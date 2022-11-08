@@ -7,5 +7,7 @@ namespace AnimationGraph
     public abstract class NodeConfig
     {
         public int id;
+
+        public abstract IAnimationGraphNodeInterface GenerateAnimationGraphNode(AnimationGraphRuntime graphRuntime);
     }
 }

@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
+using UnityEngine.Animations;
 
 namespace AnimationGraph
 {
-    public abstract class AnimationGraphNode<TNodeConfig> where TNodeConfig : NodeConfig
+    public abstract class AnimationGraphNode<TNodeConfig> : IAnimationGraphNodeInterface where TNodeConfig : NodeConfig
     {
-        private TNodeConfig m_NodeConfig;
+        internal TNodeConfig m_NodeConfig;
+
+        
     }
 }

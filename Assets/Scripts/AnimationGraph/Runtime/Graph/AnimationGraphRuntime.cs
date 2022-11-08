@@ -8,6 +8,7 @@ namespace AnimationGraph
     {
         private AnimationActor m_Actor;
         private AnimationGraph m_AnimationGraph;
+        public PlayableGraph playableGraph => m_PlayableGraph;
         private PlayableGraph m_PlayableGraph;
         private AnimationPlayableOutput m_Output;
         
@@ -24,7 +25,7 @@ namespace AnimationGraph
             m_Output = AnimationPlayableOutput.Create(m_PlayableGraph,
                 m_Actor.gameObject.name + "_" + m_Actor.gameObject.GetInstanceID(), m_Actor.animator);
 
-            AnimationClipPlayable clipPlayable = AnimationClipPlayable.Create(m_PlayableGraph, m_AnimationGraph.clipNode.clip);
+            Playable clipPlayable = m_AnimationGraph.clipNode.GenerateAnimationGraphNode(this).GetPlayable();
             m_Output.SetSourcePlayable(clipPlayable);
             m_PlayableGraph.Play();
         }
