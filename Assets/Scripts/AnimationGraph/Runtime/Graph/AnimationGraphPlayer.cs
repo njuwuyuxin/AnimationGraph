@@ -10,30 +10,24 @@ namespace AnimationGraph
     {
         public AnimationGraph animationGraph;
 
-        private Animator m_Animator;
-        private PlayableGraph m_Graph;
-        private AnimationPlayableOutput m_Output;
+        private AnimationGraphRuntime m_AnimationGraphRuntime;
+        private AnimationActor m_Actor;
 
         void Start()
         {
-            m_Animator = GetComponent<Animator>();
-            m_Graph = PlayableGraph.Create();
-            m_Graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
-            m_Output = AnimationPlayableOutput.Create(m_Graph, "MainGraph", m_Animator);
-
-            AnimationClipPlayable clipPlayable = AnimationClipPlayable.Create(m_Graph, animationGraph.clip);
-            m_Output.SetSourcePlayable(clipPlayable);
-            m_Graph.Play();
+            m_Actor = new AnimationActor(gameObject);
+            m_AnimationGraphRuntime = new AnimationGraphRuntime(m_Actor, animationGraph);
+            m_AnimationGraphRuntime.Initialize();
         }
 
         void Update()
         {
-
+            m_AnimationGraphRuntime.OnUpdate(Time.deltaTime);
         }
 
         private void OnDestroy()
         {
-            m_Graph.Destroy();
+            m_AnimationGraphRuntime.Destroy();
         }
     }
 }

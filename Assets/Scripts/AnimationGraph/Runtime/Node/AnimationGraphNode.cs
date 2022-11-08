@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationGraphNode : MonoBehaviour
+namespace AnimationGraph
 {
-    // Start is called before the first frame update
-    void Start()
+    public abstract class AnimationGraphNode<TNodeConfig> where TNodeConfig : NodeConfig
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private TNodeConfig m_NodeConfig;
     }
 }

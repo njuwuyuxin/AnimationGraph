@@ -9,6 +9,6 @@ namespace AnimationGraph
     [CreateAssetMenu(fileName = "AnimationGraph", menuName = "ScriptableObjects/AnimationGraph")]
     public class AnimationGraph : ScriptableObject
     {
-        public AnimationClip clip;
+        public AnimationClipNodeConfig clipNode;
     }
 }
