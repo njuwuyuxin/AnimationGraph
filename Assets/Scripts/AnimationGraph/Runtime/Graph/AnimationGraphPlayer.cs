@@ -17,7 +17,7 @@ namespace AnimationGraph
         {
             m_Actor = new AnimationActor(gameObject);
             m_AnimationGraphRuntime = new AnimationGraphRuntime(m_Actor, animationGraph);
-            m_AnimationGraphRuntime.Initialize();
+            m_AnimationGraphRuntime.Run();
         }
 
         void Update()

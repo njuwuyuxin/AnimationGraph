@@ -1,14 +1,26 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.Playables;
 
 namespace AnimationGraph
 {
+    [Serializable]
     [CreateAssetMenu(fileName = "AnimationGraph", menuName = "ScriptableObjects/AnimationGraph")]
     public class AnimationGraph : ScriptableObject
     {
-        public AnimationClipNodeConfig clipNode;
+        public FinalPoseNodeConfig finalPoseNode;
+
+        [SerializeReference]
+        [SerializeReferenceButton]
+        public List<NodeConfig> nodes;
+
+        public List<Connection> nodeConnections;
+    }
+
+    [Serializable]
+    public class Connection
+    {
+        public int sourceNodeId;
+        public int targetNodeId;
     }
 }

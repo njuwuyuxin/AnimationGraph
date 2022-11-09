@@ -12,7 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4630a3f8695ed44881a1b812f279a6, type: 3}
   m_Name: AnimationGraph
   m_EditorClassIdentifier: 
-  clipNode:
-    id: 0
-    clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
-    playSpeed: 0
+  finalPoseNode:
+    id: 1
+  nodes:
+  - id: 0
+  nodeConnections:
+  - sourceNodeId: 1605944722
+    targetNodeId: 1
+  references:
+    version: 1
+    00000000:
+      type: {class: AnimationClipNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 1605944722
+        clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
+        playSpeed: 0
