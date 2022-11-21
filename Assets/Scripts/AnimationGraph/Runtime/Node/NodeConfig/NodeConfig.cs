@@ -1,14 +1,21 @@
-
 using System;
 using UnityEditor;
 using UnityEngine;
 
 namespace AnimationGraph
 {
+    public enum ENodeType
+    {
+        PoseNode,
+        ValueNode,
+    }
+    
     [Serializable]
     public abstract class NodeConfig
     {
+        [SerializeField]
         public int id;
+        public virtual ENodeType nodeType { get; }
 
         public NodeConfig()
         {
@@ -18,6 +25,6 @@ namespace AnimationGraph
             }
         }
 
-        public abstract IAnimationGraphNodeInterface GenerateAnimationGraphNode(AnimationGraphRuntime graphRuntime);
+        public abstract INode GenerateNode(AnimationGraphRuntime graphRuntime);
     }
 }

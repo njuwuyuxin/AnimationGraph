@@ -8,7 +8,7 @@ namespace AnimationGraph
     [CreateAssetMenu(fileName = "AnimationGraph", menuName = "ScriptableObjects/AnimationGraph")]
     public class AnimationGraph : ScriptableObject
     {
-        public FinalPoseNodeConfig finalPoseNode;
+        public FinalPosePoseNodeConfig finalPosePoseNode;
 
         [SerializeReference]
         [SerializeReferenceButton]
@@ -22,5 +22,6 @@ namespace AnimationGraph
     {
         public int sourceNodeId;
         public int targetNodeId;
+        public int targetSlotIndex;
     }
 }

@@ -12,18 +12,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4630a3f8695ed44881a1b812f279a6, type: 3}
   m_Name: AnimationGraph
   m_EditorClassIdentifier: 
-  finalPoseNode:
-    id: 1
+  finalPosePoseNode:
+    id: 1885244080
   nodes:
   - id: 0
+  - id: 1
+  - id: 2
+  - id: 3
   nodeConnections:
-  - sourceNodeId: 1605944722
-    targetNodeId: 1
+  - sourceNodeId: 1662121278
+    targetNodeId: -2041305061
+    targetSlotIndex: 0
+  - sourceNodeId: 999632052
+    targetNodeId: -2041305061
+    targetSlotIndex: 0
+  - sourceNodeId: 861477338
+    targetNodeId: -2041305061
+    targetSlotIndex: 1
+  - sourceNodeId: -2041305061
+    targetNodeId: 1885244080
+    targetSlotIndex: 0
   references:
     version: 1
     00000000:
-      type: {class: AnimationClipNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
       data:
-        id: 1605944722
+        id: 861477338
+        clip: {fileID: 7400002, guid: 080945c46afd34f3ebc364c1696e6678, type: 3}
+        playSpeed: 0
+    00000001:
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 999632052
         clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
         playSpeed: 0
+    00000002:
+      type: {class: BoolSelectorPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -2041305061
+    00000003:
+      type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 1662121278
+        value: 1

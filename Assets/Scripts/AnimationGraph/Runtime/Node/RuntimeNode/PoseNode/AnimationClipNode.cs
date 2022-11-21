@@ -3,7 +3,7 @@ using UnityEngine.Playables;
 
 namespace AnimationGraph
 {
-    public class AnimationClipNode : AnimationGraphNode<AnimationClipNodeConfig>
+    public class AnimationClipNode : PoseNode<AnimationClipPoseNodeConfig>
     {
         private AnimationGraphRuntime m_AnimationGraphRuntime;
         private AnimationClipPlayable m_AnimationClipPlayable;

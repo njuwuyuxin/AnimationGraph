@@ -13,7 +13,7 @@ namespace AnimationGraph
         private PlayableGraph m_PlayableGraph;
         private AnimationPlayableOutput m_Output;
         private FinalPoseNode m_FinalPoseNode;
-        private Dictionary<int, IAnimationGraphNodeInterface> m_Id2NodeMap;
+        private Dictionary<int, INode> m_Id2NodeMap;
         
         public AnimationGraphRuntime(AnimationActor actor, AnimationGraph animationGraph)
         {
@@ -36,12 +36,12 @@ namespace AnimationGraph
 
         private void GenerateAnimationGraph()
         {
-            m_Id2NodeMap = new Dictionary<int, IAnimationGraphNodeInterface>();
-            m_FinalPoseNode = (FinalPoseNode)m_AnimationGraph.finalPoseNode.GenerateAnimationGraphNode(this);
-            m_Id2NodeMap.Add(m_AnimationGraph.finalPoseNode.id, m_FinalPoseNode);
+            m_Id2NodeMap = new Dictionary<int, INode>();
+            m_FinalPoseNode = (FinalPoseNode)m_AnimationGraph.finalPosePoseNode.GenerateNode(this);
+            m_Id2NodeMap.Add(m_AnimationGraph.finalPosePoseNode.id, m_FinalPoseNode);
             foreach (var nodeConfig in m_AnimationGraph.nodes)
             {
-                var animationGraphNode = nodeConfig.GenerateAnimationGraphNode(this);
+                var animationGraphNode = nodeConfig.GenerateNode(this);
                 m_Id2NodeMap.Add(nodeConfig.id, animationGraphNode);
             }
 
@@ -49,8 +49,8 @@ namespace AnimationGraph
             {
                 var sourceNode = m_Id2NodeMap[connection.sourceNodeId];
                 var targetNode = m_Id2NodeMap[connection.targetNodeId];
-                sourceNode.AddOutputNodes(targetNode);
-                targetNode.AddInputNodes(sourceNode);
+                sourceNode.AddOutputNode(targetNode);
+                targetNode.AddInputNode(sourceNode, connection.targetSlotIndex);
             }
         }
 

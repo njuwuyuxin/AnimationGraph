@@ -4,9 +4,10 @@ using UnityEngine;
 namespace AnimationGraph
 {
     [Serializable]
-    public class FinalPoseNodeConfig : NodeConfig
+    public class FinalPosePoseNodeConfig : PoseNodeConfig
     {
-        public override IAnimationGraphNodeInterface GenerateAnimationGraphNode(AnimationGraphRuntime graphRuntime)
+
+        public override INode GenerateNode(AnimationGraphRuntime graphRuntime)
         {
             FinalPoseNode finalPoseNode = new FinalPoseNode();
             finalPoseNode.m_NodeConfig = this;

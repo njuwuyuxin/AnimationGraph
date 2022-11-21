@@ -4,12 +4,12 @@ using UnityEngine;
 namespace AnimationGraph
 {
     [Serializable]
-    public class AnimationClipNodeConfig : NodeConfig
+    public class AnimationClipPoseNodeConfig : PoseNodeConfig
     {
         public AnimationClip clip;
         public float playSpeed;
-
-        public override IAnimationGraphNodeInterface GenerateAnimationGraphNode(AnimationGraphRuntime graphRuntime)
+        
+        public override INode GenerateNode(AnimationGraphRuntime graphRuntime)
         {
             AnimationClipNode animationClipNode = new AnimationClipNode();
             animationClipNode.m_NodeConfig = this;
