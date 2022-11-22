@@ -12,6 +12,7 @@ namespace AnimationGraph
 
         public override void InitializeGraphNode(AnimationGraphRuntime animationGraphRuntime)
         {
+            id = m_NodeConfig.id;
             SetPoseInputSlotCount(1);
             m_AnimationGraphRuntime = animationGraphRuntime;
         }
@@ -24,6 +25,24 @@ namespace AnimationGraph
                 throw new NotImplementedException();
             }
             return m_InputPoseNodes[0].GetPlayable();
+        }
+
+        public override void OnStart()
+        {
+            m_AnimationGraphRuntime.m_FinalPlayable.DisconnectInput(0);
+            m_AnimationGraphRuntime.m_FinalPlayable.ConnectInput(0, GetPlayable(), 0, 1f);
+        }
+
+        public override void OnUpdate(float deltaTime)
+        {
+            if (m_InputPoseNodes.Length == 0)
+            {
+                Debug.LogError("FinalPose has no input!");
+                return;
+            }
+            m_InputPoseNodes[0].OnUpdate(deltaTime);
+            m_AnimationGraphRuntime.m_FinalPlayable.DisconnectInput(0);
+            m_AnimationGraphRuntime.m_FinalPlayable.ConnectInput(0, GetPlayable(), 0, 1f);
         }
     }
 }

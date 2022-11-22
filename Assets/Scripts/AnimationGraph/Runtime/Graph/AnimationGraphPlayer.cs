@@ -29,5 +29,10 @@ namespace AnimationGraph
         {
             m_AnimationGraphRuntime.Destroy();
         }
+        
+        public void SetBoolParameter(string parameterName, bool value)
+        {
+            m_AnimationGraphRuntime.SetBoolParameter(parameterName, value);
+        }
     }
 }

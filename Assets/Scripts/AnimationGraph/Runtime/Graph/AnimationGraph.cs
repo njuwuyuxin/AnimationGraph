@@ -15,6 +15,10 @@ namespace AnimationGraph
         public List<NodeConfig> nodes;
 
         public List<Connection> nodeConnections;
+
+        [SerializeReference]
+        [SerializeReferenceButton]
+        public List<GraphParameter> parameters;
     }
 
     [Serializable]

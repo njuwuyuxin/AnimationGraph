@@ -8,11 +8,15 @@ namespace AnimationGraph
 
     public abstract class INode
     {
+        public int id;
+        
         public virtual ENodeType nodeType { get; }
 
         public abstract void InitializeGraphNode(AnimationGraphRuntime animationGraphRuntime);
-        
-        protected void OnUpdate(float deltaTime){}
+
+        public virtual void OnStart() { }
+
+        public virtual void OnUpdate(float deltaTime) { }
 
         public virtual void AddInputNode(INode inputNode, int slotIndex)
         {

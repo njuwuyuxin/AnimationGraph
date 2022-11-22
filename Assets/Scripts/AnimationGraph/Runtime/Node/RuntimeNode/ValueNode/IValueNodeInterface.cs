@@ -6,9 +6,9 @@ namespace AnimationGraph
     {
         public override ENodeType nodeType => ENodeType.ValueNode;
 
-        public virtual bool boolValue { get; }
-        public virtual float floatValue { get; }
-        public virtual string stringValue { get; }
+        public virtual bool boolValue { get; set; }
+        public virtual float floatValue { get; set; }
+        public virtual string stringValue { get; set; }
         
         protected List<IPoseNodeInterface> m_OutputPoseNodes = new List<IPoseNodeInterface>();
         

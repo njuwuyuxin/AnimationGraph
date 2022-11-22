@@ -32,6 +32,8 @@ MonoBehaviour:
   - sourceNodeId: -2041305061
     targetNodeId: 1885244080
     targetSlotIndex: 0
+  parameters:
+  - id: 4
   references:
     version: 1
     00000000:
@@ -55,3 +57,9 @@ MonoBehaviour:
       data:
         id: 1662121278
         value: 1
+    00000004:
+      type: {class: BoolParameter, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        name: testBool
+        combinedNodeId: 3ef51163
+        value: 0

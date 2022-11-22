@@ -10,8 +10,9 @@ namespace AnimationGraph
         
         public override void InitializeGraphNode(AnimationGraphRuntime animationGraphRuntime)
         {
+            id = m_NodeConfig.id;
             m_AnimationGraphRuntime = animationGraphRuntime;
-            m_AnimationClipPlayable = AnimationClipPlayable.Create(m_AnimationGraphRuntime.playableGraph, m_NodeConfig.clip);
+            m_AnimationClipPlayable = AnimationClipPlayable.Create(m_AnimationGraphRuntime.m_PlayableGraph, m_NodeConfig.clip);
         }
 
         public override Playable GetPlayable()

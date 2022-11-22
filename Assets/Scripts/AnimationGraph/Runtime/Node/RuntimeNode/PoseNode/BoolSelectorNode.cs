@@ -9,8 +9,11 @@ namespace AnimationGraph
         public IPoseNodeInterface falseNode => m_InputPoseNodes[1];
         public IValueNodeInterface condition => m_InputValueNodes[0];
 
+        private Playable m_CurrentActivePlayable;
+
         public override void InitializeGraphNode(AnimationGraphRuntime animationGraphRuntime)
         {
+            id = m_NodeConfig.id;
             SetPoseInputSlotCount(2);
             SetValueInputSlotCount(1);
             m_AnimationGraphRuntime = animationGraphRuntime;
@@ -18,15 +21,31 @@ namespace AnimationGraph
 
         public override Playable GetPlayable()
         {
+            return m_CurrentActivePlayable;
+        }
+
+        public override void OnStart()
+        {
             if (condition.boolValue)
             {
-                return trueNode.GetPlayable();
+                m_CurrentActivePlayable = trueNode.GetPlayable();
             }
             else
             {
-                return falseNode.GetPlayable();
+                m_CurrentActivePlayable = falseNode.GetPlayable();
             }
         }
-        
+
+        public override void OnUpdate(float deltaTime)
+        {
+            if (condition.boolValue)
+            {
+                m_CurrentActivePlayable = trueNode.GetPlayable();
+            }
+            else
+            {
+                m_CurrentActivePlayable = falseNode.GetPlayable();
+            }
+        }
     }
 }
