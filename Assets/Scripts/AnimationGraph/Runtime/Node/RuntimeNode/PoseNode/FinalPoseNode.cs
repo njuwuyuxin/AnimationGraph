@@ -29,6 +29,7 @@ namespace AnimationGraph
 
         public override void OnStart()
         {
+            m_InputPoseNodes[0].OnStart();
             m_AnimationGraphRuntime.m_FinalPlayable.DisconnectInput(0);
             m_AnimationGraphRuntime.m_FinalPlayable.ConnectInput(0, GetPlayable(), 0, 1f);
         }

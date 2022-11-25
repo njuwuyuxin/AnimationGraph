@@ -10,6 +10,7 @@ namespace AnimationGraph
         public IValueNodeInterface condition => m_InputValueNodes[0];
 
         private Playable m_CurrentActivePlayable;
+        private bool m_CurrentCondition;
 
         public override void InitializeGraphNode(AnimationGraphRuntime animationGraphRuntime)
         {
@@ -26,24 +27,29 @@ namespace AnimationGraph
 
         public override void OnStart()
         {
-            if (condition.boolValue)
-            {
-                m_CurrentActivePlayable = trueNode.GetPlayable();
-            }
-            else
-            {
-                m_CurrentActivePlayable = falseNode.GetPlayable();
-            }
+            ChangeSourcePlayable();
+            m_CurrentCondition = condition.boolValue;
         }
 
         public override void OnUpdate(float deltaTime)
         {
+            if (condition.boolValue != m_CurrentCondition)
+            {
+                ChangeSourcePlayable();
+                m_CurrentCondition = condition.boolValue;
+            }
+        }
+
+        private void ChangeSourcePlayable()
+        {
             if (condition.boolValue)
             {
+                trueNode.OnStart();
                 m_CurrentActivePlayable = trueNode.GetPlayable();
             }
             else
             {
+                falseNode.OnStart();
                 m_CurrentActivePlayable = falseNode.GetPlayable();
             }
         }

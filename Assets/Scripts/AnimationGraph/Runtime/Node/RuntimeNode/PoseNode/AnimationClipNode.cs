@@ -15,6 +15,11 @@ namespace AnimationGraph
             m_AnimationClipPlayable = AnimationClipPlayable.Create(m_AnimationGraphRuntime.m_PlayableGraph, m_NodeConfig.clip);
         }
 
+        public override void OnStart()
+        {
+            m_AnimationClipPlayable.SetTime(0);
+        }
+
         public override Playable GetPlayable()
         {
             return m_AnimationClipPlayable;
