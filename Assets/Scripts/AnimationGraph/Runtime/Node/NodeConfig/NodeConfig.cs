@@ -21,7 +21,7 @@ namespace AnimationGraph
         {
             if (id == 0)
             {
-                id = Animator.StringToHash(GUID.Generate().ToString());
+                id = Animator.StringToHash(  Guid.NewGuid().ToString());
             }
         }
 

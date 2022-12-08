@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270600e87d4cef1458b481170c65cc6f, type: 3}
+  m_Name: AnimationGraphAsset
+  m_EditorClassIdentifier: 
+  finalPosePoseNode:
+    id: 370414281
+  nodes:
+  - id: -632155071
+    nodeType: 0
+    positionX: 202
+    positionY: 197
+  - id: -2021067124
+    nodeType: 0
+    positionX: 502
+    positionY: 125
+  - id: -1003617486
+    nodeType: 0
+    positionX: 213
+    positionY: 44
+  - id: -1748347968
+    nodeType: 0
+    positionX: 529
+    positionY: 351
+  ports:
+  - portName: Input1
+    portId: -513137598
+    nodeId: -632155071
+    direction: 0
+    capacity: 0
+  - portName: Input2
+    portId: 196251712
+    nodeId: -632155071
+    direction: 0
+    capacity: 0
+  - portName: Output
+    portId: 1807924298
+    nodeId: -632155071
+    direction: 1
+    capacity: 1
+  - portName: Input1
+    portId: -2145722403
+    nodeId: -2021067124
+    direction: 0
+    capacity: 0
+  - portName: Input2
+    portId: 1904635994
+    nodeId: -2021067124
+    direction: 0
+    capacity: 0
+  - portName: Output
+    portId: 2082519756
+    nodeId: -2021067124
+    direction: 1
+    capacity: 1
+  - portName: Input1
+    portId: -974408384
+    nodeId: -1003617486
+    direction: 0
+    capacity: 0
+  - portName: Input2
+    portId: 1212915287
+    nodeId: -1003617486
+    direction: 0
+    capacity: 0
+  - portName: Output
+    portId: 931354074
+    nodeId: -1003617486
+    direction: 1
+    capacity: 1
+  - portName: Input1
+    portId: 73644380
+    nodeId: -1748347968
+    direction: 0
+    capacity: 0
+  - portName: Input2
+    portId: -623230528
+    nodeId: -1748347968
+    direction: 0
+    capacity: 0
+  - portName: Output
+    portId: -1997925206
+    nodeId: -1748347968
+    direction: 1
+    capacity: 1
+  edges:
+  - inputPort: 1904635994
+    outputPort: 1807924298
+  - inputPort: -2145722403
+    outputPort: 931354074
+  - inputPort: 73644380
+    outputPort: 2082519756
