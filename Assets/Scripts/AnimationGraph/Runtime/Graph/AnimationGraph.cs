@@ -13,13 +13,11 @@ namespace AnimationGraph
         public FinalPosePoseNodeConfig finalPosePoseNode;
 
         [SerializeReference]
-        [SerializeReferenceButton]
         public List<NodeConfig> nodes;
 
         public List<Connection> nodeConnections;
 
         [SerializeReference]
-        [SerializeReferenceButton]
         public List<GraphParameter> parameters;
     }
 
