@@ -1,45 +1,47 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace AnimationGraph.Editor
 {
     public class GraphNode : Node
     {
+        public virtual ENodeType nodeType => ENodeType.BaseNode;
         public int id { get; set; }
 
         protected AnimationGraphView m_AnimationGraphView;
         protected string m_NodeName;
         protected List<NodePort> m_InputPorts;
         protected NodePort m_OutputPort;
-        
+        public NodeConfig nodeConfig => m_NodeConfig;
+        protected NodeConfig m_NodeConfig;
+
         public GraphNode(AnimationGraphView graphView, Vector2 position)
         {
             m_AnimationGraphView = graphView;
             m_NodeName = "Base Node";
+            title = m_NodeName;
             m_InputPorts = new List<NodePort>();
             SetPosition(new Rect(position,Vector2.zero));
-            Draw();
         }
 
         public virtual void Initialize()
         {
             id = Animator.StringToHash(Guid.NewGuid().ToString());
-            
-            CreatePort(Direction.Output, Port.Capacity.Multi, "Output");
-            CreatePort(Direction.Input, Port.Capacity.Single, "Input1");
-            CreatePort(Direction.Input, Port.Capacity.Single, "Input2");
         }
 
         public virtual void LoadNodeData(NodeData data)
         {
             id = data.id;
+            m_NodeConfig = data.nodeConfig;
         }
         
-        private void CreatePort(Direction direction, Port.Capacity capacity, string portName)
+        protected void CreatePort(Direction direction, Port.Capacity capacity, string portName, int portIndex)
         {
-            var port = new NodePort(this, Orientation.Horizontal, direction, capacity, typeof(Port));
+            var port = new NodePort(this, Orientation.Horizontal, direction, capacity, typeof(Port), portIndex);
             port.portName = portName;
             
             switch (direction)
@@ -55,9 +57,9 @@ namespace AnimationGraph.Editor
             }
         }
 
-        public void CreatePort(Direction direction, Port.Capacity capacity, string portName, int id)
+        public void CreatePort(Direction direction, Port.Capacity capacity, string portName, int portIndex, int id)
         {
-            var port = new NodePort(this, Orientation.Horizontal, direction, capacity, typeof(Port), id);
+            var port = new NodePort(this, Orientation.Horizontal, direction, capacity, typeof(Port), portIndex, id);
             port.portName = portName;
 
             switch (direction)
@@ -76,6 +78,12 @@ namespace AnimationGraph.Editor
         protected virtual void Draw()
         {
             title = m_NodeName;
+        }
+
+        public override void Select(VisualElement selectionContainer, bool additive)
+        {
+            base.Select(selectionContainer, additive);
+            m_AnimationGraphView.inspector.SetNodeConfig(nodeConfig);
         }
     }
 }

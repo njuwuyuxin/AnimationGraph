@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 
 namespace AnimationGraph
@@ -23,6 +22,11 @@ namespace AnimationGraph
             {
                 id = Animator.StringToHash(  Guid.NewGuid().ToString());
             }
+        }
+
+        public void SetId(int id)
+        {
+            this.id = id;
         }
 
         public abstract INode GenerateNode(AnimationGraphRuntime graphRuntime);

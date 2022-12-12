@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270600e87d4cef1458b481170c65cc6f, type: 3}
+  m_Name: AnimationGraphAsset
+  m_EditorClassIdentifier: 
+  nodes:
+  - id: -1981698525
+    nodeType: 1
+    positionX: 543
+    positionY: 332
+    nodeConfig:
+      id: 0
+  - id: -711473251
+    nodeType: 2
+    positionX: 269
+    positionY: 332
+    nodeConfig:
+      id: 1
+  ports:
+  - portName: Input
+    portId: 1511145127
+    nodeId: -1981698525
+    portIndex: 0
+    direction: 0
+    capacity: 0
+  - portName: Output
+    portId: -458273520
+    nodeId: -711473251
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  edges:
+  - inputPort: 1511145127
+    outputPort: -458273520
+  references:
+    version: 1
+    00000000:
+      type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -1981698525
+    00000001:
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -711473251
+        clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
+        playSpeed: 0

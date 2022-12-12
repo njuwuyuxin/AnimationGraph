@@ -8,10 +8,11 @@ namespace AnimationGraph.Editor
     public class NodePort : Port
     {
         public int id { get; set; }
+        public int portIndex { get; set; }
         public GraphNode GraphNode => m_GraphNode;
         private GraphNode m_GraphNode;
 
-        public NodePort(GraphNode node, Orientation portOrientation, Direction portDirection, Port.Capacity portCapacity, System.Type type):base(
+        public NodePort(GraphNode node, Orientation portOrientation, Direction portDirection, Port.Capacity portCapacity, System.Type type, int portIndex):base(
             portOrientation,portDirection,portCapacity,type)
         {
             EdgeConnectorListener connectorListener = new EdgeConnectorListener();
@@ -19,10 +20,11 @@ namespace AnimationGraph.Editor
             this.AddManipulator(edgeConnector);
 
             m_GraphNode = node;
+            this.portIndex = portIndex;
             id = Animator.StringToHash(Guid.NewGuid().ToString());
         }
         
-        public NodePort(GraphNode node, Orientation portOrientation, Direction portDirection, Port.Capacity portCapacity, System.Type type, int id):base(
+        public NodePort(GraphNode node, Orientation portOrientation, Direction portDirection, Port.Capacity portCapacity, System.Type type, int portIndex, int id):base(
             portOrientation,portDirection,portCapacity,type)
         {
             EdgeConnectorListener connectorListener = new EdgeConnectorListener();
@@ -30,6 +32,7 @@ namespace AnimationGraph.Editor
             this.AddManipulator(edgeConnector);
 
             m_GraphNode = node;
+            this.portIndex = portIndex;
             this.id = id;
         }
     }

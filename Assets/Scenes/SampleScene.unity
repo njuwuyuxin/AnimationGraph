@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8856f33502786ca4db3442efd17f0936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationGraph: {fileID: 11400000, guid: c04119107d870454f8f375379172aa4d, type: 2}
+  animationGraph: {fileID: 11400000, guid: 4c7d9015c15513b46be79685bbfa6be5, type: 2}
 --- !u!4 &388657652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6882341703514390352, guid: 5209f579e3f087142a99ee75cd749f9f, type: 3}

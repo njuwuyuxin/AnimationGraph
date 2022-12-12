@@ -45,6 +45,10 @@ namespace AnimationGraph
             m_Id2NodeMap.Add(m_AnimationGraph.finalPosePoseNode.id, m_FinalPoseNode);
             foreach (var nodeConfig in m_AnimationGraph.nodes)
             {
+                if (m_Id2NodeMap.ContainsKey(nodeConfig.id))
+                {
+                    continue;
+                }
                 var animationGraphNode = nodeConfig.GenerateNode(this);
                 m_Id2NodeMap.Add(nodeConfig.id, animationGraphNode);
             }

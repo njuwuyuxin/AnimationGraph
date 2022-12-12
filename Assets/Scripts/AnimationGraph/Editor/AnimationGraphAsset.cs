@@ -10,8 +10,6 @@ namespace AnimationGraph.Editor
     [CreateAssetMenu(fileName = "AnimationGraphAsset", menuName = "ScriptableObjects/AnimationGraphAsset")]
     public class AnimationGraphAsset : ScriptableObject
     {
-        public FinalPosePoseNodeConfig finalPosePoseNode;
-
         public List<NodeData> nodes;
         public List<PortData> ports;
         public List<EdgeData> edges;
@@ -60,6 +58,8 @@ namespace AnimationGraph.Editor
         public ENodeType nodeType;
         public float positionX;
         public float positionY;
+        [SerializeReference]
+        public NodeConfig nodeConfig;
     }
 
     [Serializable]
@@ -68,6 +68,7 @@ namespace AnimationGraph.Editor
         public string portName;
         public int portId;
         public int nodeId;
+        public int portIndex;
         public EPortDirection direction;
         public EPortCapacity capacity;
     }

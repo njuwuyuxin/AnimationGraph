@@ -10,9 +10,12 @@ namespace AnimationGraph.Editor
     {
         private const string k_StyleSheetPrefix = "Assets/Scripts/AnimationGraph/Editor/StyleSheet/";
         private AnimationGraphAsset m_AnimationGraphAsset;
+        public NodeInspector inspector => m_Inspector;
+        private NodeInspector m_Inspector;
 
-        public AnimationGraphView()
+        public AnimationGraphView(NodeInspector inspector)
         {
+            m_Inspector = inspector;
             AddGridBackground();
             AddManipulators();
             AddStyleSheet();
@@ -32,15 +35,25 @@ namespace AnimationGraph.Editor
             this.AddManipulator(CreateContextualMenu());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
+            this.AddManipulator(new ClickSelector());
         }
-
+        
         private IManipulator CreateContextualMenu()
         {
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
-                menuEvent => menuEvent.menu.AppendAction(
-                    "Add Node", actionEvent => AddElement(CreateNode(actionEvent.eventInfo.mousePosition))
-                    )
-                );
+                menuEvent =>
+                {
+                    menuEvent.menu.AppendAction(
+                        "Add FinalPose Node",
+                        actionEvent =>
+                            AddElement(CreateDefaultNode(ENodeType.FinalPoseNode, actionEvent.eventInfo.mousePosition))
+                    );
+                    menuEvent.menu.AppendAction(
+                        "Add AnimationClip Node",
+                        actionEvent =>
+                            AddElement(CreateDefaultNode(ENodeType.AnimationClipNode, actionEvent.eventInfo.mousePosition))
+                    );
+                });
             return contextualMenuManipulator;
         }
 
@@ -53,16 +66,31 @@ namespace AnimationGraph.Editor
             }
         }
 
-        private Node CreateNode(Vector2 position)
+        private GraphNode CreateNode(ENodeType nodeType, Vector2 position)
         {
-            var node = new GraphNode(this, position);
+            GraphNode node = null;
+            switch (nodeType)
+            {
+                case ENodeType.FinalPoseNode: node = new FinalPoseNode(this, position);
+                    break;
+                case ENodeType.AnimationClipNode: node = new AnimationClipNode(this, position);
+                    break;
+                default: node = new GraphNode(this, position);
+                    break;
+            }
+            return node;
+        }
+
+        private GraphNode CreateDefaultNode(ENodeType nodeType, Vector2 position)
+        {
+            var node = CreateNode(nodeType, position);
             node.Initialize();
             return node;
         }
 
-        private Node CreateNodeFromAsset(NodeData data)
+        private GraphNode CreateNodeFromAsset(NodeData data)
         {
-            var node = new GraphNode(this, new Vector2(data.positionX,data.positionY));
+            var node = CreateNode(data.nodeType, new Vector2(data.positionX, data.positionY));
             node.LoadNodeData(data);
             return node;
         }
@@ -100,6 +128,35 @@ namespace AnimationGraph.Editor
             return ports.ToList();
         }
 
+        public void Compile(AnimationGraph compiledGraph)
+        {
+            compiledGraph.nodes = new List<NodeConfig>();
+            compiledGraph.nodeConnections = new List<Connection>();
+            nodes.ForEach(node =>
+            {
+                GraphNode graphNode = node as GraphNode;
+                if (graphNode != null)
+                {
+                    compiledGraph.nodes.Add(graphNode.nodeConfig);
+                    if (graphNode.nodeType == ENodeType.FinalPoseNode)
+                    {
+                        compiledGraph.finalPosePoseNode = graphNode.nodeConfig as FinalPosePoseNodeConfig;
+                    }
+                }
+            });
+            
+            edges.ForEach(edge =>
+            {
+                var inputPort = edge.input as NodePort;
+                var outputPort = edge.output as NodePort;
+                Connection connection = new Connection();
+                connection.sourceNodeId = outputPort.GraphNode.nodeConfig.id;
+                connection.targetNodeId = inputPort.GraphNode.nodeConfig.id;
+                connection.targetSlotIndex = inputPort.portIndex;
+                compiledGraph.nodeConnections.Add(connection);
+            });
+        }
+
         public void Save()
         {
             m_AnimationGraphAsset.nodes = new List<NodeData>();
@@ -113,9 +170,10 @@ namespace AnimationGraph.Editor
                 {
                     NodeData nodeData = new NodeData();
                     nodeData.id = graphNode.id;
-                    nodeData.nodeType = ENodeType.BaseNode;
+                    nodeData.nodeType = graphNode.nodeType;
                     nodeData.positionX = graphNode.GetPosition().x;
                     nodeData.positionY = graphNode.GetPosition().y;
+                    nodeData.nodeConfig = graphNode.nodeConfig;
                     m_AnimationGraphAsset.nodes.Add(nodeData);
                 }
             });
@@ -148,7 +206,8 @@ namespace AnimationGraph.Editor
 
                     portData.nodeId = nodePort.GraphNode.id;
                     portData.portId = nodePort.id;
-                    portData.portName = port.portName;
+                    portData.portName = nodePort.portName;
+                    portData.portIndex = nodePort.portIndex;
                     m_AnimationGraphAsset.ports.Add(portData);
                 }
             });
@@ -168,7 +227,6 @@ namespace AnimationGraph.Editor
 
             EditorUtility.SetDirty(m_AnimationGraphAsset);
             AssetDatabase.SaveAssets();
-            EditorUtility.DisplayDialog("Success", "Animation Graph Save Successfully!", "OK");
         }
 
         public void LoadAnimGraphAsset(AnimationGraphAsset graphAsset)
@@ -215,7 +273,7 @@ namespace AnimationGraph.Editor
                         capacity = Port.Capacity.Multi;
                         break;
                 }
-                node.CreatePort(direction, capacity, portData.portName, portData.portId);
+                node.CreatePort(direction, capacity, portData.portName, portData.portIndex, portData.portId);
             }
         }
 
