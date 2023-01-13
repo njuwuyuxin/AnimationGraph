@@ -13,6 +13,7 @@ namespace AnimationGraph.Editor
         private VisualElement m_GraphArea;
         private IMGUIContainer m_InspectorArea;
         private NodeInspector m_NodeInspector;
+        private ParameterBoard m_ParameterBoard;
 
         private const string k_StyleSheetPrefix = "Assets/Scripts/AnimationGraph/Editor/StyleSheet/";
         private const string k_CompiledGraphSavePath = "Assets/Data/AnimationGraph/";
@@ -34,6 +35,7 @@ namespace AnimationGraph.Editor
 
             if (animationGraphAsset != null)
             {
+                wnd.ClearAnimationGraphWindow();
                 wnd.LoadAnimationGraphAsset(animationGraphAsset);
             }
         }
@@ -44,30 +46,36 @@ namespace AnimationGraph.Editor
             VisualElement root = rootVisualElement;
 
             // Import UXML
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+            var mainWindowVisualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
                     "Assets/Scripts/AnimationGraph/Editor/UIDocuments/AnimationGraphEditorWindow.uxml");
-            VisualElement templateContainer = visualTree.CloneTree();
-            templateContainer.style.flexGrow = 1;
+            VisualElement mainWindowElement = mainWindowVisualTree.CloneTree();
+            mainWindowElement.style.flexGrow = 1;
             
             var editorWindowStyleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(k_StyleSheetPrefix + "AnimationGraphEditorWindow.uss");
             if (editorWindowStyleSheet != null)
             {
-                templateContainer.styleSheets.Add(editorWindowStyleSheet);
+                mainWindowElement.styleSheets.Add(editorWindowStyleSheet);
             }
 
-            root.Add(templateContainer);
+            root.Add(mainWindowElement);
             
             Button saveButton = new Button(Save);
             saveButton.Add(new Label("Save"));
-            templateContainer.Add(saveButton);
+            mainWindowElement.Add(saveButton);
             
             Button compileButton = new Button(CompileGraph);
             compileButton.Add(new Label("Compile"));
-            templateContainer.Add(compileButton);
+            mainWindowElement.Add(compileButton);
             
-            m_GraphArea = templateContainer.Q("GraphArea");
-            m_ParameterArea = templateContainer.Q("ParameterArea");
-            m_InspectorArea = templateContainer.Q("InspectorArea") as IMGUIContainer;
+            m_GraphArea = mainWindowElement.Q("GraphArea");
+            m_ParameterArea = mainWindowElement.Q("ParameterArea");
+
+            m_ParameterBoard = new ParameterBoard();
+            m_ParameterArea.Add(m_ParameterBoard);
+            m_ParameterBoard.StretchToParentSize();
+            
+            
+            m_InspectorArea = mainWindowElement.Q("InspectorArea") as IMGUIContainer;
             m_NodeInspector = CreateInstance<NodeInspector>();
             m_InspectorArea.onGUIHandler = m_NodeInspector.OnInspectorGUI;
 
@@ -81,14 +89,21 @@ namespace AnimationGraph.Editor
             m_AnimationGraphView.StretchToParentSize();
         }
 
+        private void ClearAnimationGraphWindow()
+        {
+            m_ParameterBoard.ClearParameterBoard();
+        }
+        
         private void LoadAnimationGraphAsset(AnimationGraphAsset graphAsset)
         {
             m_AnimationGraphAsset = graphAsset;
+            m_ParameterBoard.LoadAnimGraphAsset(graphAsset);
             m_AnimationGraphView.LoadAnimGraphAsset(m_AnimationGraphAsset);
         }
 
         private void Save()
         {
+            m_ParameterBoard.Save();
             m_AnimationGraphView.Save();
             EditorUtility.DisplayDialog("Success", "Animation Graph Save Successfully!", "OK");
         }

@@ -13,6 +13,9 @@ namespace AnimationGraph.Editor
         public List<NodeData> nodes;
         public List<PortData> ports;
         public List<EdgeData> edges;
+        [SerializeReference]
+        [SerializeReferenceButton]
+        public List<ParameterData> parameters;
         
         
 #if UNITY_EDITOR
@@ -78,5 +81,32 @@ namespace AnimationGraph.Editor
     {
         public int inputPort;
         public int outputPort;
+    }
+
+    [Serializable]
+    public class ParameterData
+    {
+        public string name;
+        public List<int> associateNodes;
+    }
+
+    public class BoolParameterData : ParameterData
+    {
+        public bool value;
+    }
+    
+    public class IntParameterData : ParameterData
+    {
+        public int value;
+    }
+    
+    public class FloatParameterData : ParameterData
+    {
+        public float value;
+    }
+    
+    public class StringParameterData : ParameterData
+    {
+        public string value;
     }
 }
