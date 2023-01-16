@@ -33,6 +33,33 @@ namespace AnimationGraph.Editor
             m_NameLabel.text = m_Name;
             
             this.AddManipulator(CreateContextualMenu());
+            m_NameLabel.RegisterCallback<ClickEvent>(OnNameLabelClicked);
+        }
+
+        private void OnNameLabelClicked(ClickEvent evt)
+        {
+            if (evt.clickCount == 2)
+            {
+                m_NameLabel.visible = false;
+                TextField textField = new TextField();
+                textField.value = m_NameLabel.text;
+                textField.style.position = new StyleEnum<Position>(Position.Absolute);
+                textField.style.height = new StyleLength(new Length(26));
+                textField.style.marginTop = new StyleLength(new Length(8));
+                textField.style.marginLeft = new StyleLength(new Length(10));
+                textField.RegisterCallback<FocusOutEvent>(focusEvt =>
+                {
+                    m_NameLabel.text = parameterName = textField.text;
+                    Remove(textField);
+                    m_NameLabel.visible = true;
+                });
+                Add(textField);
+                schedule.Execute(() =>
+                {
+                    textField.Focus();
+                    textField.SelectAll();
+                });
+            }
         }
         
         private IManipulator CreateContextualMenu()

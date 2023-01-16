@@ -80,12 +80,12 @@ MonoBehaviour:
     00000003:
       type: {class: IntParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:
-        name: intParameter
+        name: testInt
         associateNodes: 
         value: 0
     00000004:
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:
-        name: floatParameter
+        name: testFloat
         associateNodes: 
         value: 0
