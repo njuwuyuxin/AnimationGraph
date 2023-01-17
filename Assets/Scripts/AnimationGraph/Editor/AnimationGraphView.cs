@@ -19,6 +19,7 @@ namespace AnimationGraph.Editor
             AddGridBackground();
             AddManipulators();
             AddStyleSheet();
+            RegisterCallbacks();
         }
 
         private void AddGridBackground()
@@ -45,13 +46,11 @@ namespace AnimationGraph.Editor
                 {
                     menuEvent.menu.AppendAction(
                         "Add FinalPose Node",
-                        actionEvent =>
-                            AddElement(CreateDefaultNode(ENodeType.FinalPoseNode, actionEvent.eventInfo.mousePosition))
+                        actionEvent => CreateDefaultNode(ENodeType.FinalPoseNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
                     );
                     menuEvent.menu.AppendAction(
                         "Add AnimationClip Node",
-                        actionEvent =>
-                            AddElement(CreateDefaultNode(ENodeType.AnimationClipNode, actionEvent.eventInfo.mousePosition))
+                        actionEvent => CreateDefaultNode(ENodeType.AnimationClipNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
                     );
                 });
             return contextualMenuManipulator;
@@ -66,6 +65,52 @@ namespace AnimationGraph.Editor
             }
         }
 
+        private void RegisterCallbacks()
+        {
+            RegisterCallback<DragEnterEvent>(OnDragEnter);
+            RegisterCallback<DragLeaveEvent>(OnDragLeave);
+            RegisterCallback<DragUpdatedEvent>(OnDragUpdate);
+            RegisterCallback<DragPerformEvent>(OnDragPerform);
+            RegisterCallback<DragExitedEvent>(OnDragExit);
+        }
+
+        void OnDragEnter(DragEnterEvent evt)
+        {
+        }
+        
+        void OnDragLeave(DragLeaveEvent evt)
+        {
+            
+        }
+        
+        void OnDragUpdate(DragUpdatedEvent evt)
+        {
+            DragAndDrop.visualMode = DragAndDropVisualMode.Generic;
+        }
+        
+        private void OnDragPerform(DragPerformEvent evt)
+        {
+            DragAndDrop.AcceptDrag();
+            
+            var parameterCard = DragAndDrop.GetGenericData("parameterCard") as ParameterCard;
+            if (parameterCard != null)
+            {
+                CreateParameterNode(parameterCard, MouseToViewPosition(evt.mousePosition));
+            }
+            
+            Debug.Log(parameterCard.parameterName);
+        }
+        
+        void OnDragExit(DragExitedEvent evt)
+        { 
+        }
+
+        private Vector2 MouseToViewPosition(Vector2 mousePosition)
+        {
+            Vector2 graphViewPosition = VisualElementExtensions.LocalToWorld(this, new Vector2(transform.position.x,transform.position.y));
+            return mousePosition - graphViewPosition;
+        }
+        
         private GraphNode CreateNode(ENodeType nodeType, Vector2 position)
         {
             GraphNode node = null;
@@ -75,16 +120,66 @@ namespace AnimationGraph.Editor
                     break;
                 case ENodeType.AnimationClipNode: node = new AnimationClipNode(this, position);
                     break;
+                case ENodeType.BoolValueNode: node = new BoolValueGraphNode(this, position);
+                    break;
+                case ENodeType.IntValueNode: node = new IntValueGraphNode(this, position);
+                    break;
+                case ENodeType.FloatValueNode: node = new FloatValueGraphNode(this, position);
+                    break;
+                case ENodeType.StringValueNode: node = new StringValueGraphNode(this, position);
+                    break;
                 default: node = new GraphNode(this, position);
                     break;
             }
+
+            if (node != null)
+            {
+                AddElement(node);
+            }
+            else
+            {
+                Debug.LogError("[AnimationGraph][GraphView]: Create Node failed, nodeType:" + nodeType);
+            }
+
             return node;
         }
 
         private GraphNode CreateDefaultNode(ENodeType nodeType, Vector2 position)
         {
             var node = CreateNode(nodeType, position);
-            node.Initialize();
+            node.InitializeDefault();
+            return node;
+        }
+
+        private GraphNode CreateParameterNode(ParameterCard parameterCard, Vector2 position)
+        {
+            GraphNode node = null;
+            if (parameterCard is BoolParameterCard)
+            {
+                node = CreateNode(ENodeType.BoolValueNode, position);
+            }
+            else if (parameterCard is IntParameterCard)
+            {
+                node = CreateNode(ENodeType.IntValueNode, position);
+            }
+            else if (parameterCard is FloatParameterCard)
+            {
+                node = CreateNode(ENodeType.FloatValueNode, position);
+            }
+            else if (parameterCard is StringParameterCard)
+            {
+                node = CreateNode(ENodeType.StringValueNode, position);
+            }
+            else
+            {
+                Debug.LogError("[AnimationGraph][GraphView]: Unknown Parameter Type, " + parameterCard);
+                node = CreateNode(ENodeType.BoolValueNode, position);
+            }
+
+            var valueNode = node as ValueGraphNode;
+            valueNode.InitializeDefault();
+            valueNode.CombineWithParameter(parameterCard);
+            
             return node;
         }
 
@@ -242,7 +337,6 @@ namespace AnimationGraph.Editor
             foreach (var nodeData in m_AnimationGraphAsset.nodes)
             {
                 var graphNode = CreateNodeFromAsset(nodeData);
-                AddElement(graphNode);
             }
         }
 

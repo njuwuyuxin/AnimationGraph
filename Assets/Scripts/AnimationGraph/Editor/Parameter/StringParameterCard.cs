@@ -9,5 +9,11 @@ namespace AnimationGraph.Editor
             var typeLabel = m_ParameterCardTemplateContainer.Q<Label>("ParameterType");
             typeLabel.text = "String";
         }
+        
+        public StringParameterCard(ParameterBoard parameterBoard, string name, int id) : base(parameterBoard, name, id)
+        {
+            var typeLabel = m_ParameterCardTemplateContainer.Q<Label>("ParameterType");
+            typeLabel.text = "String";
+        }
     }
 }

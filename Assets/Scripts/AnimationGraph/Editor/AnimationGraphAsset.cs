@@ -40,6 +40,10 @@ namespace AnimationGraph.Editor
         FinalPoseNode = 1,
         AnimationClipNode = 2,
         BoolSelectorNode = 3,
+        BoolValueNode = 101,
+        IntValueNode = 102,
+        FloatValueNode = 103,
+        StringValueNode = 104,
     }
 
     public enum EPortDirection
@@ -86,6 +90,7 @@ namespace AnimationGraph.Editor
     [Serializable]
     public class ParameterData
     {
+        public int id;
         public string name;
         public List<int> associateNodes;
     }

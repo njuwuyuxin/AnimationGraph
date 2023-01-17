@@ -1,25 +1,51 @@
+using System;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace AnimationGraph.Editor
 {
     public class ParameterCard : VisualElement
     {
-        private Label m_NameLabel;
+        private enum EDragState
+        {
+            Idle,
+            Start,
+            Dragging,
+        }
 
+        private EDragState m_DragStatus;
+
+        public int id { get; private set; }
         public string parameterName
         {
             get => m_Name;
-            set => m_Name = value;
+            set
+            {
+                m_Name = value;
+                m_NameLabel.text = m_Name;
+            }
         }
         protected string m_Name;
+        private Label m_NameLabel;
         protected ParameterBoard m_ParameterBoard;
         protected TemplateContainer m_ParameterCardTemplateContainer;
 
         public ParameterCard(ParameterBoard parameterBoard, string name)
         {
+            Initialize(parameterBoard, name);
+            id = Animator.StringToHash(Guid.NewGuid().ToString());
+        }
+
+        public ParameterCard(ParameterBoard parameterBoard, string name, int id)
+        {
+            Initialize(parameterBoard, name);
+            this.id = id;
+        }
+
+        private void Initialize(ParameterBoard parameterBoard, string name)
+        {
             m_ParameterBoard = parameterBoard;
-            m_Name = name;
             
             var parameterCardVisualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Scripts/AnimationGraph/Editor/UIDocuments/ParameterCard.uxml");
             m_ParameterCardTemplateContainer = parameterCardVisualTree.CloneTree();
@@ -30,10 +56,39 @@ namespace AnimationGraph.Editor
             styleSheets.Add(styleSheet);
             
             m_NameLabel = m_ParameterCardTemplateContainer.Q<Label>("ParameterName");
-            m_NameLabel.text = m_Name;
+            parameterName = name;
             
             this.AddManipulator(CreateContextualMenu());
+            RegisterCallbacks();
+        }
+
+        private void RegisterCallbacks()
+        {
             m_NameLabel.RegisterCallback<ClickEvent>(OnNameLabelClicked);
+            RegisterCallback<MouseDownEvent>(OnMouseDown);
+            RegisterCallback<MouseUpEvent>(OnMouseUp);
+            RegisterCallback<MouseMoveEvent>(OnMouseMove);
+        }
+        
+        private void OnMouseDown(MouseDownEvent evt)
+        {
+            m_DragStatus = EDragState.Start;
+        }
+        
+        private void OnMouseUp(MouseUpEvent evt)
+        {
+            m_DragStatus = EDragState.Idle;
+        }
+        
+        private void OnMouseMove(MouseMoveEvent evt)
+        {
+            if (m_DragStatus == EDragState.Start)
+            {
+                m_DragStatus = EDragState.Dragging;
+                DragAndDrop.SetGenericData("parameterCard", this);
+                DragAndDrop.StartDrag("Dragging Parameter Card");
+                DragAndDrop.visualMode = DragAndDropVisualMode.Generic;
+            }
         }
 
         private void OnNameLabelClicked(ClickEvent evt)
@@ -49,7 +104,7 @@ namespace AnimationGraph.Editor
                 textField.style.marginLeft = new StyleLength(new Length(10));
                 textField.RegisterCallback<FocusOutEvent>(focusEvt =>
                 {
-                    m_NameLabel.text = parameterName = textField.text;
+                    parameterName = textField.text;
                     Remove(textField);
                     m_NameLabel.visible = true;
                 });

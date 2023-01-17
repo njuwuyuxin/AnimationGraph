@@ -7,6 +7,7 @@ namespace AnimationGraph
         public override ENodeType nodeType => ENodeType.ValueNode;
 
         public virtual bool boolValue { get; set; }
+        public virtual int intValue { get; set; }
         public virtual float floatValue { get; set; }
         public virtual string stringValue { get; set; }
         

@@ -13,19 +13,49 @@ MonoBehaviour:
   m_Name: AnimationGraphAsset
   m_EditorClassIdentifier: 
   nodes:
-  - id: -711473251
-    nodeType: 2
-    positionX: 263
-    positionY: 236
-    nodeConfig:
-      id: 0
   - id: -1981698525
     nodeType: 1
-    positionX: 541
-    positionY: 253
+    positionX: 468
+    positionY: 260
+    nodeConfig:
+      id: 0
+  - id: -711473251
+    nodeType: 2
+    positionX: 217
+    positionY: 221
     nodeConfig:
       id: 1
+  - id: -507226297
+    nodeType: 101
+    positionX: 103
+    positionY: 274
+    nodeConfig:
+      id: 2
+  - id: -1211280263
+    nodeType: 102
+    positionX: 285
+    positionY: 351
+    nodeConfig:
+      id: 3
+  - id: 609721862
+    nodeType: 103
+    positionX: 153
+    positionY: 428
+    nodeConfig:
+      id: 4
+  - id: 1177717432
+    nodeType: 104
+    positionX: 332
+    positionY: 440
+    nodeConfig:
+      id: 5
   ports:
+  - portName: Input
+    portId: 1511145127
+    nodeId: -1981698525
+    portIndex: 0
+    direction: 0
+    capacity: 0
   - portName: Output
     portId: -458273520
     nodeId: -711473251
@@ -33,59 +63,104 @@ MonoBehaviour:
     direction: 1
     capacity: 1
   - portName: Output
-    portId: -458273520
-    nodeId: -711473251
+    portId: -986020633
+    nodeId: -507226297
     portIndex: 0
     direction: 1
     capacity: 1
-  - portName: Input
-    portId: 1511145127
-    nodeId: -1981698525
+  - portName: Output
+    portId: 280221522
+    nodeId: -1211280263
     portIndex: 0
-    direction: 0
-    capacity: 0
-  - portName: Input
-    portId: 1511145127
-    nodeId: -1981698525
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: -928774730
+    nodeId: 609721862
     portIndex: 0
-    direction: 0
-    capacity: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 451092563
+    nodeId: 1177717432
+    portIndex: 0
+    direction: 1
+    capacity: 1
   edges:
   - inputPort: 1511145127
     outputPort: -458273520
   - inputPort: 1511145127
     outputPort: -458273520
   parameters:
-  - id: 2
-  - id: 3
-  - id: 4
+  - id: 6
+  - id: 7
+  - id: 8
+  - id: 9
   references:
     version: 1
     00000000:
+      type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -1981698525
+    00000001:
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
       data:
         id: -711473251
         clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
         playSpeed: 0
-    00000001:
-      type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
-      data:
-        id: -1981698525
     00000002:
+      type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -507226297
+        parameterId: -1151727010
+        parameterName: boolParameter
+        value: 0
+    00000003:
+      type: {class: IntValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -1211280263
+        parameterId: -1673687625
+        parameterName: intParameter
+        value: 123
+    00000004:
+      type: {class: FloatValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 609721862
+        parameterId: -1727491856
+        parameterName: floatParameter
+        value: 1.23
+    00000005:
+      type: {class: StringValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 1177717432
+        parameterId: 2065909175
+        parameterName: stringParameter
+        value: 
+    00000006:
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:
+        id: -1151727010
         name: boolParameter
         associateNodes: 
         value: 0
-    00000003:
+    00000007:
       type: {class: IntParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:
-        name: testInt
+        id: -1673687625
+        name: intParameter
         associateNodes: 
         value: 0
-    00000004:
+    00000008:
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:
-        name: testFloat
+        id: -1727491856
+        name: floatParameter
         associateNodes: 
         value: 0
+    00000009:
+      type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
+      data:
+        id: 2065909175
+        name: stringParameter
+        associateNodes: 
+        value: 

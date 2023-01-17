@@ -61,7 +61,7 @@ namespace AnimationGraph.Editor
             m_AnimationGraphAsset = graphAsset;
             foreach (var parameterData in m_AnimationGraphAsset.parameters)
             {
-                CreateParameterCard(parameterData);
+                LoadParameterCard(parameterData);
             }
         }
 
@@ -74,54 +74,51 @@ namespace AnimationGraph.Editor
                 if (parameterCard is BoolParameterCard)
                 {
                     parameterData = new BoolParameterData();
-                    parameterData.name = parameterCard.parameterName;
                 }
                 else if (parameterCard is IntParameterCard)
                 {
                     parameterData = new IntParameterData();
-                    parameterData.name = parameterCard.parameterName;
                 }
                 else if (parameterCard is FloatParameterCard)
                 {
                     parameterData = new FloatParameterData();
-                    parameterData.name = parameterCard.parameterName;
                 }
                 else if (parameterCard is StringParameterCard)
                 {
                     parameterData = new StringParameterData();
-                    parameterData.name = parameterCard.parameterName;
                 }
                 else
                 {
                     parameterData = new ParameterData();
-                    parameterData.name = parameterCard.parameterName;
                 }
+                parameterData.name = parameterCard.parameterName;
+                parameterData.id = parameterCard.id;
                 m_AnimationGraphAsset.parameters.Add(parameterData);
             }
         }
 
-        private void CreateParameterCard(ParameterData parameterData)
+        private void LoadParameterCard(ParameterData parameterData)
         {
             ParameterCard parameterCard = null;
             if (parameterData is BoolParameterData)
             {
-                parameterCard = new BoolParameterCard(this, parameterData.name);
+                parameterCard = new BoolParameterCard(this, parameterData.name, parameterData.id);
             }
             else if (parameterData is IntParameterData)
             {
-                parameterCard = new IntParameterCard(this, parameterData.name);
+                parameterCard = new IntParameterCard(this, parameterData.name, parameterData.id);
             }
             else if (parameterData is FloatParameterData)
             {
-                parameterCard = new FloatParameterCard(this, parameterData.name);
+                parameterCard = new FloatParameterCard(this, parameterData.name, parameterData.id);
             }
             else if (parameterData is StringParameterData)
             {
-                parameterCard = new StringParameterCard(this, parameterData.name);
+                parameterCard = new StringParameterCard(this, parameterData.name, parameterData.id);
             }
             else
             {
-                parameterCard = new ParameterCard(this, parameterData.name);
+                parameterCard = new ParameterCard(this, parameterData.name, parameterData.id);
             }
             
             m_ParameterCards.Add(parameterCard);

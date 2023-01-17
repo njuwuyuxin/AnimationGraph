@@ -9,13 +9,12 @@ namespace AnimationGraph.Editor
 
         public AnimationClipNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
-            m_NodeName = "AnimationClip";
-            title = m_NodeName;
+            nodeName = "AnimationClip";
         }
 
-        public override void Initialize()
+        public override void InitializeDefault()
         {
-            base.Initialize();
+            base.InitializeDefault();
             m_NodeConfig = new AnimationClipPoseNodeConfig();
             m_NodeConfig.SetId(id);
             CreatePort(Direction.Output, Port.Capacity.Multi, "Output", 0);

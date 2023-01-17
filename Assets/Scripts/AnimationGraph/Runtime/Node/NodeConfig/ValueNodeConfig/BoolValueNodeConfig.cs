@@ -6,7 +6,7 @@ namespace AnimationGraph
     public class BoolValueNodeConfig : ValueNodeConfig
     {
         public bool value;
-        
+
         public override INode GenerateNode(AnimationGraphRuntime graphRuntime)
         {
             BoolValueNode boolValueNode = new BoolValueNode();

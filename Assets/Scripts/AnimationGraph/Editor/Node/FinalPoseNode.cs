@@ -9,13 +9,12 @@ namespace AnimationGraph.Editor
 
         public FinalPoseNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
-            m_NodeName = "FinalPose";
-            title = m_NodeName;
+            nodeName = "FinalPose";
         }
 
-        public override void Initialize()
+        public override void InitializeDefault()
         {
-            base.Initialize();
+            base.InitializeDefault();
             m_NodeConfig = new FinalPosePoseNodeConfig();
             m_NodeConfig.SetId(id);
             CreatePort(Direction.Input, Port.Capacity.Single, "Input", 0);

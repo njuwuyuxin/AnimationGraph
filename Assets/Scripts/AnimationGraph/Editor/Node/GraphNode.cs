@@ -12,6 +12,16 @@ namespace AnimationGraph.Editor
         public virtual ENodeType nodeType => ENodeType.BaseNode;
         public int id { get; set; }
 
+        protected string nodeName
+        {
+            get => m_NodeName;
+            set
+            {
+                m_NodeName = value;
+                title = m_NodeName;
+            }
+        }
+
         protected AnimationGraphView m_AnimationGraphView;
         protected string m_NodeName;
         protected List<NodePort> m_InputPorts;
@@ -22,13 +32,12 @@ namespace AnimationGraph.Editor
         public GraphNode(AnimationGraphView graphView, Vector2 position)
         {
             m_AnimationGraphView = graphView;
-            m_NodeName = "Base Node";
-            title = m_NodeName;
+            nodeName = "Base Node";
             m_InputPorts = new List<NodePort>();
             SetPosition(new Rect(position,Vector2.zero));
         }
 
-        public virtual void Initialize()
+        public virtual void InitializeDefault()
         {
             id = Animator.StringToHash(Guid.NewGuid().ToString());
         }
