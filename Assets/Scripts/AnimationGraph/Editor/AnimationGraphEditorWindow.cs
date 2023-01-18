@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEditor.UIElements;
 
 namespace AnimationGraph.Editor
 {
@@ -92,6 +90,7 @@ namespace AnimationGraph.Editor
         private void ClearAnimationGraphWindow()
         {
             m_ParameterBoard.ClearParameterBoard();
+            m_AnimationGraphView.ClearAnimationGraphView();
         }
         
         private void LoadAnimationGraphAsset(AnimationGraphAsset graphAsset)

@@ -324,6 +324,13 @@ namespace AnimationGraph.Editor
             AssetDatabase.SaveAssets();
         }
 
+        public void ClearAnimationGraphView()
+        {
+            DeleteElements(nodes.ToList());
+            DeleteElements(edges.ToList());
+            DeleteElements(ports.ToList());
+        }
+
         public void LoadAnimGraphAsset(AnimationGraphAsset graphAsset)
         {
             m_AnimationGraphAsset = graphAsset;
