@@ -13,151 +13,158 @@ MonoBehaviour:
   m_Name: AnimationGraphAsset
   m_EditorClassIdentifier: 
   nodes:
-  - id: -1981698525
-    nodeType: 1
-    positionX: 468
-    positionY: 260
+  - id: 907455762
+    nodeType: 3
+    positionX: 278
+    positionY: 216
     nodeConfig:
       id: 0
-  - id: -711473251
-    nodeType: 2
-    positionX: 217
-    positionY: 221
+  - id: 865624309
+    nodeType: 1
+    positionX: 507
+    positionY: 216
     nodeConfig:
       id: 1
-  - id: -507226297
-    nodeType: 101
-    positionX: 103
-    positionY: 274
+  - id: -801127482
+    nodeType: 2
+    positionX: 96
+    positionY: 191
     nodeConfig:
       id: 2
-  - id: -1211280263
-    nodeType: 102
-    positionX: 285
-    positionY: 351
+  - id: -10755976
+    nodeType: 2
+    positionX: 75
+    positionY: 294
     nodeConfig:
       id: 3
-  - id: 609721862
-    nodeType: 103
-    positionX: 153
-    positionY: 428
+  - id: 1648609286
+    nodeType: 101
+    positionX: 117
+    positionY: 411
     nodeConfig:
       id: 4
-  - id: 1177717432
-    nodeType: 104
-    positionX: 332
-    positionY: 440
-    nodeConfig:
-      id: 5
   ports:
+  - portName: True
+    portId: 1644925353
+    nodeId: 907455762
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: False
+    portId: -604779644
+    nodeId: 907455762
+    portType: 0
+    portIndex: 1
+    direction: 0
+    capacity: 1
+  - portName: Condition
+    portId: -1159961646
+    nodeId: 907455762
+    portType: 1
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: Output
+    portId: -1801269600
+    nodeId: 907455762
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
   - portName: Input
-    portId: 1511145127
-    nodeId: -1981698525
+    portId: 2098052597
+    nodeId: 865624309
+    portType: 0
     portIndex: 0
     direction: 0
     capacity: 0
   - portName: Output
-    portId: -458273520
-    nodeId: -711473251
+    portId: 210018045
+    nodeId: -801127482
+    portType: 0
     portIndex: 0
     direction: 1
     capacity: 1
   - portName: Output
-    portId: -986020633
-    nodeId: -507226297
+    portId: -488495228
+    nodeId: -10755976
+    portType: 0
     portIndex: 0
     direction: 1
     capacity: 1
   - portName: Output
-    portId: 280221522
-    nodeId: -1211280263
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
-    portId: -928774730
-    nodeId: 609721862
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
-    portId: 451092563
-    nodeId: 1177717432
+    portId: 577452480
+    nodeId: 1648609286
+    portType: 1
     portIndex: 0
     direction: 1
     capacity: 1
   edges:
-  - inputPort: 1511145127
-    outputPort: -458273520
-  - inputPort: 1511145127
-    outputPort: -458273520
+  - inputPort: 1644925353
+    outputPort: 210018045
+  - inputPort: -604779644
+    outputPort: -488495228
+  - inputPort: 2098052597
+    outputPort: -1801269600
+  - inputPort: -1159961646
+    outputPort: 577452480
   parameters:
+  - id: 5
   - id: 6
   - id: 7
   - id: 8
-  - id: 9
   references:
     version: 1
     00000000:
+      type: {class: BoolSelectorPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 907455762
+    00000001:
       type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
       data:
-        id: -1981698525
-    00000001:
+        id: 865624309
+    00000002:
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
       data:
-        id: -711473251
+        id: -801127482
         clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
         playSpeed: 0
-    00000002:
+    00000003:
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -10755976
+        clip: {fileID: 7400002, guid: 080945c46afd34f3ebc364c1696e6678, type: 3}
+        playSpeed: 0
+    00000004:
       type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
       data:
-        id: -507226297
+        id: 1648609286
         parameterId: -1151727010
         parameterName: boolParameter
         value: 0
-    00000003:
-      type: {class: IntValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
-      data:
-        id: -1211280263
-        parameterId: -1673687625
-        parameterName: intParameter
-        value: 123
-    00000004:
-      type: {class: FloatValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
-      data:
-        id: 609721862
-        parameterId: -1727491856
-        parameterName: floatParameter
-        value: 1.23
     00000005:
-      type: {class: StringValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
-      data:
-        id: 1177717432
-        parameterId: 2065909175
-        parameterName: stringParameter
-        value: 
-    00000006:
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:
         id: -1151727010
         name: boolParameter
-        associateNodes: 
+        associateNodes: 06c84362
         value: 0
-    00000007:
+    00000006:
       type: {class: IntParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:
         id: -1673687625
         name: intParameter
         associateNodes: 
         value: 0
-    00000008:
+    00000007:
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:
         id: -1727491856
         name: floatParameter
         associateNodes: 
         value: 0
-    00000009:
+    00000008:
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:
         id: 2065909175

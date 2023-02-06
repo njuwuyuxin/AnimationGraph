@@ -10,7 +10,7 @@ namespace AnimationGraph.Editor
             typeLabel.text = "Float";
         }
         
-        public FloatParameterCard(ParameterBoard parameterBoard, string name, int id) : base(parameterBoard, name, id)
+        public FloatParameterCard(ParameterBoard parameterBoard, ParameterData parameterData) : base(parameterBoard, parameterData)
         {
             var typeLabel = m_ParameterCardTemplateContainer.Q<Label>("ParameterType");
             typeLabel.text = "Float";

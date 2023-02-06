@@ -75,6 +75,7 @@ namespace AnimationGraph.Editor
         public string portName;
         public int portId;
         public int nodeId;
+        public NodePort.EPortType portType;
         public int portIndex;
         public EPortDirection direction;
         public EPortCapacity capacity;

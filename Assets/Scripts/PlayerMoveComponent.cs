@@ -16,12 +16,12 @@ public class PlayerMoveComponent : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            m_AnimationGraphPlayer.SetBoolParameter("testBool", true);
+            m_AnimationGraphPlayer.SetBoolParameter("boolParameter", true);
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            m_AnimationGraphPlayer.SetBoolParameter("testBool", false);
+            m_AnimationGraphPlayer.SetBoolParameter("boolParameter", false);
         }
     }
 }

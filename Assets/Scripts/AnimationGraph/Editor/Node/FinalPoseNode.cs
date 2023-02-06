@@ -17,7 +17,7 @@ namespace AnimationGraph.Editor
             base.InitializeDefault();
             m_NodeConfig = new FinalPosePoseNodeConfig();
             m_NodeConfig.SetId(id);
-            CreatePort(Direction.Input, Port.Capacity.Single, "Input", 0);
+            CreatePort(Direction.Input, Port.Capacity.Single, "Input", NodePort.EPortType.PosePort, 0);
         }
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -82,9 +82,15 @@ namespace AnimationGraph.Editor
 
         private void InitAnimGraphView()
         {
-            m_AnimationGraphView = new AnimationGraphView(m_NodeInspector);
+            m_AnimationGraphView = new AnimationGraphView(m_ParameterBoard, m_NodeInspector);
             m_GraphArea.Add(m_AnimationGraphView);
             m_AnimationGraphView.StretchToParentSize();
+        }
+
+        public void OnDestroy()
+        {
+            m_ParameterBoard.OnDestroy();
+            m_AnimationGraphView.OnDestory();
         }
 
         private void ClearAnimationGraphWindow()
@@ -120,7 +126,7 @@ namespace AnimationGraph.Editor
             {
                 compiledGraph = AssetDatabase.LoadAssetAtPath<AnimationGraph>(savePath);
                 m_AnimationGraphView.Compile(compiledGraph);
-                compiledGraph.parameters = new List<GraphParameter>();
+                m_ParameterBoard.Compile(compiledGraph);
                 EditorUtility.SetDirty(compiledGraph);
                 AssetDatabase.SaveAssets();
             }
@@ -128,7 +134,7 @@ namespace AnimationGraph.Editor
             {
                 compiledGraph = CreateInstance<AnimationGraph>();
                 m_AnimationGraphView.Compile(compiledGraph);
-                compiledGraph.parameters = new List<GraphParameter>();
+                m_ParameterBoard.Compile(compiledGraph);
                 AssetDatabase.CreateAsset(compiledGraph, savePath);
             }
             

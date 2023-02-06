@@ -13,24 +13,85 @@ MonoBehaviour:
   m_Name: AnimationGraphAsset_Compiled
   m_EditorClassIdentifier: 
   finalPosePoseNode:
-    id: -1981698525
+    id: 865624309
   nodes:
   - id: 0
   - id: 1
+  - id: 2
+  - id: 3
+  - id: 4
   nodeConnections:
-  - sourceNodeId: -711473251
-    targetNodeId: -1981698525
+  - sourceNodeId: -801127482
+    targetNodeId: 907455762
     targetSlotIndex: 0
-  parameters: []
+  - sourceNodeId: -10755976
+    targetNodeId: 907455762
+    targetSlotIndex: 1
+  - sourceNodeId: 907455762
+    targetNodeId: 865624309
+    targetSlotIndex: 0
+  - sourceNodeId: 1648609286
+    targetNodeId: 907455762
+    targetSlotIndex: 0
+  parameters:
+  - id: 5
+  - id: 6
+  - id: 7
+  - id: 8
   references:
     version: 1
     00000000:
+      type: {class: BoolSelectorPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 907455762
+    00000001:
       type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
       data:
-        id: -1981698525
-    00000001:
+        id: 865624309
+    00000002:
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
       data:
-        id: -711473251
+        id: -801127482
         clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
         playSpeed: 0
+    00000003:
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -10755976
+        clip: {fileID: 7400002, guid: 080945c46afd34f3ebc364c1696e6678, type: 3}
+        playSpeed: 0
+    00000004:
+      type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 1648609286
+        parameterId: -1151727010
+        parameterName: boolParameter
+        value: 0
+    00000005:
+      type: {class: BoolParameter, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -1151727010
+        name: boolParameter
+        associatedNodes: 06c84362
+        value: 0
+    00000006:
+      type: {class: IntParameter, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -1673687625
+        name: intParameter
+        associatedNodes: 
+        value: 0
+    00000007:
+      type: {class: FloatParameter, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -1727491856
+        name: floatParameter
+        associatedNodes: 
+        value: 0
+    00000008:
+      type: {class: StringParameter, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 2065909175
+        name: stringParameter
+        associatedNodes: 
+        value: 

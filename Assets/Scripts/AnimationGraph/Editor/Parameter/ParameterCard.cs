@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -27,6 +28,8 @@ namespace AnimationGraph.Editor
             }
         }
         protected string m_Name;
+        public List<int> associatedNodes;
+
         private Label m_NameLabel;
         protected ParameterBoard m_ParameterBoard;
         protected TemplateContainer m_ParameterCardTemplateContainer;
@@ -35,17 +38,20 @@ namespace AnimationGraph.Editor
         {
             Initialize(parameterBoard, name);
             id = Animator.StringToHash(Guid.NewGuid().ToString());
+            associatedNodes = new List<int>();
         }
 
-        public ParameterCard(ParameterBoard parameterBoard, string name, int id)
+        public ParameterCard(ParameterBoard parameterBoard, ParameterData parameterData)
         {
-            Initialize(parameterBoard, name);
-            this.id = id;
+            Initialize(parameterBoard, parameterData.name);
+            id = parameterData.id;
+            associatedNodes = new List<int>(parameterData.associateNodes.ToArray());
         }
 
         private void Initialize(ParameterBoard parameterBoard, string name)
         {
             m_ParameterBoard = parameterBoard;
+            
             
             var parameterCardVisualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Scripts/AnimationGraph/Editor/UIDocuments/ParameterCard.uxml");
             m_ParameterCardTemplateContainer = parameterCardVisualTree.CloneTree();

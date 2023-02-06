@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -48,9 +47,9 @@ namespace AnimationGraph.Editor
             m_NodeConfig = data.nodeConfig;
         }
         
-        protected void CreatePort(Direction direction, Port.Capacity capacity, string portName, int portIndex)
+        protected void CreatePort(Direction direction, Port.Capacity capacity, string portName, NodePort.EPortType portType, int portIndex)
         {
-            var port = new NodePort(this, Orientation.Horizontal, direction, capacity, typeof(Port), portIndex);
+            var port = new NodePort(this, Orientation.Horizontal, direction, capacity, typeof(Port), portType, portIndex);
             port.portName = portName;
             
             switch (direction)
@@ -66,9 +65,9 @@ namespace AnimationGraph.Editor
             }
         }
 
-        public void CreatePort(Direction direction, Port.Capacity capacity, string portName, int portIndex, int id)
+        public void CreatePort(Direction direction, Port.Capacity capacity, string portName, NodePort.EPortType portType, int portIndex, int id)
         {
-            var port = new NodePort(this, Orientation.Horizontal, direction, capacity, typeof(Port), portIndex, id);
+            var port = new NodePort(this, Orientation.Horizontal, direction, capacity, typeof(Port), portType, portIndex, id);
             port.portName = portName;
 
             switch (direction)
@@ -94,5 +93,11 @@ namespace AnimationGraph.Editor
             base.Select(selectionContainer, additive);
             m_AnimationGraphView.inspector.SetNodeConfig(nodeConfig);
         }
+
+        public virtual void OnDestroy()
+        {
+            
+        }
+        
     }
 }

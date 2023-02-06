@@ -17,7 +17,7 @@ namespace AnimationGraph.Editor
             base.InitializeDefault();
             m_NodeConfig = new AnimationClipPoseNodeConfig();
             m_NodeConfig.SetId(id);
-            CreatePort(Direction.Output, Port.Capacity.Multi, "Output", 0);
+            CreatePort(Direction.Output, Port.Capacity.Multi, "Output", NodePort.EPortType.PosePort, 0);
         }
     }
 }

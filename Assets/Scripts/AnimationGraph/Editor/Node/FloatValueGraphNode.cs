@@ -18,7 +18,7 @@ namespace AnimationGraph.Editor
             base.InitializeDefault();
             m_NodeConfig = new FloatValueNodeConfig();
             m_NodeConfig.SetId(id);
-            CreatePort(Direction.Output, Port.Capacity.Multi, "Output", 0);
+            CreatePort(Direction.Output, Port.Capacity.Multi, "Output", NodePort.EPortType.ValuePort, 0);
         }
     }
 }

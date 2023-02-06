@@ -6,7 +6,8 @@ namespace AnimationGraph
     [Serializable]
     public class GraphParameter
     {
+        public int id;
         public string name;
-        public List<int> combinedNodeId;
+        public List<int> associatedNodes;
     }
 }

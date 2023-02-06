@@ -93,6 +93,7 @@ namespace AnimationGraph.Editor
                 }
                 parameterData.name = parameterCard.parameterName;
                 parameterData.id = parameterCard.id;
+                parameterData.associateNodes = new List<int>(parameterCard.associatedNodes.ToArray());
                 m_AnimationGraphAsset.parameters.Add(parameterData);
             }
         }
@@ -102,27 +103,66 @@ namespace AnimationGraph.Editor
             ParameterCard parameterCard = null;
             if (parameterData is BoolParameterData)
             {
-                parameterCard = new BoolParameterCard(this, parameterData.name, parameterData.id);
+                parameterCard = new BoolParameterCard(this, parameterData);
             }
             else if (parameterData is IntParameterData)
             {
-                parameterCard = new IntParameterCard(this, parameterData.name, parameterData.id);
+                parameterCard = new IntParameterCard(this, parameterData);
             }
             else if (parameterData is FloatParameterData)
             {
-                parameterCard = new FloatParameterCard(this, parameterData.name, parameterData.id);
+                parameterCard = new FloatParameterCard(this, parameterData);
             }
             else if (parameterData is StringParameterData)
             {
-                parameterCard = new StringParameterCard(this, parameterData.name, parameterData.id);
+                parameterCard = new StringParameterCard(this, parameterData);
             }
             else
             {
-                parameterCard = new ParameterCard(this, parameterData.name, parameterData.id);
+                parameterCard = new ParameterCard(this, parameterData);
             }
             
             m_ParameterCards.Add(parameterCard);
             m_ParameterArea.Add(parameterCard);
+        }
+
+        public void Compile(AnimationGraph compiledGraph)
+        {
+            compiledGraph.parameters = new List<GraphParameter>();
+            foreach (var parameterCard in m_ParameterCards)
+            {
+                GraphParameter graphParameter;
+                if (parameterCard is BoolParameterCard)
+                {
+                    graphParameter = new BoolParameter();
+                }
+                else if (parameterCard is IntParameterCard)
+                {
+                    graphParameter = new IntParameter();
+                }
+                else if (parameterCard is FloatParameterCard)
+                {
+                    graphParameter = new FloatParameter();
+                }
+                else if (parameterCard is StringParameterCard)
+                {
+                    graphParameter = new StringParameter();
+                }
+                else
+                {
+                    graphParameter = new GraphParameter();
+                }
+
+                graphParameter.id = parameterCard.id;
+                graphParameter.name = parameterCard.parameterName;
+                graphParameter.associatedNodes = parameterCard.associatedNodes;
+                compiledGraph.parameters.Add(graphParameter);
+            }
+        }
+
+        public void OnDestroy()
+        {
+            
         }
 
         public void DeleteParameterCard(ParameterCard parameterCard)
@@ -174,6 +214,11 @@ namespace AnimationGraph.Editor
             }
 
             return defaultName;
+        }
+
+        public ParameterCard TryGetParameterById(int id)
+        {
+            return m_ParameterCards.Find(m => m.id == id);
         }
     }
 }
