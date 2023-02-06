@@ -33,14 +33,35 @@ namespace AnimationGraph.Editor
         {
             DragAndDrop.AcceptDrag();
             
+            //Drag Fbx or AnimationClip to create AnimationClipNode
+            if (DragAndDrop.objectReferences != null && DragAndDrop.objectReferences.Length > 0)
+            {
+                foreach (var objectReference in DragAndDrop.objectReferences)
+                {
+                    var assetPath = AssetDatabase.GetAssetPath(objectReference);
+                    if (assetPath != null)
+                    {
+                        AnimationClip clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(assetPath);
+                        if (clip != null)
+                        {
+                            var animtionClipNode = CreateDefaultNode(ENodeType.AnimationClipNode, MouseToViewPosition(evt.mousePosition));
+                            (animtionClipNode.nodeConfig as AnimationClipPoseNodeConfig).clip = clip;
+                        }
+                    }
+                }
+
+                return;
+            }
+            
+            //Drag ParameterCard to create ValueNode
             var parameterCard = DragAndDrop.GetGenericData("parameterCard") as ParameterCard;
             if (parameterCard != null)
             {
                 GraphNode node = CreateParameterNode(parameterCard, MouseToViewPosition(evt.mousePosition));
                 parameterCard.associatedNodes.Add(node.id);
+                Debug.Log(parameterCard.parameterName);
+                return;
             }
-            
-            Debug.Log(parameterCard.parameterName);
         }
         
         void OnDragExit(DragExitedEvent evt)
