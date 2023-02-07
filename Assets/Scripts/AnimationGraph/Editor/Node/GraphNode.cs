@@ -91,7 +91,12 @@ namespace AnimationGraph.Editor
         public override void Select(VisualElement selectionContainer, bool additive)
         {
             base.Select(selectionContainer, additive);
-            m_AnimationGraphView.inspector.SetNodeConfig(nodeConfig);
+            m_AnimationGraphView.inspector.SetGraphNode(this);
+        }
+
+        public virtual void OnNodeConfigUpdate()
+        {
+            
         }
 
         public virtual void OnDestroy()

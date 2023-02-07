@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: AnimationGraphAsset
   m_EditorClassIdentifier: 
   nodes:
-  - id: 907455762
-    nodeType: 3
-    positionX: 278
-    positionY: 216
-    nodeConfig:
-      id: 0
   - id: 865624309
     nodeType: 1
     positionX: 507
     positionY: 216
     nodeConfig:
+      id: 0
+  - id: 1648609286
+    nodeType: 101
+    positionX: 117
+    positionY: 411
+    nodeConfig:
       id: 1
-  - id: -801127482
-    nodeType: 2
-    positionX: 96
-    positionY: 191
+  - id: 907455762
+    nodeType: 3
+    positionX: 278
+    positionY: 216
     nodeConfig:
       id: 2
   - id: -10755976
@@ -37,13 +37,27 @@ MonoBehaviour:
     positionY: 294
     nodeConfig:
       id: 3
-  - id: 1648609286
-    nodeType: 101
-    positionX: 117
-    positionY: 411
+  - id: -801127482
+    nodeType: 2
+    positionX: 96
+    positionY: 191
     nodeConfig:
       id: 4
   ports:
+  - portName: Input
+    portId: 2098052597
+    nodeId: 865624309
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 0
+  - portName: Output
+    portId: 577452480
+    nodeId: 1648609286
+    portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
   - portName: True
     portId: 1644925353
     nodeId: 907455762
@@ -72,20 +86,6 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
-  - portName: Input
-    portId: 2098052597
-    nodeId: 865624309
-    portType: 0
-    portIndex: 0
-    direction: 0
-    capacity: 0
-  - portName: Output
-    portId: 210018045
-    nodeId: -801127482
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
   - portName: Output
     portId: -488495228
     nodeId: -10755976
@@ -94,9 +94,9 @@ MonoBehaviour:
     direction: 1
     capacity: 1
   - portName: Output
-    portId: 577452480
-    nodeId: 1648609286
-    portType: 1
+    portId: 210018045
+    nodeId: -801127482
+    portType: 0
     portIndex: 0
     direction: 1
     capacity: 1
@@ -117,32 +117,32 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: BoolSelectorPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
-      data:
-        id: 907455762
-    00000001:
       type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
       data:
         id: 865624309
-    00000002:
-      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
-      data:
-        id: -801127482
-        clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
-        playSpeed: 0
-    00000003:
-      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
-      data:
-        id: -10755976
-        clip: {fileID: 7400002, guid: 080945c46afd34f3ebc364c1696e6678, type: 3}
-        playSpeed: 0
-    00000004:
+    00000001:
       type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
       data:
         id: 1648609286
         parameterId: -1151727010
         parameterName: boolParameter
         value: 0
+    00000002:
+      type: {class: BoolSelectorPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: 907455762
+    00000003:
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -10755976
+        clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
+        playSpeed: 0
+    00000004:
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: Assembly-CSharp}
+      data:
+        id: -801127482
+        clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
+        playSpeed: 0
     00000005:
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: Assembly-CSharp-Editor}
       data:

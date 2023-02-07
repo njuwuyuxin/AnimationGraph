@@ -12,7 +12,8 @@ namespace AnimationGraph.Editor
             [SerializeReference]
             public NodeConfig m_NodeConfig;
         }
-        
+
+        private GraphNode m_GraphNode;
         private NodeConfig m_NodeConfig;
         private NodeInspectorObject m_NodeInspectorObject;
         private SerializedObject m_SerializedObject;
@@ -40,17 +41,23 @@ namespace AnimationGraph.Editor
                     EditorGUILayout.PropertyField(nodeConfig);
                 }
 
-                m_SerializedObject.ApplyModifiedProperties();
+                if (m_SerializedObject.hasModifiedProperties)
+                {
+                    m_SerializedObject.ApplyModifiedProperties();
+                    m_GraphNode.OnNodeConfigUpdate();
+                }
             }
         }
 
-        public void SetNodeConfig(NodeConfig nodeConfig)
+        public void SetGraphNode(GraphNode graphNode)
         {
             if (m_NodeInspectorObject != null)
             {
                 DestroyImmediate(m_NodeInspectorObject);
             }
-            m_NodeConfig = nodeConfig;
+
+            m_GraphNode = graphNode;
+            m_NodeConfig = graphNode.nodeConfig;
             m_NodeInspectorObject = CreateInstance<NodeInspectorObject>();
             m_NodeInspectorObject.m_NodeConfig = m_NodeConfig;
             m_SerializedObject = new SerializedObject(m_NodeInspectorObject);
