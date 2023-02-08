@@ -8,7 +8,7 @@ namespace AnimationGraph
 {
     public class AnimationGraphPlayer : MonoBehaviour
     {
-        public AnimationGraph animationGraph;
+        public CompiledAnimationGraph animationGraph;
 
         private AnimationGraphRuntime m_AnimationGraphRuntime;
         private AnimationActor m_Actor;

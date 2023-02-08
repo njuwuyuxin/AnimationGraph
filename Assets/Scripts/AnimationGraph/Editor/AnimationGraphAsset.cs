@@ -14,7 +14,6 @@ namespace AnimationGraph.Editor
         public List<PortData> ports;
         public List<EdgeData> edges;
         [SerializeReference]
-        [SerializeReferenceButton]
         public List<ParameterData> parameters;
         
         
@@ -96,21 +95,25 @@ namespace AnimationGraph.Editor
         public List<int> associateNodes;
     }
 
+    [Serializable]
     public class BoolParameterData : ParameterData
     {
         public bool value;
     }
     
+    [Serializable]
     public class IntParameterData : ParameterData
     {
         public int value;
     }
     
+    [Serializable]
     public class FloatParameterData : ParameterData
     {
         public float value;
     }
     
+    [Serializable]
     public class StringParameterData : ParameterData
     {
         public string value;

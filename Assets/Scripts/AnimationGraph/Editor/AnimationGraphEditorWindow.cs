@@ -115,7 +115,7 @@ namespace AnimationGraph.Editor
 
         private void CompileGraph()
         {
-            AnimationGraph compiledGraph = null;
+            CompiledAnimationGraph compiledGraph = null;
             string savePath = k_CompiledGraphSavePath + m_AnimationGraphAsset.name + "_Compiled.asset";
             if (!System.IO.Directory.Exists(k_CompiledGraphSavePath))
             {
@@ -124,7 +124,7 @@ namespace AnimationGraph.Editor
             
             if (System.IO.File.Exists(savePath))
             {
-                compiledGraph = AssetDatabase.LoadAssetAtPath<AnimationGraph>(savePath);
+                compiledGraph = AssetDatabase.LoadAssetAtPath<CompiledAnimationGraph>(savePath);
                 m_AnimationGraphView.Compile(compiledGraph);
                 m_ParameterBoard.Compile(compiledGraph);
                 EditorUtility.SetDirty(compiledGraph);
@@ -132,7 +132,7 @@ namespace AnimationGraph.Editor
             }
             else
             {
-                compiledGraph = CreateInstance<AnimationGraph>();
+                compiledGraph = CreateInstance<CompiledAnimationGraph>();
                 m_AnimationGraphView.Compile(compiledGraph);
                 m_ParameterBoard.Compile(compiledGraph);
                 AssetDatabase.CreateAsset(compiledGraph, savePath);

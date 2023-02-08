@@ -8,7 +8,7 @@ namespace AnimationGraph
     public class AnimationGraphRuntime
     {
         private AnimationActor m_Actor;
-        private AnimationGraph m_AnimationGraph;
+        private CompiledAnimationGraph m_CompiledAnimationGraph;
         public PlayableGraph m_PlayableGraph;
         private AnimationPlayableOutput m_Output;
         public Playable m_FinalPlayable;
@@ -16,10 +16,10 @@ namespace AnimationGraph
         private Dictionary<int, INode> m_Id2NodeMap;
         private Dictionary<int, GraphParameter> m_Id2ParameterMap;
         
-        public AnimationGraphRuntime(AnimationActor actor, AnimationGraph animationGraph)
+        public AnimationGraphRuntime(AnimationActor actor, CompiledAnimationGraph compiledAnimationGraph)
         {
             m_Actor = actor;
-            m_AnimationGraph = animationGraph;
+            m_CompiledAnimationGraph = compiledAnimationGraph;
             m_PlayableGraph = PlayableGraph.Create();
             m_PlayableGraph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
             m_Output = AnimationPlayableOutput.Create(m_PlayableGraph,
@@ -40,9 +40,9 @@ namespace AnimationGraph
             GenerateParameterMap();
             
             m_Id2NodeMap = new Dictionary<int, INode>();
-            m_FinalPoseNode = (FinalPoseNode)m_AnimationGraph.finalPosePoseNode.GenerateNode(this);
-            m_Id2NodeMap.Add(m_AnimationGraph.finalPosePoseNode.id, m_FinalPoseNode);
-            foreach (var nodeConfig in m_AnimationGraph.nodes)
+            m_FinalPoseNode = (FinalPoseNode)m_CompiledAnimationGraph.finalPosePoseNode.GenerateNode(this);
+            m_Id2NodeMap.Add(m_CompiledAnimationGraph.finalPosePoseNode.id, m_FinalPoseNode);
+            foreach (var nodeConfig in m_CompiledAnimationGraph.nodes)
             {
                 if (m_Id2NodeMap.ContainsKey(nodeConfig.id))
                 {
@@ -52,7 +52,7 @@ namespace AnimationGraph
                 m_Id2NodeMap.Add(nodeConfig.id, animationGraphNode);
             }
 
-            foreach (var connection in m_AnimationGraph.nodeConnections)
+            foreach (var connection in m_CompiledAnimationGraph.nodeConnections)
             {
                 var sourceNode = m_Id2NodeMap[connection.sourceNodeId];
                 var targetNode = m_Id2NodeMap[connection.targetNodeId];
@@ -64,7 +64,7 @@ namespace AnimationGraph
         private void GenerateParameterMap()
         {
             m_Id2ParameterMap = new Dictionary<int, GraphParameter>();
-            foreach (var parameter in m_AnimationGraph.parameters)
+            foreach (var parameter in m_CompiledAnimationGraph.parameters)
             {
                 m_Id2ParameterMap.Add(Animator.StringToHash(parameter.name), parameter);
             }

@@ -141,7 +141,7 @@ namespace AnimationGraph.Editor
             }
         }
         
-        public void Compile(AnimationGraph compiledGraph)
+        public void Compile(CompiledAnimationGraph compiledGraph)
         {
             compiledGraph.nodes = new List<NodeConfig>();
             compiledGraph.nodeConnections = new List<Connection>();

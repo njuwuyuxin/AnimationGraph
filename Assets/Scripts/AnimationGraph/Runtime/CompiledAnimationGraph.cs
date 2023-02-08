@@ -6,7 +6,7 @@ namespace AnimationGraph
 {
     [Serializable]
     [CreateAssetMenu(fileName = "AnimationGraph", menuName = "ScriptableObjects/AnimationGraph")]
-    public class AnimationGraph : ScriptableObject
+    public class CompiledAnimationGraph : ScriptableObject
     {
         public FinalPosePoseNodeConfig finalPosePoseNode;
 
