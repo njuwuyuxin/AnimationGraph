@@ -1,5 +1,6 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace AnimationGraph.Editor
 {
@@ -10,7 +11,9 @@ namespace AnimationGraph.Editor
 
         public ValueGraphNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
-            
+            var divider = topContainer.Q("divider");
+            topContainer.Remove(divider);
+            inputContainer.style.flexGrow = 0;
         }
 
         public void CombineWithParameter(ParameterCard parameterCard)
@@ -24,7 +27,9 @@ namespace AnimationGraph.Editor
         public override void LoadNodeData(NodeData data)
         {
             base.LoadNodeData(data);
-            m_ParameterCard = m_AnimationGraphView.parameterBoard.TryGetParameterById(((ValueNodeConfig)data.nodeConfig).parameterId);
+            ValueNodeConfig nodeConfig = data.nodeConfig as ValueNodeConfig;
+            m_ParameterCard = m_AnimationGraphView.parameterBoard.TryGetParameterById(nodeConfig.parameterId);
+            nodeName = nodeConfig.parameterName;
         }
 
         public override void OnDestroy()

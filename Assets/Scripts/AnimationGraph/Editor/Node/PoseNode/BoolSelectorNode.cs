@@ -1,5 +1,6 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace AnimationGraph.Editor
 {
@@ -10,6 +11,8 @@ namespace AnimationGraph.Editor
         public BoolSelectorNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
             nodeName = "BoolSelector";
+            ColorUtility.TryParseHtmlString("#663366", out var titleColor);
+            titleContainer.style.backgroundColor = new StyleColor(titleColor);
         }
 
         public override void InitializeDefault()

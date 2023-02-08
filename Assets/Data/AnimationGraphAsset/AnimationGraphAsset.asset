@@ -25,24 +25,42 @@ MonoBehaviour:
     positionY: 247
     nodeConfig:
       id: 1
-  - id: 2127122984
-    nodeType: 101
-    positionX: 136
-    positionY: 429
-    nodeConfig:
-      id: 2
   - id: -94438304
     nodeType: 2
-    positionX: 84
-    positionY: 232
+    positionX: 159
+    positionY: 170
+    nodeConfig:
+      id: 2
+  - id: 2127122984
+    nodeType: 101
+    positionX: 109
+    positionY: 372
     nodeConfig:
       id: 3
   - id: 1193394559
     nodeType: 2
-    positionX: 110
-    positionY: 334
+    positionX: 174
+    positionY: 270
     nodeConfig:
       id: 4
+  - id: 1647918194
+    nodeType: 104
+    positionX: 115
+    positionY: 494
+    nodeConfig:
+      id: 5
+  - id: 105878772
+    nodeType: 103
+    positionX: 495
+    positionY: 429
+    nodeConfig:
+      id: 6
+  - id: -1238857129
+    nodeType: 102
+    positionX: 314
+    positionY: 468
+    nodeConfig:
+      id: 7
   ports:
   - portName: Input
     portId: 1805344058
@@ -80,13 +98,6 @@ MonoBehaviour:
     direction: 1
     capacity: 1
   - portName: Output
-    portId: -1203546968
-    nodeId: 2127122984
-    portType: 1
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
     portId: 1160151592
     nodeId: -94438304
     portType: 0
@@ -94,9 +105,37 @@ MonoBehaviour:
     direction: 1
     capacity: 1
   - portName: Output
+    portId: -1203546968
+    nodeId: 2127122984
+    portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
     portId: 114621825
     nodeId: 1193394559
     portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: -2094713245
+    nodeId: 1647918194
+    portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: -1941566638
+    nodeId: 105878772
+    portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 1148220311
+    nodeId: -1238857129
+    portType: 1
     portIndex: 0
     direction: 1
     capacity: 1
@@ -110,8 +149,10 @@ MonoBehaviour:
   - inputPort: 1805344058
     outputPort: 570121511
   parameters:
-  - id: 5
-  - id: 6
+  - id: 8
+  - id: 9
+  - id: 10
+  - id: 11
   references:
     version: 1
     00000000:
@@ -123,18 +164,18 @@ MonoBehaviour:
       data:
         id: 1099035665
     00000002:
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: -94438304
+        clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
+        playSpeed: 0
+    00000003:
       type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 2127122984
         parameterId: 871654246
         parameterName: boolParameter
         value: 0
-    00000003:
-      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: -94438304
-        clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
-        playSpeed: 0
     00000004:
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
@@ -142,16 +183,51 @@ MonoBehaviour:
         clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
         playSpeed: 0
     00000005:
+      type: {class: StringValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: 1647918194
+        parameterId: 1283543217
+        parameterName: stringParameter
+        value: 
+    00000006:
+      type: {class: FloatValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: 105878772
+        parameterId: 1775383630
+        parameterName: floatParameter
+        value: 0
+    00000007:
+      type: {class: IntValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: -1238857129
+        parameterId: 246310827
+        parameterName: intParameter
+        value: 0
+    00000008:
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: boolParameter
         associateNodes: 2852c97e
         value: 0
-    00000006:
+    00000009:
       type: {class: IntParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 246310827
         name: intParameter
-        associateNodes: 
+        associateNodes: 578a28b6
         value: 0
+    0000000A:
+      type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
+      data:
+        id: 1775383630
+        name: floatParameter
+        associateNodes: f4944f06
+        value: 0
+    0000000B:
+      type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
+      data:
+        id: 1283543217
+        name: stringParameter
+        associateNodes: 723c3962
+        value: 

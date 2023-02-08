@@ -1,5 +1,6 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace AnimationGraph.Editor
 {
@@ -9,7 +10,11 @@ namespace AnimationGraph.Editor
 
         public AnimationClipNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
-            
+            var divider = topContainer.Q("divider");
+            topContainer.Remove(divider);
+            inputContainer.style.flexGrow = 0;
+            ColorUtility.TryParseHtmlString("#006633", out var titleColor);
+            titleContainer.style.backgroundColor = new StyleColor(titleColor);
         }
 
         public override void InitializeDefault()
