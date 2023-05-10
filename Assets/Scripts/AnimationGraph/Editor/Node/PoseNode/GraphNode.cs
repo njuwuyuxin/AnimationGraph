@@ -27,6 +27,8 @@ namespace AnimationGraph.Editor
         protected NodePort m_OutputPort;
         public NodeConfig nodeConfig => m_NodeConfig;
         protected NodeConfig m_NodeConfig;
+        public CustomSerializableData customData => m_CustomData;
+        protected CustomSerializableData m_CustomData;
 
         public GraphNode(AnimationGraphView graphView, Vector2 position)
         {
@@ -45,6 +47,11 @@ namespace AnimationGraph.Editor
         {
             id = data.id;
             m_NodeConfig = data.nodeConfig;
+            if (data.customData == null)
+            {
+                m_CustomData = new CustomSerializableData();
+            }
+            m_CustomData = data.customData;
         }
         
         protected void CreatePort(Direction direction, Port.Capacity capacity, string portName, NodePort.EPortType portType, int portIndex)
@@ -86,6 +93,11 @@ namespace AnimationGraph.Editor
         protected virtual void Draw()
         {
             title = m_NodeName;
+        }
+
+        public virtual void OnNodeInspectorGUI()
+        {
+            
         }
 
         public override void Select(VisualElement selectionContainer, bool additive)

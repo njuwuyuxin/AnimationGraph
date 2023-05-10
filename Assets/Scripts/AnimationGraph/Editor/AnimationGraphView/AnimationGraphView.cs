@@ -77,6 +77,10 @@ namespace AnimationGraph.Editor
                         "Add BoolSelector Node",
                         actionEvent => CreateDefaultNode(ENodeType.BoolSelectorNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
                     );
+                    menuEvent.menu.AppendAction(
+                        "Add StringSelector Node",
+                        actionEvent => CreateDefaultNode(ENodeType.StringSelectorNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
+                    );
                 });
             return contextualMenuManipulator;
         }

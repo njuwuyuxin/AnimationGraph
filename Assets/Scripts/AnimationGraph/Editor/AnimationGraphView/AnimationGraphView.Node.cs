@@ -15,6 +15,8 @@ namespace AnimationGraph.Editor
                     break;
                 case ENodeType.BoolSelectorNode: node = new BoolSelectorNode(this, position);
                     break;
+                case ENodeType.StringSelectorNode: node = new StringSelectorNode(this, position);
+                    break;
                 case ENodeType.BoolValueNode: node = new BoolValueGraphNode(this, position);
                     break;
                 case ENodeType.IntValueNode: node = new IntValueGraphNode(this, position);

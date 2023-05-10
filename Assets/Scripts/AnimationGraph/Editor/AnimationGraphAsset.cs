@@ -39,6 +39,7 @@ namespace AnimationGraph.Editor
         FinalPoseNode = 1,
         AnimationClipNode = 2,
         BoolSelectorNode = 3,
+        StringSelectorNode = 4,
         BoolValueNode = 101,
         IntValueNode = 102,
         FloatValueNode = 103,
@@ -56,6 +57,12 @@ namespace AnimationGraph.Editor
         Single = 0,
         Multi =1,
     }
+
+    [Serializable]
+    public class CustomSerializableData
+    {
+        
+    }
     
     [Serializable]
     public class NodeData
@@ -66,6 +73,8 @@ namespace AnimationGraph.Editor
         public float positionY;
         [SerializeReference]
         public NodeConfig nodeConfig;
+        [SerializeReference]
+        public CustomSerializableData customData;
     }
 
     [Serializable]

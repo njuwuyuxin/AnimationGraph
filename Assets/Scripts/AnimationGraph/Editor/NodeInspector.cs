@@ -47,6 +47,11 @@ namespace AnimationGraph.Editor
                     m_GraphNode.OnNodeConfigUpdate();
                 }
             }
+
+            if (m_GraphNode != null)
+            {
+                m_GraphNode.OnNodeInspectorGUI();
+            }
         }
 
         public void SetGraphNode(GraphNode graphNode)

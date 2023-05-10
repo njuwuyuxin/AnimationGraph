@@ -23,6 +23,7 @@ namespace AnimationGraph.Editor
                     nodeData.positionX = graphNode.GetPosition().x;
                     nodeData.positionY = graphNode.GetPosition().y;
                     nodeData.nodeConfig = graphNode.nodeConfig;
+                    nodeData.customData = graphNode.customData;
                     m_AnimationGraphAsset.nodes.Add(nodeData);
                 }
             });
