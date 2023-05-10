@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,6 +18,8 @@ namespace AnimationGraph.Editor
         }
 
         private StringSelectorData m_StringSelectorData => customData as StringSelectorData;
+        
+        private List<string> m_Selections = new List<string>();
 
         public StringSelectorNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
@@ -29,7 +33,7 @@ namespace AnimationGraph.Editor
         public override void InitializeDefault()
         {
             base.InitializeDefault();
-            m_NodeConfig = new BoolSelectorPoseNodeConfig();
+            m_NodeConfig = new StringSelectorPoseNodeConfig();
             m_NodeConfig.SetId(id);
             CreatePort(Direction.Output, Port.Capacity.Multi, "Output", NodePort.EPortType.PosePort, 0);
             CreatePort(Direction.Input, Port.Capacity.Multi, "Condition", NodePort.EPortType.ValuePort, 0);
@@ -37,19 +41,31 @@ namespace AnimationGraph.Editor
 
         public override void OnNodeInspectorGUI()
         {
+            m_Selections = (m_NodeConfig as StringSelectorPoseNodeConfig).selections;
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("+"))
             {
+                m_Selections.Add("Default String");
                 
+                var config = m_NodeConfig as StringSelectorPoseNodeConfig;
+                config.selections = m_Selections;
             }
-
+            
             if (GUILayout.Button("-"))
             {
+                if (m_Selections.Count > 0)
+                {
+                    m_Selections.RemoveAt(m_Selections.Count - 1);
+                }
                 
+                var config = m_NodeConfig as StringSelectorPoseNodeConfig;
+                config.selections = m_Selections;
             }
             GUILayout.EndHorizontal();
-            m_StringSelectorData.testString = GUILayout.TextField(m_StringSelectorData.testString);
-
+            for (int i = 0; i < m_Selections.Count; i++)
+            {
+                m_Selections[i] = GUILayout.TextField(m_Selections[i]);
+            }
         }
     }
 }

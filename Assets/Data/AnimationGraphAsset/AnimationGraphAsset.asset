@@ -13,55 +13,76 @@ MonoBehaviour:
   m_Name: AnimationGraphAsset
   m_EditorClassIdentifier: 
   nodes:
-  - id: 1067351774
-    nodeType: 1
-    positionX: 550
-    positionY: 243
-    nodeConfig:
-      id: 0
-    customData:
-      id: 1
-  - id: 1099035665
-    nodeType: 3
-    positionX: 334
-    positionY: 247
-    nodeConfig:
-      id: 2
-    customData:
-      id: 1
-  - id: -94438304
-    nodeType: 2
-    positionX: 159
-    positionY: 170
-    nodeConfig:
-      id: 3
-    customData:
-      id: 1
   - id: 2127122984
     nodeType: 101
-    positionX: 109
-    positionY: 372
+    positionX: 89.14287
+    positionY: 269.7143
     nodeConfig:
-      id: 4
+      rid: 4
     customData:
-      id: 1
+      rid: -2
   - id: 1193394559
     nodeType: 2
-    positionX: 174
-    positionY: 270
+    positionX: 154.28572
+    positionY: 167.42856
     nodeConfig:
-      id: 5
+      rid: 5
     customData:
-      id: 1
-  - id: 121921487
+      rid: -2
+  - id: -94438304
+    nodeType: 2
+    positionX: 139.42857
+    positionY: 67.42857
+    nodeConfig:
+      rid: 3
+    customData:
+      rid: -2
+  - id: 1067351774
+    nodeType: 1
+    positionX: 530.2857
+    positionY: 144.57143
+    nodeConfig:
+      rid: 0
+    customData:
+      rid: -2
+  - id: 1099035665
+    nodeType: 3
+    positionX: 314.2857
+    positionY: 144.57143
+    nodeConfig:
+      rid: 2
+    customData:
+      rid: -2
+  - id: -1690551298
     nodeType: 4
-    positionX: 334
-    positionY: 449
+    positionX: 325.7143
+    positionY: 328.57144
     nodeConfig:
-      id: 6
+      rid: 6930250617480020002
     customData:
-      id: 7
+      rid: 6930250617480020003
   ports:
+  - portName: Output
+    portId: -1203546968
+    nodeId: 2127122984
+    portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 114621825
+    nodeId: 1193394559
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 1160151592
+    nodeId: -94438304
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
   - portName: Input
     portId: 1805344058
     nodeId: 1067351774
@@ -97,37 +118,16 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
-  - portName: Output
-    portId: 1160151592
-    nodeId: -94438304
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
-    portId: -1203546968
-    nodeId: 2127122984
-    portType: 1
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
-    portId: 114621825
-    nodeId: 1193394559
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
   - portName: Condition
-    portId: -23645797
-    nodeId: 121921487
+    portId: 1350315936
+    nodeId: -1690551298
     portType: 1
     portIndex: 0
     direction: 0
     capacity: 1
   - portName: Output
-    portId: -199815268
-    nodeId: 121921487
+    portId: -1301703176
+    nodeId: -1690551298
     portType: 0
     portIndex: 0
     direction: 1
@@ -142,71 +142,76 @@ MonoBehaviour:
   - inputPort: 1805344058
     outputPort: 570121511
   parameters:
-  - id: 8
-  - id: 9
-  - id: 10
-  - id: 11
+  - rid: 6930250617480020088
+  - rid: 6930250617480020089
+  - rid: 6930250617480020090
+  - rid: 6930250617480020091
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 0
       type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1067351774
-    00000001:
-      type: {class: , ns: , asm: }
-    00000002:
+    - rid: 2
       type: {class: BoolSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1099035665
-    00000003:
+    - rid: 3
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: -94438304
         clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
         playSpeed: 0
-    00000004:
+    - rid: 4
       type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 2127122984
         parameterId: 871654246
         parameterName: boolParameter
         value: 0
-    00000005:
+    - rid: 5
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1193394559
         clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
         playSpeed: 0
-    00000006:
-      type: {class: BoolSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+    - rid: 6930250617480020002
+      type: {class: StringSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
-        id: 121921487
-    00000007:
+        id: -1690551298
+        selections:
+        - Default String
+        - Default String
+        - Default String
+    - rid: 6930250617480020003
       type: {class: StringSelectorNode/StringSelectorData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
-        testString: 123
-    00000008:
+        testString: 
+    - rid: 6930250617480020088
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: boolParameter
         associateNodes: 2852c97e
         value: 0
-    00000009:
+    - rid: 6930250617480020089
       type: {class: IntParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 246310827
         name: intParameter
         associateNodes: 
         value: 0
-    0000000A:
+    - rid: 6930250617480020090
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1775383630
         name: floatParameter
         associateNodes: 
         value: 0
-    0000000B:
+    - rid: 6930250617480020091
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217

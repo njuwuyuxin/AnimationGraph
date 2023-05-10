@@ -167,7 +167,7 @@ namespace AnimationGraph.Editor
                 Connection connection = new Connection();
                 connection.sourceNodeId = outputPort.GraphNode.nodeConfig.id;
                 connection.targetNodeId = inputPort.GraphNode.nodeConfig.id;
-                connection.targetSlotIndex = inputPort.portIndex;
+                connection.targetPortIndex = inputPort.portIndex;
                 compiledGraph.nodeConnections.Add(connection);
             });
             

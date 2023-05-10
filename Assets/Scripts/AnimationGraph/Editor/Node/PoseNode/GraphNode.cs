@@ -89,6 +89,21 @@ namespace AnimationGraph.Editor
                     break;
             }
         }
+        
+        public void DeletePort(NodePort port)
+        {
+            switch (port.direction)
+            {
+                case Direction.Input:
+                    m_InputPorts.Remove(port);
+                    inputContainer.Remove(port);
+                    break;
+                case Direction.Output:
+                    m_OutputPort = null;
+                    outputContainer.Remove(port);
+                    break;
+            }
+        }
 
         protected virtual void Draw()
         {

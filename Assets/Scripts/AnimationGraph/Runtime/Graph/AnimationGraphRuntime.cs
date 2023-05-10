@@ -57,7 +57,7 @@ namespace AnimationGraph
                 var sourceNode = m_Id2NodeMap[connection.sourceNodeId];
                 var targetNode = m_Id2NodeMap[connection.targetNodeId];
                 sourceNode.AddOutputNode(targetNode);
-                targetNode.AddInputNode(sourceNode, connection.targetSlotIndex);
+                targetNode.AddInputNode(sourceNode, connection.targetPortIndex);
             }
         }
 

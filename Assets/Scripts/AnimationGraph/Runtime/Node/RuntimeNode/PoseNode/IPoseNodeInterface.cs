@@ -69,7 +69,6 @@ namespace AnimationGraph
         
         protected void SetValueInputSlotCount(int count)
         {
-            
             m_InputValueNodes = new IValueNodeInterface[count];
         }
     }

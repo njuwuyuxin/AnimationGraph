@@ -35,7 +35,6 @@ namespace AnimationGraph.Editor
             if (m_SerializedObject != null)
             {
                 var nodeConfig = m_SerializedObject.FindProperty("m_NodeConfig");
-
                 while (nodeConfig.NextVisible(true))
                 {
                     EditorGUILayout.PropertyField(nodeConfig);
@@ -56,14 +55,14 @@ namespace AnimationGraph.Editor
 
         public void SetGraphNode(GraphNode graphNode)
         {
-            if (m_NodeInspectorObject != null)
-            {
-                DestroyImmediate(m_NodeInspectorObject);
-            }
+            // if (m_NodeInspectorObject != null)
+            // {
+            //     DestroyImmediate(m_NodeInspectorObject);
+            // }
 
             m_GraphNode = graphNode;
             m_NodeConfig = graphNode.nodeConfig;
-            m_NodeInspectorObject = CreateInstance<NodeInspectorObject>();
+            m_NodeInspectorObject = ScriptableObject.CreateInstance<NodeInspectorObject>();
             m_NodeInspectorObject.m_NodeConfig = m_NodeConfig;
             m_SerializedObject = new SerializedObject(m_NodeInspectorObject);
         }

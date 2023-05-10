@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AnimationGraph
 {
@@ -24,6 +25,6 @@ namespace AnimationGraph
     {
         public int sourceNodeId;
         public int targetNodeId;
-        public int targetSlotIndex;
+        public int targetPortIndex;
     }
 }

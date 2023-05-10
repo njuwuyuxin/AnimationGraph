@@ -15,6 +15,9 @@ namespace AnimationGraph.Editor
 
         public int id { get; set; }
         public EPortType portType { get; set; }
+        
+        //Input 中 PosePort 和 ValuePort分别从0开始索引
+        //Output Port 也从0开始索引
         public int portIndex { get; set; }
         public GraphNode GraphNode => m_GraphNode;
         private GraphNode m_GraphNode;
@@ -26,7 +29,7 @@ namespace AnimationGraph.Editor
             EdgeConnectorListener connectorListener = new EdgeConnectorListener();
             m_EdgeConnector = new EdgeConnector<Edge>(connectorListener);
             this.AddManipulator(edgeConnector);
-
+            
             m_GraphNode = node;
             this.portType = portType;
             this.portIndex = portIndex;
