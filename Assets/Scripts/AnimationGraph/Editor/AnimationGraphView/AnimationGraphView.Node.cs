@@ -4,7 +4,7 @@ namespace AnimationGraph.Editor
 {
     public partial class AnimationGraphView
     {
-        private GraphNode CreateNode(ENodeType nodeType, Vector2 position)
+        private GraphNode CreateNodeInternal(ENodeType nodeType, Vector2 position)
         {
             GraphNode node = null;
             switch (nodeType)
@@ -43,7 +43,7 @@ namespace AnimationGraph.Editor
 
         private GraphNode CreateDefaultNode(ENodeType nodeType, Vector2 position)
         {
-            var node = CreateNode(nodeType, position);
+            var node = CreateNodeInternal(nodeType, position);
             node.InitializeDefault();
             return node;
         }
@@ -53,24 +53,24 @@ namespace AnimationGraph.Editor
             GraphNode node = null;
             if (parameterCard is BoolParameterCard)
             {
-                node = CreateNode(ENodeType.BoolValueNode, position);
+                node = CreateNodeInternal(ENodeType.BoolValueNode, position);
             }
             else if (parameterCard is IntParameterCard)
             {
-                node = CreateNode(ENodeType.IntValueNode, position);
+                node = CreateNodeInternal(ENodeType.IntValueNode, position);
             }
             else if (parameterCard is FloatParameterCard)
             {
-                node = CreateNode(ENodeType.FloatValueNode, position);
+                node = CreateNodeInternal(ENodeType.FloatValueNode, position);
             }
             else if (parameterCard is StringParameterCard)
             {
-                node = CreateNode(ENodeType.StringValueNode, position);
+                node = CreateNodeInternal(ENodeType.StringValueNode, position);
             }
             else
             {
                 Debug.LogError("[AnimationGraph][GraphView]: Unknown Parameter Type, " + parameterCard);
-                node = CreateNode(ENodeType.BoolValueNode, position);
+                node = CreateNodeInternal(ENodeType.BoolValueNode, position);
             }
 
             var valueNode = node as ValueGraphNode;
@@ -82,7 +82,7 @@ namespace AnimationGraph.Editor
 
         private GraphNode CreateNodeFromAsset(NodeData data)
         {
-            var node = CreateNode(data.nodeType, new Vector2(data.positionX, data.positionY));
+            var node = CreateNodeInternal(data.nodeType, new Vector2(data.positionX, data.positionY));
             node.LoadNodeData(data);
             return node;
         }

@@ -17,6 +17,7 @@ namespace AnimationGraph.Editor
                 GraphNode graphNode = node as GraphNode;
                 if (graphNode != null)
                 {
+                    graphNode.OnSave();
                     NodeData nodeData = new NodeData();
                     nodeData.id = graphNode.id;
                     nodeData.nodeType = graphNode.nodeType;

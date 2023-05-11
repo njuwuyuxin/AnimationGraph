@@ -11,14 +11,6 @@ namespace AnimationGraph.Editor
     {
         public override ENodeType nodeType => ENodeType.StringSelectorNode;
 
-        [Serializable]
-        public class StringSelectorData : CustomSerializableData
-        {
-            public string testString;
-        }
-
-        private StringSelectorData m_StringSelectorData => customData as StringSelectorData;
-        
         private List<string> m_Selections = new List<string>();
 
         public StringSelectorNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
@@ -26,8 +18,6 @@ namespace AnimationGraph.Editor
             nodeName = "StringSelector";
             ColorUtility.TryParseHtmlString("#663366", out var titleColor);
             titleContainer.style.backgroundColor = new StyleColor(titleColor);
-            //创建Node时创建Data，后续Load NodeData时存在gc，后续优化
-            m_CustomData = new StringSelectorData();
         }
 
         public override void InitializeDefault()
@@ -39,32 +29,48 @@ namespace AnimationGraph.Editor
             CreatePort(Direction.Input, Port.Capacity.Multi, "Condition", NodePort.EPortType.ValuePort, 0);
         }
 
+        public override void OnSave()
+        {
+            var config = m_NodeConfig as StringSelectorPoseNodeConfig;
+            config.selections.Clear();
+            config.selections.AddRange(m_Selections);
+        }
+
+        public override void LoadNodeData(NodeData data)
+        {
+            base.LoadNodeData(data);
+            var config = m_NodeConfig as StringSelectorPoseNodeConfig;
+            m_Selections.Clear();
+            m_Selections.AddRange(config.selections);
+        }
+        
         public override void OnNodeInspectorGUI()
         {
-            m_Selections = (m_NodeConfig as StringSelectorPoseNodeConfig).selections;
-            GUILayout.BeginHorizontal();
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("+"))
             {
                 m_Selections.Add("Default String");
-                
-                var config = m_NodeConfig as StringSelectorPoseNodeConfig;
-                config.selections = m_Selections;
+                CreatePort(Direction.Input, Port.Capacity.Multi, m_Selections[m_Selections.Count -1], NodePort.EPortType.PosePort, m_Selections.Count -1);
             }
             
             if (GUILayout.Button("-"))
             {
                 if (m_Selections.Count > 0)
                 {
+                    var selectionPort = GetInputPort(NodePort.EPortType.PosePort, m_Selections.Count - 1);
+                    DeletePort(selectionPort);
                     m_Selections.RemoveAt(m_Selections.Count - 1);
                 }
-                
-                var config = m_NodeConfig as StringSelectorPoseNodeConfig;
-                config.selections = m_Selections;
             }
-            GUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
             for (int i = 0; i < m_Selections.Count; i++)
             {
-                m_Selections[i] = GUILayout.TextField(m_Selections[i]);
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(i.ToString(), GUILayout.Width(20));
+                m_Selections[i] = EditorGUILayout.TextField(m_Selections[i]);
+                var selectionPort = GetInputPort(NodePort.EPortType.PosePort, i);
+                selectionPort.portName = m_Selections[i];
+                EditorGUILayout.EndHorizontal();
             }
         }
     }

@@ -43,6 +43,11 @@ namespace AnimationGraph.Editor
             id = Animator.StringToHash(Guid.NewGuid().ToString());
         }
 
+        public virtual void OnSave()
+        {
+            
+        }
+        
         public virtual void LoadNodeData(NodeData data)
         {
             id = data.id;
@@ -88,6 +93,11 @@ namespace AnimationGraph.Editor
                     outputContainer.Add(port);
                     break;
             }
+        }
+
+        public NodePort GetInputPort(NodePort.EPortType portType, int portIndex)
+        {
+            return m_InputPorts.Find(port => port.portType == portType && port.portIndex == portIndex);
         }
         
         public void DeletePort(NodePort port)

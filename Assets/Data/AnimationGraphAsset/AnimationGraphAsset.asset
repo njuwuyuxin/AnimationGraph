@@ -15,52 +15,52 @@ MonoBehaviour:
   nodes:
   - id: 2127122984
     nodeType: 101
-    positionX: 89.14287
-    positionY: 269.7143
+    positionX: 89
+    positionY: 270
     nodeConfig:
       rid: 4
     customData:
       rid: -2
   - id: 1193394559
     nodeType: 2
-    positionX: 154.28572
-    positionY: 167.42856
+    positionX: 154
+    positionY: 167
     nodeConfig:
       rid: 5
     customData:
       rid: -2
   - id: -94438304
     nodeType: 2
-    positionX: 139.42857
-    positionY: 67.42857
+    positionX: 139
+    positionY: 67
     nodeConfig:
       rid: 3
     customData:
       rid: -2
   - id: 1067351774
     nodeType: 1
-    positionX: 530.2857
-    positionY: 144.57143
+    positionX: 530
+    positionY: 145
     nodeConfig:
       rid: 0
     customData:
       rid: -2
   - id: 1099035665
     nodeType: 3
-    positionX: 314.2857
-    positionY: 144.57143
+    positionX: 314
+    positionY: 145
     nodeConfig:
       rid: 2
     customData:
       rid: -2
-  - id: -1690551298
+  - id: -233946403
     nodeType: 4
-    positionX: 325.7143
-    positionY: 328.57144
+    positionX: 349
+    positionY: 366
     nodeConfig:
-      rid: 6930250617480020002
+      rid: 5990190180978655307
     customData:
-      rid: 6930250617480020003
+      rid: -2
   ports:
   - portName: Output
     portId: -1203546968
@@ -119,15 +119,36 @@ MonoBehaviour:
     direction: 1
     capacity: 1
   - portName: Condition
-    portId: 1350315936
-    nodeId: -1690551298
+    portId: 357491562
+    nodeId: -233946403
     portType: 1
     portIndex: 0
     direction: 0
     capacity: 1
+  - portName: Default String
+    portId: 1609239283
+    nodeId: -233946403
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: Default String
+    portId: 486245932
+    nodeId: -233946403
+    portType: 0
+    portIndex: 1
+    direction: 0
+    capacity: 1
+  - portName: Default String
+    portId: 1544360886
+    nodeId: -233946403
+    portType: 0
+    portIndex: 2
+    direction: 0
+    capacity: 1
   - portName: Output
-    portId: -1301703176
-    nodeId: -1690551298
+    portId: -674763441
+    nodeId: -233946403
     portType: 0
     portIndex: 0
     direction: 1
@@ -142,10 +163,10 @@ MonoBehaviour:
   - inputPort: 1805344058
     outputPort: 570121511
   parameters:
-  - rid: 6930250617480020088
-  - rid: 6930250617480020089
-  - rid: 6930250617480020090
-  - rid: 6930250617480020091
+  - rid: 5990190180978655336
+  - rid: 5990190180978655337
+  - rid: 5990190180978655338
+  - rid: 5990190180978655339
   references:
     version: 2
     RefIds:
@@ -178,40 +199,36 @@ MonoBehaviour:
         id: 1193394559
         clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
         playSpeed: 0
-    - rid: 6930250617480020002
+    - rid: 5990190180978655307
       type: {class: StringSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
-        id: -1690551298
+        id: -233946403
         selections:
         - Default String
         - Default String
         - Default String
-    - rid: 6930250617480020003
-      type: {class: StringSelectorNode/StringSelectorData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
-      data:
-        testString: 
-    - rid: 6930250617480020088
+    - rid: 5990190180978655336
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: boolParameter
         associateNodes: 2852c97e
         value: 0
-    - rid: 6930250617480020089
+    - rid: 5990190180978655337
       type: {class: IntParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 246310827
         name: intParameter
         associateNodes: 
         value: 0
-    - rid: 6930250617480020090
+    - rid: 5990190180978655338
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1775383630
         name: floatParameter
         associateNodes: 
         value: 0
-    - rid: 6930250617480020091
+    - rid: 5990190180978655339
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217
