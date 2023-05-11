@@ -5,7 +5,7 @@ namespace AnimationGraph
     [Serializable]
     public class StringValueNodeConfig : ValueNodeConfig
     {
-        public string value;
+        public string value = String.Empty;
 
         public override INode GenerateNode(AnimationGraphRuntime graphRuntime)
         {

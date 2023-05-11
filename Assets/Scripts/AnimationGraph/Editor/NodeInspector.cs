@@ -39,15 +39,18 @@ namespace AnimationGraph.Editor
                 if (m_SerializedObject != null)
                 {
                     var nodeConfig = m_SerializedObject.FindProperty("m_NodeConfig");
-                    while (nodeConfig.NextVisible(true))
+                    if (nodeConfig != null)
                     {
-                        EditorGUILayout.PropertyField(nodeConfig);
-                    }
+                        while (nodeConfig.NextVisible(true))
+                        {
+                            EditorGUILayout.PropertyField(nodeConfig);
+                        }
 
-                    if (m_SerializedObject.hasModifiedProperties)
-                    {
-                        m_SerializedObject.ApplyModifiedProperties();
-                        m_GraphNode.OnNodeConfigUpdate();
+                        if (m_SerializedObject.hasModifiedProperties)
+                        {
+                            m_SerializedObject.ApplyModifiedProperties();
+                            m_GraphNode.OnNodeConfigUpdate();
+                        }
                     }
                 }
             }

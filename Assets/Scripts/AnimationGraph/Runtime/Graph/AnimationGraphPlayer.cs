@@ -34,5 +34,10 @@ namespace AnimationGraph
         {
             m_AnimationGraphRuntime.SetBoolParameter(parameterName, value);
         }
+        
+        public void SetStringParameter(string parameterName, string value)
+        {
+            m_AnimationGraphRuntime.SetStringParameter(parameterName, value);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace AnimationGraph
@@ -6,14 +7,12 @@ namespace AnimationGraph
     public class StringSelectorNode : PoseNode<StringSelectorPoseNodeConfig>
     {
         private AnimationGraphRuntime m_AnimationGraphRuntime;
-        public IPoseNodeInterface trueNode => m_InputPoseNodes[0];
-        public IPoseNodeInterface falseNode => m_InputPoseNodes[1];
-        
-        public Dictionary<string, IPoseNodeInterface> string2NodeMap = new Dictionary<string, IPoseNodeInterface>();
+
+        public Dictionary<string, int> string2PortIndex = new Dictionary<string, int>();
         public IValueNodeInterface condition => m_InputValueNodes[0];
 
         private Playable m_CurrentActivePlayable;
-        private bool m_CurrentCondition;
+        private string m_CurrentCondition;
 
         public override void InitializeGraphNode(AnimationGraphRuntime animationGraphRuntime)
         {
@@ -21,6 +20,11 @@ namespace AnimationGraph
             SetPoseInputSlotCount(2);
             SetValueInputSlotCount(1);
             m_AnimationGraphRuntime = animationGraphRuntime;
+            var config = m_NodeConfig as StringSelectorPoseNodeConfig;
+            for (int i = 0; i < config.selections.Count; i++)
+            {
+                string2PortIndex.Add(config.selections[i], i);
+            }
         }
 
         public override Playable GetPlayable()
@@ -31,29 +35,29 @@ namespace AnimationGraph
         public override void OnStart()
         {
             ChangeSourcePlayable();
-            m_CurrentCondition = condition.boolValue;
+            m_CurrentCondition = condition.stringValue;
         }
 
         public override void OnUpdate(float deltaTime)
         {
-            if (condition.boolValue != m_CurrentCondition)
+            if (condition.stringValue != m_CurrentCondition)
             {
                 ChangeSourcePlayable();
-                m_CurrentCondition = condition.boolValue;
+                m_CurrentCondition = condition.stringValue;
             }
         }
 
         private void ChangeSourcePlayable()
         {
-            if (condition.boolValue)
+            if (string2PortIndex.TryGetValue(condition.stringValue, out int portIndex))
             {
-                trueNode.OnStart();
-                m_CurrentActivePlayable = trueNode.GetPlayable();
+                var node = m_InputPoseNodes[portIndex];
+                node.OnStart();
+                m_CurrentActivePlayable = node.GetPlayable();
             }
             else
             {
-                falseNode.OnStart();
-                m_CurrentActivePlayable = falseNode.GetPlayable();
+                Debug.LogError("StringSelectorNode: No String matcheds name: " + condition.stringValue);
             }
         }
     }
