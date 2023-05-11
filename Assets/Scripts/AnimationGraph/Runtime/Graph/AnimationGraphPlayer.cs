@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,14 @@ namespace AnimationGraph
         void Update()
         {
             m_AnimationGraphRuntime.OnUpdate(Time.deltaTime);
+        }
+
+        private void OnAnimatorMove()
+        {
+            var deltaPosition = m_Actor.animator.deltaPosition;
+            var deltaRotation = m_Actor.animator.deltaRotation;
+            transform.position += deltaPosition;
+            transform.rotation *= deltaRotation;
         }
 
         private void OnDestroy()

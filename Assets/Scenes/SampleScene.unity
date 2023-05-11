@@ -542,6 +542,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: -9176535527314318852, guid: 5e3994e22589b824abdf41df7514d55e, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2491308756171476115, guid: 5e3994e22589b824abdf41df7514d55e, type: 3}
       propertyPath: m_Name
       value: Vanguard By T. Choonyung Variant

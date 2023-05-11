@@ -30,8 +30,8 @@ namespace AnimationGraph
         public override void OnStart()
         {
             m_InputPoseNodes[0].OnStart();
-            m_AnimationGraphRuntime.m_FinalPlayable.DisconnectInput(0);
-            m_AnimationGraphRuntime.m_FinalPlayable.ConnectInput(0, GetPlayable(), 0, 1f);
+            m_AnimationGraphRuntime.m_FinalPosePlayable.DisconnectInput(0);
+            m_AnimationGraphRuntime.m_FinalPosePlayable.ConnectInput(0, GetPlayable(), 0, 1f);
         }
 
         public override void OnUpdate(float deltaTime)
@@ -42,8 +42,8 @@ namespace AnimationGraph
                 return;
             }
             m_InputPoseNodes[0].OnUpdate(deltaTime);
-            m_AnimationGraphRuntime.m_FinalPlayable.DisconnectInput(0);
-            m_AnimationGraphRuntime.m_FinalPlayable.ConnectInput(0, GetPlayable(), 0, 1f);
+            m_AnimationGraphRuntime.m_FinalPosePlayable.DisconnectInput(0);
+            m_AnimationGraphRuntime.m_FinalPosePlayable.ConnectInput(0, GetPlayable(), 0, 1f);
         }
     }
 }

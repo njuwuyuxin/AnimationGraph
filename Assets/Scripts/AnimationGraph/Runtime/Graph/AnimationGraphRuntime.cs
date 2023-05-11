@@ -11,7 +11,8 @@ namespace AnimationGraph
         private CompiledAnimationGraph m_CompiledAnimationGraph;
         public PlayableGraph m_PlayableGraph;
         private AnimationPlayableOutput m_Output;
-        public Playable m_FinalPlayable;
+        public Playable m_FinalPosePlayable;
+        public AnimationScriptPlayable m_PostProcessPlayable;
         private FinalPoseNode m_FinalPoseNode;
         private Dictionary<int, INode> m_Id2NodeMap;
         private Dictionary<int, GraphParameter> m_Id2ParameterMap;
@@ -25,8 +26,12 @@ namespace AnimationGraph
             m_Output = AnimationPlayableOutput.Create(m_PlayableGraph,
                 m_Actor.gameObject.name + "_" + m_Actor.gameObject.GetInstanceID(), m_Actor.animator);
             GenerateAnimationGraph();
-            m_FinalPlayable = Playable.Create(m_PlayableGraph, 1);
-            m_Output.SetSourcePlayable(m_FinalPlayable);
+            m_FinalPosePlayable = Playable.Create(m_PlayableGraph, 1);
+            PostProcessJob postProcessJob = new PostProcessJob();
+            m_PostProcessPlayable = AnimationScriptPlayable.Create(m_PlayableGraph, postProcessJob, 1);
+            m_PostProcessPlayable.ConnectInput(0, m_FinalPosePlayable, 0, 1f);
+            
+            m_Output.SetSourcePlayable(m_PostProcessPlayable);
         }
 
         public void Run()

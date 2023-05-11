@@ -15,11 +15,13 @@ MonoBehaviour:
   finalPosePoseNode:
     id: 1067351774
   nodes:
-  - rid: 5990190180978655413
-  - rid: 5990190180978655414
-  - rid: 5990190180978655415
-  - rid: 5990190180978655416
-  - rid: 5990190180978655417
+  - rid: 5990190180978655458
+  - rid: 5990190180978655459
+  - rid: 5990190180978655460
+  - rid: 5990190180978655461
+  - rid: 5990190180978655462
+  - rid: 5990190180978655463
+  - rid: 5990190180978655464
   nodeConnections:
   - sourceNodeId: -233946403
     targetNodeId: 1067351774
@@ -33,66 +35,86 @@ MonoBehaviour:
   - sourceNodeId: 177331940
     targetNodeId: -233946403
     targetPortIndex: 0
+  - sourceNodeId: -1805907108
+    targetNodeId: -233946403
+    targetPortIndex: 3
+  - sourceNodeId: -35317417
+    targetNodeId: -233946403
+    targetPortIndex: 2
   parameters:
-  - rid: 5990190180978655418
-  - rid: 5990190180978655419
-  - rid: 5990190180978655420
-  - rid: 5990190180978655421
+  - rid: 5990190180978655465
+  - rid: 5990190180978655466
+  - rid: 5990190180978655467
+  - rid: 5990190180978655468
   references:
     version: 2
     RefIds:
-    - rid: 5990190180978655413
+    - rid: 5990190180978655458
       type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1067351774
-    - rid: 5990190180978655414
-      type: {class: StringSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: -233946403
-        selections:
-        - Run
-        - Idle
-    - rid: 5990190180978655415
+    - rid: 5990190180978655459
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 177331940
         clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
         playSpeed: 0
-    - rid: 5990190180978655416
+    - rid: 5990190180978655460
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: -2020598042
         clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
         playSpeed: 0
-    - rid: 5990190180978655417
+    - rid: 5990190180978655461
       type: {class: StringValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1646470057
         parameterId: 1283543217
         parameterName: stringParameter
         value: Idle
-    - rid: 5990190180978655418
+    - rid: 5990190180978655462
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: -1805907108
+        clip: {fileID: -203655887218126122, guid: fcf21530cadefc94eb194e6ab6ad787a, type: 3}
+        playSpeed: 0
+    - rid: 5990190180978655463
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: -35317417
+        clip: {fileID: -203655887218126122, guid: 1d8430178d057ed44a336d1ae2c16d7c, type: 3}
+        playSpeed: 0
+    - rid: 5990190180978655464
+      type: {class: StringSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: -233946403
+        selections:
+        - Run
+        - Idle
+        - LeftStrafe
+        - RightStrafe
+    - rid: 5990190180978655465
       type: {class: BoolParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 871654246
         name: boolParameter
         associatedNodes: 
         value: 0
-    - rid: 5990190180978655419
+    - rid: 5990190180978655466
       type: {class: IntParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 246310827
         name: intParameter
         associatedNodes: 
         value: 0
-    - rid: 5990190180978655420
+    - rid: 5990190180978655467
       type: {class: FloatParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1775383630
         name: floatParameter
         associatedNodes: 
         value: 0
-    - rid: 5990190180978655421
+    - rid: 5990190180978655468
       type: {class: StringParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1283543217
