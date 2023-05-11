@@ -17,14 +17,16 @@ namespace AnimationGraph
         public override void InitializeGraphNode(AnimationGraphRuntime animationGraphRuntime)
         {
             id = m_NodeConfig.id;
-            SetPoseInputSlotCount(2);
-            SetValueInputSlotCount(1);
-            m_AnimationGraphRuntime = animationGraphRuntime;
             var config = m_NodeConfig as StringSelectorPoseNodeConfig;
             for (int i = 0; i < config.selections.Count; i++)
             {
                 string2PortIndex.Add(config.selections[i], i);
             }
+
+            SetPoseInputSlotCount(config.selections.Count);
+            SetValueInputSlotCount(1);
+            m_AnimationGraphRuntime = animationGraphRuntime;
+            
         }
 
         public override Playable GetPlayable()
