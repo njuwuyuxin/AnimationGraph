@@ -17,6 +17,7 @@ namespace AnimationGraph.Editor
         private NodeConfig m_NodeConfig;
         private NodeInspectorObject m_NodeInspectorObject;
         private SerializedObject m_SerializedObject;
+        private bool m_DrawInspectorCustomize;
 
         public override void OnInspectorGUI()
         {
@@ -32,18 +33,22 @@ namespace AnimationGraph.Editor
             });
             EditorGUILayout.Separator();
             EditorGUILayout.Separator();
-            if (m_SerializedObject != null)
-            {
-                var nodeConfig = m_SerializedObject.FindProperty("m_NodeConfig");
-                while (nodeConfig.NextVisible(true))
-                {
-                    EditorGUILayout.PropertyField(nodeConfig);
-                }
 
-                if (m_SerializedObject.hasModifiedProperties)
+            if (!m_DrawInspectorCustomize)
+            {
+                if (m_SerializedObject != null)
                 {
-                    m_SerializedObject.ApplyModifiedProperties();
-                    m_GraphNode.OnNodeConfigUpdate();
+                    var nodeConfig = m_SerializedObject.FindProperty("m_NodeConfig");
+                    while (nodeConfig.NextVisible(true))
+                    {
+                        EditorGUILayout.PropertyField(nodeConfig);
+                    }
+
+                    if (m_SerializedObject.hasModifiedProperties)
+                    {
+                        m_SerializedObject.ApplyModifiedProperties();
+                        m_GraphNode.OnNodeConfigUpdate();
+                    }
                 }
             }
 
@@ -53,13 +58,14 @@ namespace AnimationGraph.Editor
             }
         }
 
-        public void SetGraphNode(GraphNode graphNode)
+        public void SetGraphNode(GraphNode graphNode, bool drawInspectorCustomize)
         {
-            // if (m_NodeInspectorObject != null)
-            // {
-            //     DestroyImmediate(m_NodeInspectorObject);
-            // }
+            if (m_NodeInspectorObject != null)
+            {
+                DestroyImmediate(m_NodeInspectorObject);
+            }
 
+            m_DrawInspectorCustomize = drawInspectorCustomize;
             m_GraphNode = graphNode;
             m_NodeConfig = graphNode.nodeConfig;
             m_NodeInspectorObject = ScriptableObject.CreateInstance<NodeInspectorObject>();

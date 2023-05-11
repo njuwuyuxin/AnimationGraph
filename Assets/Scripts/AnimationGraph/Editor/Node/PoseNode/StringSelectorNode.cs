@@ -10,6 +10,7 @@ namespace AnimationGraph.Editor
     public class StringSelectorNode : GraphNode
     {
         public override ENodeType nodeType => ENodeType.StringSelectorNode;
+        protected override bool m_DrawInspectorCustomize => true;
 
         private List<string> m_Selections = new List<string>();
 

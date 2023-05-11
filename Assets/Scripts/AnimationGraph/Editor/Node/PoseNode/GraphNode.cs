@@ -30,6 +30,8 @@ namespace AnimationGraph.Editor
         public CustomSerializableData customData => m_CustomData;
         protected CustomSerializableData m_CustomData;
 
+        protected virtual bool m_DrawInspectorCustomize => false;
+
         public GraphNode(AnimationGraphView graphView, Vector2 position)
         {
             m_AnimationGraphView = graphView;
@@ -128,7 +130,7 @@ namespace AnimationGraph.Editor
         public override void Select(VisualElement selectionContainer, bool additive)
         {
             base.Select(selectionContainer, additive);
-            m_AnimationGraphView.inspector.SetGraphNode(this);
+            m_AnimationGraphView.inspector.SetGraphNode(this, m_DrawInspectorCustomize);
         }
 
         public virtual void OnNodeConfigUpdate()
