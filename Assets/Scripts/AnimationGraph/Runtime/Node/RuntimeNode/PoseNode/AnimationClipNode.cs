@@ -18,6 +18,7 @@ namespace AnimationGraph
         public override void OnStart()
         {
             m_AnimationClipPlayable.SetTime(0);
+            m_AnimationClipPlayable.SetTime(0);
         }
 
         public override Playable GetPlayable()
