@@ -69,30 +69,6 @@ MonoBehaviour:
       rid: 5990190180978655386
     customData:
       rid: -2
-  - id: 1344714943
-    nodeType: 101
-    positionX: 162
-    positionY: 697
-    nodeConfig:
-      rid: 5990190180978655521
-    customData:
-      rid: -2
-  - id: 1436502423
-    nodeType: 101
-    positionX: 556
-    positionY: 219
-    nodeConfig:
-      rid: 5990190180978655522
-    customData:
-      rid: -2
-  - id: 1067351774
-    nodeType: 1
-    positionX: 743
-    positionY: 369
-    nodeConfig:
-      rid: 0
-    customData:
-      rid: -2
   - id: -541010945
     nodeType: 3
     positionX: 556
@@ -115,6 +91,30 @@ MonoBehaviour:
     positionY: 507
     nodeConfig:
       rid: 5990190180978655491
+    customData:
+      rid: -2
+  - id: 1067351774
+    nodeType: 1
+    positionX: 759
+    positionY: 86
+    nodeConfig:
+      rid: 0
+    customData:
+      rid: -2
+  - id: 1436502423
+    nodeType: 101
+    positionX: 556
+    positionY: 219
+    nodeConfig:
+      rid: 5990190180978655522
+    customData:
+      rid: -2
+  - id: 1344714943
+    nodeType: 101
+    positionX: 162
+    positionY: 697
+    nodeConfig:
+      rid: 5990190180978655521
     customData:
       rid: -2
   ports:
@@ -167,27 +167,6 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
-  - portName: Output
-    portId: 1715708821
-    nodeId: 1344714943
-    portType: 1
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
-    portId: 1043169421
-    nodeId: 1436502423
-    portType: 1
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Input
-    portId: 1805344058
-    nodeId: 1067351774
-    portType: 0
-    portIndex: 0
-    direction: 0
-    capacity: 0
   - portName: True
     portId: -522740260
     nodeId: -541010945
@@ -286,6 +265,27 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
+  - portName: Input
+    portId: 1805344058
+    nodeId: 1067351774
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 0
+  - portName: Output
+    portId: 1043169421
+    nodeId: 1436502423
+    portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 1715708821
+    nodeId: 1344714943
+    portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
   edges:
   - inputPort: 357491562
     outputPort: 1219996606
@@ -310,11 +310,11 @@ MonoBehaviour:
   - inputPort: 1594750886
     outputPort: 1043169421
   - inputPort: 1805344058
-    outputPort: 1137938940
+    outputPort: -769627129
   parameters:
-  - rid: 5990190180978655582
-  - rid: 5990190180978655583
-  - rid: 5990190180978655584
+  - rid: 5990190180978655601
+  - rid: 5990190180978655602
+  - rid: 5990190180978655603
   references:
     version: 2
     RefIds:
@@ -393,7 +393,7 @@ MonoBehaviour:
         id: 1344714943
         parameterId: 871654246
         parameterName: moveCondition
-        value: 0
+        value: 1
     - rid: 5990190180978655522
       type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
@@ -401,21 +401,21 @@ MonoBehaviour:
         parameterId: -906310031
         parameterName: mode
         value: 0
-    - rid: 5990190180978655582
+    - rid: 5990190180978655601
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: moveCondition
         associateNodes: bfb82650
         value: 0
-    - rid: 5990190180978655583
+    - rid: 5990190180978655602
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217
         name: stringParameter
         associateNodes: a9232362
         value: 
-    - rid: 5990190180978655584
+    - rid: 5990190180978655603
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: -906310031

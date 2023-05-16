@@ -20,7 +20,16 @@ namespace AnimationGraph
         public override void OnStart()
         {
             m_CurrentCondition = condition.boolValue;
-            ChangeSourcePlayable();
+            if (condition.boolValue)
+            {
+                trueNode.OnStart();
+                TransitionImmediate(trueNode);
+            }
+            else
+            {
+                falseNode.OnStart();
+                TransitionImmediate(falseNode);
+            }
         }
 
         public override void OnUpdate(float deltaTime)
@@ -31,22 +40,21 @@ namespace AnimationGraph
                 m_CurrentCondition = condition.boolValue;
             }
 
+            m_CurrentActiveNode.OnUpdate(deltaTime);
             UpdateTransition(deltaTime);
         }
-
+        
         private void ChangeSourcePlayable()
         {
             if (condition.boolValue)
             {
                 trueNode.OnStart();
-                m_CurrentActivePlayable = trueNode.GetPlayable();
-                StartTransition();
+                StartTransition(trueNode);
             }
             else
             {
                 falseNode.OnStart();
-                m_CurrentActivePlayable = falseNode.GetPlayable();
-                StartTransition();
+                StartTransition(falseNode);
             }
         }
     }

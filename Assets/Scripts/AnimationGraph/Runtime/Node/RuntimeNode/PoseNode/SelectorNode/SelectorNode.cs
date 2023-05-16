@@ -5,44 +5,53 @@ namespace AnimationGraph
 {
     public abstract class SelectorNode<TNodeConfig> : PoseNode<TNodeConfig> where TNodeConfig :PoseNodeConfig
     {
-        protected Playable m_OldPlayable;
-        protected Playable m_CurrentActivePlayable;
         protected AnimationMixerPlayable m_MixerPlayable;
+        protected IPoseNodeInterface m_CurrentActiveNode;
+        private IPoseNodeInterface m_LastActiveNode;
         protected float m_TransitionTimer = 0f;
         protected float m_TransitionTime = 0.25f;
+        protected PlayableGraph m_PlayableGraph;
         
         private bool m_IsTransitioning;
 
         protected void InitializePlayable(AnimationGraphRuntime animationGraphRuntime)
         {
+            m_PlayableGraph = animationGraphRuntime.m_PlayableGraph;
             //Input 0 = old playable, Input 1 = new playable
             m_MixerPlayable = AnimationMixerPlayable.Create(animationGraphRuntime.m_PlayableGraph, 2);
-            m_OldPlayable = Playable.Null;
         }
         
-        protected void StartTransition()
+        protected void StartTransition(IPoseNodeInterface targetNode)
         {
+            if (m_IsTransitioning)
+            {
+                TransitionFinish();
+            }
+            
             m_MixerPlayable.DisconnectInput(0);
             m_MixerPlayable.DisconnectInput(1);
-            m_MixerPlayable.ConnectInput(0, m_OldPlayable, 0);
-            m_MixerPlayable.ConnectInput(1, m_CurrentActivePlayable, 0);
             
-            if (m_OldPlayable.IsNull())
+            var targetPlayable = targetNode.GetPlayable();
+            if (m_CurrentActiveNode == null)
             {
-                m_MixerPlayable.SetInputWeight(0, 0);
+                m_MixerPlayable.ConnectInput(1, targetPlayable, 0);
                 m_MixerPlayable.SetInputWeight(1, 1);
             }
             else
             {
+                var currentActivePlayable = m_CurrentActiveNode.GetPlayable();
+                m_MixerPlayable.ConnectInput(0, currentActivePlayable, 0);
+                m_MixerPlayable.ConnectInput(1, targetPlayable, 0);
                 m_MixerPlayable.SetInputWeight(0, 1);
                 m_MixerPlayable.SetInputWeight(1, 0);
                 m_IsTransitioning = true;
                 m_TransitionTimer = 0f;
             }
-            
-            m_OldPlayable = m_CurrentActivePlayable;
+
+            m_LastActiveNode = m_CurrentActiveNode;
+            m_CurrentActiveNode = targetNode;
         }
-        
+
         protected void UpdateTransition(float deltaTime)
         {
             if (m_IsTransitioning)
@@ -50,15 +59,40 @@ namespace AnimationGraph
                 m_TransitionTimer += deltaTime;
                 if (m_TransitionTimer >= m_TransitionTime)
                 {
-                    m_IsTransitioning = false;
-                    m_MixerPlayable.SetInputWeight(0, 0);
-                    m_MixerPlayable.SetInputWeight(1, 1);
+                    TransitionFinish();
                 }
 
                 float transitionPercentage = m_TransitionTimer / m_TransitionTime;
                 m_MixerPlayable.SetInputWeight(0, 1 - transitionPercentage);
                 m_MixerPlayable.SetInputWeight(1, transitionPercentage);
             }
+        }
+
+        private void TransitionFinish()
+        {
+            m_IsTransitioning = false;
+            m_MixerPlayable.SetInputWeight(0, 0);
+            m_MixerPlayable.SetInputWeight(1, 1);
+            m_MixerPlayable.DisconnectInput(0);
+
+            if (m_LastActiveNode != null)
+            {
+                m_LastActiveNode.OnDisconnected();
+            }
+        }
+
+        protected void TransitionImmediate(IPoseNodeInterface targetNode)
+        {
+            m_MixerPlayable.ConnectInput(1, targetNode.GetPlayable(), 0);
+            m_MixerPlayable.SetInputWeight(1, 1);
+            m_LastActiveNode = m_CurrentActiveNode;
+            m_CurrentActiveNode = targetNode;
+        }
+        
+        public override void OnDisconnected()
+        {
+            m_MixerPlayable.DisconnectInput(0);
+            m_MixerPlayable.DisconnectInput(1);
         }
         
         public override Playable GetPlayable()

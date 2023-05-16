@@ -22,12 +22,12 @@ MonoBehaviour:
   - rid: 5990190180978655562
   - rid: 5990190180978655563
   - rid: 5990190180978655564
-  - rid: 5990190180978655565
-  - rid: 5990190180978655566
-  - rid: 5990190180978655567
   - rid: 5990190180978655568
   - rid: 5990190180978655570
   - rid: 5990190180978655569
+  - rid: 5990190180978655567
+  - rid: 5990190180978655566
+  - rid: 5990190180978655565
   nodeConnections:
   - sourceNodeId: 1646470057
     targetNodeId: -233946403
@@ -62,13 +62,13 @@ MonoBehaviour:
   - sourceNodeId: 1436502423
     targetNodeId: -541010945
     targetPortIndex: 0
-  - sourceNodeId: 2048133611
+  - sourceNodeId: -541010945
     targetNodeId: 1067351774
     targetPortIndex: 0
   parameters:
-  - rid: 5990190180978655585
-  - rid: 5990190180978655586
-  - rid: 5990190180978655587
+  - rid: 5990190180978655598
+  - rid: 5990190180978655599
+  - rid: 5990190180978655600
   references:
     version: 2
     RefIds:
@@ -121,7 +121,7 @@ MonoBehaviour:
         id: 1344714943
         parameterId: 871654246
         parameterName: moveCondition
-        value: 0
+        value: 1
     - rid: 5990190180978655566
       type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
@@ -153,21 +153,21 @@ MonoBehaviour:
         - Idle
         - LeftStrafe
         - RightStrafe
-    - rid: 5990190180978655585
+    - rid: 5990190180978655598
       type: {class: BoolParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 871654246
         name: moveCondition
         associatedNodes: bfb82650
         value: 0
-    - rid: 5990190180978655586
+    - rid: 5990190180978655599
       type: {class: StringParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1283543217
         name: stringParameter
         associatedNodes: a9232362
         value: 
-    - rid: 5990190180978655587
+    - rid: 5990190180978655600
       type: {class: BoolParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: -906310031

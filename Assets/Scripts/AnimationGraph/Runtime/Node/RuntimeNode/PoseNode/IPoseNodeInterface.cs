@@ -71,5 +71,10 @@ namespace AnimationGraph
         {
             m_InputValueNodes = new IValueNodeInterface[count];
         }
+
+        public virtual void OnDisconnected()
+        {
+            
+        }
     }
 }

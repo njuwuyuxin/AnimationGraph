@@ -9,7 +9,7 @@ namespace AnimationGraph
         public IValueNodeInterface condition => m_InputValueNodes[0];
         
         private string m_CurrentCondition;
-        
+
         public override void InitializeGraphNode(AnimationGraphRuntime animationGraphRuntime)
         {
             id = m_NodeConfig.id;
@@ -28,7 +28,12 @@ namespace AnimationGraph
         public override void OnStart()
         {
             m_CurrentCondition = condition.stringValue;
-            ChangeSourcePlayable();
+            if (string2PortIndex.TryGetValue(condition.stringValue, out int portIndex))
+            {
+                var node = m_InputPoseNodes[portIndex];
+                node.OnStart();
+                TransitionImmediate(node);
+            }
         }
 
         public override void OnUpdate(float deltaTime)
@@ -39,17 +44,17 @@ namespace AnimationGraph
                 m_CurrentCondition = condition.stringValue;
             }
 
+            m_CurrentActiveNode.OnUpdate(deltaTime);
             UpdateTransition(deltaTime);
         }
-        
+
         private void ChangeSourcePlayable()
         {
             if (string2PortIndex.TryGetValue(condition.stringValue, out int portIndex))
             {
                 var node = m_InputPoseNodes[portIndex];
                 node.OnStart();
-                m_CurrentActivePlayable = node.GetPlayable();
-                StartTransition();
+                StartTransition(node);
             }
             else
             {
