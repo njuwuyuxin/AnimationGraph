@@ -14,6 +14,15 @@ public class PlayerMoveComponent : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            m_AnimationGraphPlayer.SetBoolParameter("mode", true);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            m_AnimationGraphPlayer.SetBoolParameter("mode", false);
+        }
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             m_AnimationGraphPlayer.SetStringParameter("stringParameter", "Run");
@@ -32,6 +41,15 @@ public class PlayerMoveComponent : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
         {
             m_AnimationGraphPlayer.SetStringParameter("stringParameter", "RightStrafe");
+        }
+        
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            m_AnimationGraphPlayer.SetBoolParameter("moveCondition", true);
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            m_AnimationGraphPlayer.SetBoolParameter("moveCondition", false);
         }
     }
 }
