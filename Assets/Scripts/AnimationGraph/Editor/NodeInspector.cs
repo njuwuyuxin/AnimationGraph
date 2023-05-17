@@ -68,6 +68,16 @@ namespace AnimationGraph.Editor
                 DestroyImmediate(m_NodeInspectorObject);
             }
 
+            if (graphNode == null)
+            {
+                m_DrawInspectorCustomize = drawInspectorCustomize;
+                m_GraphNode = null;
+                m_NodeConfig = null;
+                m_NodeInspectorObject = null;
+                m_SerializedObject = null;
+                return;
+            }
+
             m_DrawInspectorCustomize = drawInspectorCustomize;
             m_GraphNode = graphNode;
             m_NodeConfig = graphNode.nodeConfig;
