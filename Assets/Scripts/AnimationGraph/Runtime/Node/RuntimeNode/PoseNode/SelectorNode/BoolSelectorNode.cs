@@ -48,13 +48,14 @@ namespace AnimationGraph
         {
             if (condition.boolValue)
             {
-                trueNode.OnStart();
+                //Need to call StartTransition() before Node.OnStart()
                 StartTransition(trueNode);
+                trueNode.OnStart();
             }
             else
             {
-                falseNode.OnStart();
                 StartTransition(falseNode);
+                falseNode.OnStart();
             }
         }
     }

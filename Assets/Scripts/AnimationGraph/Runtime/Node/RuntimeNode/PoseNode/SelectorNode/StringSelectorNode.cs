@@ -53,8 +53,8 @@ namespace AnimationGraph
             if (string2PortIndex.TryGetValue(condition.stringValue, out int portIndex))
             {
                 var node = m_InputPoseNodes[portIndex];
-                node.OnStart();
                 StartTransition(node);
+                node.OnStart();
             }
             else
             {

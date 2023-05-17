@@ -23,6 +23,7 @@ namespace AnimationGraph
         
         protected void StartTransition(IPoseNodeInterface targetNode)
         {
+            //Finish last transition before new transition start
             if (m_IsTransitioning)
             {
                 TransitionFinish();
@@ -60,6 +61,7 @@ namespace AnimationGraph
                 if (m_TransitionTimer >= m_TransitionTime)
                 {
                     TransitionFinish();
+                    return;
                 }
 
                 float transitionPercentage = m_TransitionTimer / m_TransitionTime;
@@ -83,6 +85,8 @@ namespace AnimationGraph
 
         protected void TransitionImmediate(IPoseNodeInterface targetNode)
         {
+            m_MixerPlayable.DisconnectInput(0);
+            m_MixerPlayable.DisconnectInput(1);
             m_MixerPlayable.ConnectInput(1, targetNode.GetPlayable(), 0);
             m_MixerPlayable.SetInputWeight(1, 1);
             m_LastActiveNode = m_CurrentActiveNode;
