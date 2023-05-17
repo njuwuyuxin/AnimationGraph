@@ -82,7 +82,7 @@ namespace AnimationGraph.Editor
 
         private void InitAnimGraphView()
         {
-            m_AnimationGraphView = new AnimationGraphView(m_ParameterBoard, m_NodeInspector);
+            m_AnimationGraphView = new AnimationGraphView(m_GraphArea, m_ParameterBoard, m_NodeInspector);
             m_GraphArea.Add(m_AnimationGraphView);
             m_AnimationGraphView.StretchToParentSize();
         }

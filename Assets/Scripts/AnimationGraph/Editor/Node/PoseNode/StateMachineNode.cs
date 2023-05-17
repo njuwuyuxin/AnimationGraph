@@ -6,7 +6,7 @@ namespace AnimationGraph.Editor
 {
     public class StateMachineNode : GraphNode
     {
-        public override ENodeType nodeType => ENodeType.Blend1DNode;
+        public override ENodeType nodeType => ENodeType.StateMachineNode;
 
         public StateMachineNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
@@ -34,7 +34,8 @@ namespace AnimationGraph.Editor
 
         private void OpenStateMachineGraphView()
         {
-            Debug.Log("Open State Machine Graph Viwe");
+            Debug.Log("Open State Machine Graph View");
+            m_AnimationGraphView.OpenStateMachineGraphView(this);
         }
     }
 }

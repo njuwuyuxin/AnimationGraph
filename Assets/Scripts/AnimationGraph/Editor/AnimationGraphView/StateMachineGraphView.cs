@@ -6,28 +6,39 @@ using UnityEngine.UIElements;
 
 namespace AnimationGraph.Editor
 {
-    public partial class AnimationGraphView : GraphView
+    public class StateMachineGraphView : GraphView
     {
         private const string k_StyleSheetPrefix = "Assets/Scripts/AnimationGraph/Editor/StyleSheet/";
-        private VisualElement m_Container;
-        private AnimationGraphAsset m_AnimationGraphAsset;
         public NodeInspector inspector => m_Inspector;
         public ParameterBoard parameterBoard => m_ParameterBoard;
         private ParameterBoard m_ParameterBoard;
         private NodeInspector m_Inspector;
-        private StateMachineGraphView m_StateMachineGraphView;
+        private VisualElement m_Container;
+        private AnimationGraphView m_OwnerGraph;
+        private StateMachineNode m_StateMachineNode;
 
-        public AnimationGraphView(VisualElement container, ParameterBoard parameterBoard, NodeInspector inspector)
+        public StateMachineGraphView(VisualElement container, AnimationGraphView ownerGraph, StateMachineNode stateMachineNode, ParameterBoard parameterBoard, NodeInspector inspector)
         {
             m_Container = container;
+            m_OwnerGraph = ownerGraph;
+            m_StateMachineNode = stateMachineNode;
             m_ParameterBoard = parameterBoard;
             m_Inspector = inspector;
             AddGridBackground();
             AddManipulators();
             AddStyleSheet();
-            RegisterCallbacks();
             graphViewChanged += OnGraphViewChanged;
             
+            
+            Button returnButton = new Button(ReturnBack);
+            returnButton.Add(new Label("Return back"));
+            this.Add(returnButton);
+            
+        }
+        
+        private void ReturnBack()
+        {
+            m_OwnerGraph.CloseStateMachineGraphView();
         }
 
         public GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
@@ -45,26 +56,6 @@ namespace AnimationGraph.Editor
             }
             
             return graphViewChange;
-        }
-
-        public void OpenStateMachineGraphView(StateMachineNode stateMachineNode)
-        {
-            m_Container.Remove(this);
-            
-            m_StateMachineGraphView = new StateMachineGraphView(m_Container, this, stateMachineNode, m_ParameterBoard, m_Inspector);
-            m_Container.Add(m_StateMachineGraphView);
-            m_StateMachineGraphView.StretchToParentSize();
-        }
-
-        public void CloseStateMachineGraphView()
-        {
-            if (m_StateMachineGraphView != null)
-            {
-                m_Container.Remove(m_StateMachineGraphView);
-                m_Container.Add(this);
-                this.StretchToParentSize();
-                m_StateMachineGraphView = null;
-            }
         }
 
         private void AddGridBackground()
@@ -89,30 +80,10 @@ namespace AnimationGraph.Editor
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
                 menuEvent =>
                 {
-                    menuEvent.menu.AppendAction(
-                        "Add FinalPose Node",
-                        actionEvent => CreateDefaultNode(ENodeType.FinalPoseNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
-                    );
-                    menuEvent.menu.AppendAction(
-                        "Add AnimationClip Node",
-                        actionEvent => CreateDefaultNode(ENodeType.AnimationClipNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
-                    );
-                    menuEvent.menu.AppendAction(
-                        "Add BoolSelector Node",
-                        actionEvent => CreateDefaultNode(ENodeType.BoolSelectorNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
-                    );
-                    menuEvent.menu.AppendAction(
-                        "Add StringSelector Node",
-                        actionEvent => CreateDefaultNode(ENodeType.StringSelectorNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
-                    );
-                    menuEvent.menu.AppendAction(
-                        "Add Blend1D Node",
-                        actionEvent => CreateDefaultNode(ENodeType.Blend1DNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
-                    );
-                    menuEvent.menu.AppendAction(
-                        "Add StateMachine Node",
-                        actionEvent => CreateDefaultNode(ENodeType.StateMachineNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
-                    );
+                    // menuEvent.menu.AppendAction(
+                    //     "Add FinalPose Node",
+                    //     actionEvent => CreateDefaultNode(ENodeType.FinalPoseNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
+                    // );
                 });
             return contextualMenuManipulator;
         }
