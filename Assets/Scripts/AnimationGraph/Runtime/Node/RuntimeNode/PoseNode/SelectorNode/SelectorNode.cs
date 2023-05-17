@@ -95,6 +95,10 @@ namespace AnimationGraph
         
         public override void OnDisconnected()
         {
+            if (m_CurrentActiveNode != null)
+            {
+                m_CurrentActiveNode.OnDisconnected();
+            }
             m_MixerPlayable.DisconnectInput(0);
             m_MixerPlayable.DisconnectInput(1);
         }

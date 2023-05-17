@@ -25,6 +25,8 @@ namespace AnimationGraph.Editor
                     break;
                 case ENodeType.StringValueNode: node = new StringValueGraphNode(this, position);
                     break;
+                case ENodeType.Blend1DNode: node = new Blend1DNode(this, position);
+                    break;
                 default: node = new GraphNode(this, position);
                     break;
             }

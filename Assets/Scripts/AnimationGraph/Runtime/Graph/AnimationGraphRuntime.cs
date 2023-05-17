@@ -104,6 +104,26 @@ namespace AnimationGraph
                 Debug.LogError("Paramter \"" + parameterName + "\" not exist!");
             }
         }
+        
+        public void SetFloatParameter(string parameterName, float value)
+        {
+            var hash = Animator.StringToHash(parameterName);
+            if (m_Id2ParameterMap.TryGetValue(hash, out var graphParameter))
+            {
+                foreach (var nodeId in  graphParameter.associatedNodes)
+                {
+                    if (m_Id2NodeMap.TryGetValue(nodeId, out var node))
+                    {
+                        FloatValueNode boolValueNode = (FloatValueNode) node;
+                        boolValueNode.floatValue = value;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError("Paramter \"" + parameterName + "\" not exist!");
+            }
+        }
 
         public void SetStringParameter(string parameterName, string value)
         {

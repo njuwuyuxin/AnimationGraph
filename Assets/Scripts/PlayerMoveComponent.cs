@@ -14,6 +14,9 @@ public class PlayerMoveComponent : MonoBehaviour
 
     void Update()
     {
+        var verticalInput = Input.GetAxis("Vertical");
+        m_AnimationGraphPlayer.SetFloatParameter("moveSpeed", verticalInput);
+        
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             m_AnimationGraphPlayer.SetBoolParameter("mode", true);
