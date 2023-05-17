@@ -53,20 +53,12 @@ MonoBehaviour:
       rid: 5990190180978655386
     customData:
       rid: -2
-  - id: -233946403
-    nodeType: 4
-    positionX: 162
-    positionY: 46
+  - id: 1655197360
+    nodeType: 2
+    positionX: 173
+    positionY: 314
     nodeConfig:
-      rid: 5990190180978655307
-    customData:
-      rid: -2
-  - id: -1465730693
-    nodeType: 3
-    positionX: 364
-    positionY: 84
-    nodeConfig:
-      rid: 5990190297734447109
+      rid: 5990190297734447111
     customData:
       rid: -2
   - id: -1092406093
@@ -77,52 +69,60 @@ MonoBehaviour:
       rid: 5990190297734447110
     customData:
       rid: -2
-  - id: 1655197360
-    nodeType: 2
-    positionX: 173
-    positionY: 314
+  - id: -1465730693
+    nodeType: 3
+    positionX: 364
+    positionY: 84
     nodeConfig:
-      rid: 5990190297734447111
+      rid: 5990190297734447109
+    customData:
+      rid: -2
+  - id: -233946403
+    nodeType: 4
+    positionX: 162
+    positionY: 46
+    nodeConfig:
+      rid: 5990190180978655307
     customData:
       rid: -2
   - id: 1067351774
     nodeType: 1
-    positionX: 809
-    positionY: 364
+    positionX: 565
+    positionY: 377
     nodeConfig:
       rid: 0
     customData:
       rid: -2
-  - id: 641799270
-    nodeType: 2
-    positionX: 414
-    positionY: 403
-    nodeConfig:
-      rid: 5990190180978655490
-    customData:
-      rid: -2
   - id: -1753076601
     nodeType: 2
-    positionX: 398
-    positionY: 494
+    positionX: 154
+    positionY: 507
     nodeConfig:
       rid: 5990190180978655489
     customData:
       rid: -2
   - id: 1821668909
     nodeType: 103
-    positionX: 406
-    positionY: 590
+    positionX: 162
+    positionY: 603
     nodeConfig:
       rid: 5990190297734447150
     customData:
       rid: -2
   - id: -530591723
     nodeType: 5
-    positionX: 605
-    positionY: 352
+    positionX: 361
+    positionY: 365
     nodeConfig:
       rid: 5990190297734447151
+    customData:
+      rid: -2
+  - id: 641799270
+    nodeType: 2
+    positionX: 170
+    positionY: 416
+    nodeConfig:
+      rid: 5990190180978655490
     customData:
       rid: -2
   ports:
@@ -158,6 +158,48 @@ MonoBehaviour:
     portId: 1219996606
     nodeId: 1646470057
     portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 1068578476
+    nodeId: 1655197360
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 1916712673
+    nodeId: -1092406093
+    portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: True
+    portId: -1065401543
+    nodeId: -1465730693
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: False
+    portId: -120622468
+    nodeId: -1465730693
+    portType: 0
+    portIndex: 1
+    direction: 0
+    capacity: 1
+  - portName: Condition
+    portId: -295135675
+    nodeId: -1465730693
+    portType: 1
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: Output
+    portId: -487324902
+    nodeId: -1465730693
+    portType: 0
     portIndex: 0
     direction: 1
     capacity: 1
@@ -203,48 +245,6 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
-  - portName: True
-    portId: -1065401543
-    nodeId: -1465730693
-    portType: 0
-    portIndex: 0
-    direction: 0
-    capacity: 1
-  - portName: False
-    portId: -120622468
-    nodeId: -1465730693
-    portType: 0
-    portIndex: 1
-    direction: 0
-    capacity: 1
-  - portName: Condition
-    portId: -295135675
-    nodeId: -1465730693
-    portType: 1
-    portIndex: 0
-    direction: 0
-    capacity: 1
-  - portName: Output
-    portId: -487324902
-    nodeId: -1465730693
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
-    portId: 1916712673
-    nodeId: -1092406093
-    portType: 1
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
-    portId: 1068578476
-    nodeId: 1655197360
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
   - portName: Input
     portId: 1805344058
     nodeId: 1067351774
@@ -252,13 +252,6 @@ MonoBehaviour:
     portIndex: 0
     direction: 0
     capacity: 0
-  - portName: Output
-    portId: 2055963221
-    nodeId: 641799270
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
   - portName: Output
     portId: -1293489154
     nodeId: -1753076601
@@ -301,6 +294,13 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
+  - portName: Output
+    portId: 2055963221
+    nodeId: 641799270
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
   edges:
   - inputPort: 357491562
     outputPort: 1219996606
@@ -327,10 +327,10 @@ MonoBehaviour:
   - inputPort: -346309245
     outputPort: -1293489154
   parameters:
-  - rid: 5990190297734447152
-  - rid: 5990190297734447153
-  - rid: 5990190297734447154
-  - rid: 5990190297734447155
+  - rid: 5990190297734447208
+  - rid: 5990190297734447209
+  - rid: 5990190297734447210
+  - rid: 5990190297734447211
   references:
     version: 2
     RefIds:
@@ -424,28 +424,28 @@ MonoBehaviour:
         id: -530591723
         slot0: 0
         slot1: 1
-    - rid: 5990190297734447152
+    - rid: 5990190297734447208
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: moveCondition
         associateNodes: 
         value: 0
-    - rid: 5990190297734447153
+    - rid: 5990190297734447209
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217
         name: stringParameter
         associateNodes: a9232362
         value: 
-    - rid: 5990190297734447154
+    - rid: 5990190297734447210
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: -906310031
         name: mode
         associateNodes: b334e3be
         value: 0
-    - rid: 5990190297734447155
+    - rid: 5990190297734447211
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1597705152

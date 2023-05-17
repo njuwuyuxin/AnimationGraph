@@ -85,6 +85,10 @@ namespace AnimationGraph.Editor
                         "Add Blend1D Node",
                         actionEvent => CreateDefaultNode(ENodeType.Blend1DNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
                     );
+                    menuEvent.menu.AppendAction(
+                        "Add StateMachine Node",
+                        actionEvent => CreateDefaultNode(ENodeType.StateMachineNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
+                    );
                 });
             return contextualMenuManipulator;
         }

@@ -27,6 +27,8 @@ namespace AnimationGraph.Editor
                     break;
                 case ENodeType.Blend1DNode: node = new Blend1DNode(this, position);
                     break;
+                case ENodeType.StateMachineNode: node = new StateMachineNode(this, position);
+                    break;
                 default: node = new GraphNode(this, position);
                     break;
             }

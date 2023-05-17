@@ -41,6 +41,8 @@ namespace AnimationGraph.Editor
         BoolSelectorNode = 3,
         StringSelectorNode = 4,
         Blend1DNode = 5,
+        Blend2DNode = 6,
+        StateMachineNode = 7,
         BoolValueNode = 101,
         IntValueNode = 102,
         FloatValueNode = 103,
