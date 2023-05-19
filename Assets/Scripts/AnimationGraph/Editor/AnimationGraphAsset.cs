@@ -47,6 +47,7 @@ namespace AnimationGraph.Editor
         IntValueNode = 102,
         FloatValueNode = 103,
         StringValueNode = 104,
+        StateNode = 201,
     }
 
     public enum EPortDirection

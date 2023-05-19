@@ -342,10 +342,10 @@ MonoBehaviour:
   - inputPort: -346309245
     outputPort: -1293489154
   parameters:
-  - rid: 5990190297734447227
-  - rid: 5990190297734447228
-  - rid: 5990190297734447229
-  - rid: 5990190297734447230
+  - rid: 5990190297734447265
+  - rid: 5990190297734447266
+  - rid: 5990190297734447267
+  - rid: 5990190297734447268
   references:
     version: 2
     RefIds:
@@ -445,28 +445,28 @@ MonoBehaviour:
         id: -1003514715
         slot0: 0
         slot1: 0
-    - rid: 5990190297734447227
+    - rid: 5990190297734447265
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: moveCondition
         associateNodes: 
         value: 0
-    - rid: 5990190297734447228
+    - rid: 5990190297734447266
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217
         name: stringParameter
         associateNodes: a9232362
         value: 
-    - rid: 5990190297734447229
+    - rid: 5990190297734447267
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: -906310031
         name: mode
         associateNodes: b334e3be
         value: 0
-    - rid: 5990190297734447230
+    - rid: 5990190297734447268
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1597705152

@@ -16,6 +16,14 @@ namespace AnimationGraph.Editor
         private VisualElement m_Container;
         private AnimationGraphView m_OwnerGraph;
         private StateMachineNode m_StateMachineNode;
+        
+        public class TransitionToAdd
+        {
+            public StateNode source;
+            public StateNode target;
+        }
+        
+        public TransitionToAdd transitionToAdd { get; set; }
 
         public StateMachineGraphView(VisualElement container, AnimationGraphView ownerGraph, StateMachineNode stateMachineNode, ParameterBoard parameterBoard, NodeInspector inspector)
         {
@@ -29,16 +37,21 @@ namespace AnimationGraph.Editor
             AddStyleSheet();
             graphViewChanged += OnGraphViewChanged;
             
-            
             Button returnButton = new Button(ReturnBack);
             returnButton.Add(new Label("Return back"));
             this.Add(returnButton);
-            
+
+            transitionToAdd = new TransitionToAdd();
         }
         
         private void ReturnBack()
         {
             m_OwnerGraph.CloseStateMachineGraphView();
+        }
+        
+        private void OnGeometryChanged(GeometryChangedEvent evt)
+        {
+            
         }
 
         public GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
@@ -80,10 +93,10 @@ namespace AnimationGraph.Editor
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
                 menuEvent =>
                 {
-                    // menuEvent.menu.AppendAction(
-                    //     "Add FinalPose Node",
-                    //     actionEvent => CreateDefaultNode(ENodeType.FinalPoseNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))
-                    // );
+                    menuEvent.menu.AppendAction(
+                        "Add State",
+                        actionEvent => AddState(MouseToViewPosition(actionEvent.eventInfo.mousePosition))
+                    );
                 });
             return contextualMenuManipulator;
         }
@@ -100,6 +113,13 @@ namespace AnimationGraph.Editor
         {
             Vector2 graphViewPosition = VisualElementExtensions.LocalToWorld(this, new Vector2(transform.position.x,transform.position.y));
             return mousePosition - graphViewPosition;
+        }
+
+        private void AddState(Vector2 position)
+        {
+            var stateNode = new StateNode(this.m_OwnerGraph, this, position);
+            stateNode.InitializeDefault();
+            AddElement(stateNode);
         }
 
         private GraphNode GetNodeById(int id)
@@ -145,6 +165,24 @@ namespace AnimationGraph.Editor
         public void OnDestory()
         {
             graphViewChanged -= OnGraphViewChanged;
+        }
+
+        public void TryCreateTransition()
+        {
+            if (transitionToAdd.source == null || transitionToAdd.target == null)
+            {
+                return;
+            }
+
+            if (transitionToAdd.source == transitionToAdd.target)
+            {
+                return;
+            }
+
+            var transition = new StateTransition(transitionToAdd.source, transitionToAdd.target);
+            Add(transition);
+            transitionToAdd.source = null;
+            transitionToAdd.target = null;
         }
     }
 }
