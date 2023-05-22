@@ -17,10 +17,30 @@ namespace AnimationGraph.Editor
         private AnimationGraphView m_OwnerGraph;
         private StateMachineNode m_StateMachineNode;
 
+        private StateTransition m_PreviewTransition;
+
         public StateNode currentSelectedNode { get; set; }
         public StateNode lastSelectedNode { get; set; }
-        public bool isMakingTransition { get; set; }
-        
+
+        private bool m_IsMakingTransition;
+
+        public bool isMakingTransition
+        {
+            get
+            {
+                return m_IsMakingTransition;
+            }
+            set
+            {
+                m_IsMakingTransition = value;
+                if (!m_IsMakingTransition && m_PreviewTransition != null)
+                {
+                    RemoveElement(m_PreviewTransition);
+                    m_PreviewTransition = null;
+                }
+            }
+        }
+
         public class TransitionToAdd
         {
             public StateNode source;
@@ -38,6 +58,7 @@ namespace AnimationGraph.Editor
             m_Inspector = inspector;
 
             RegisterCallback<MouseDownEvent>(OnMouseDown);
+            RegisterCallback<MouseMoveEvent>(OnMouseMove);
             AddGridBackground();
             AddManipulators();
             AddStyleSheet();
@@ -120,6 +141,14 @@ namespace AnimationGraph.Editor
             }
         }
         
+        private void OnMouseMove(MouseMoveEvent evt)
+        {
+            if (isMakingTransition && m_PreviewTransition != null)
+            {
+                m_PreviewTransition.candidatePosition = evt.mousePosition;
+            }
+        }
+        
         private void AddStyleSheet()
         {
             var graphViewStyleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(k_StyleSheetPrefix + "AnimationGraphView.uss");
@@ -144,6 +173,11 @@ namespace AnimationGraph.Editor
         private void StartMakingTransition()
         {
             isMakingTransition = true;
+            if (m_PreviewTransition == null)
+            {
+                m_PreviewTransition = new StateTransition(this, currentSelectedNode, null);
+                AddElement(m_PreviewTransition);
+            }
         }
 
         private GraphNode GetNodeById(int id)

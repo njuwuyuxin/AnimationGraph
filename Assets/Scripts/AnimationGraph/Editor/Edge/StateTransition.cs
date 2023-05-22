@@ -77,23 +77,48 @@ namespace AnimationGraph.Editor
             }
         }
         
+        private Vector2 m_CandidatePosition;
+        private Vector2 m_GlobalCandidatePosition;
+
+        public Vector2 candidatePosition
+        {
+            get => m_CandidatePosition;
+            set
+            {
+                if (!Approximately(m_CandidatePosition, value))
+                {
+                    m_CandidatePosition = value;
+
+                    m_GlobalCandidatePosition = this.WorldToLocal(m_CandidatePosition);
+
+                    UpdateTransitionControl();
+                }
+            }
+        }
+        
         public StateTransition(StateMachineGraphView stateMachineGraphView, StateNode source, StateNode target)
         {
             m_StateMachineGraphView = stateMachineGraphView;
             m_SourceState = source;
             m_TargetState = target;
-            source.AddOutputTransition(this);
-            target.AddInputTransition(this);
-            
+            if (source != null)
+            {
+                source.AddOutputTransition(this);
+                m_From = m_SourceState.GetPosition().center;
+            }
+
+            if (target != null)
+            {
+                target.AddInputTransition(this);
+                m_To = m_TargetState.GetPosition().center;
+            }
+
             styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(k_StyleSheetPrefix + "StateTransition.uss"));
             AddToClassList("state-transition");
 
             style.position = Position.Absolute;
             capabilities |= Capabilities.Selectable | Capabilities.Deletable | Capabilities.Copiable;
-            
-            m_From = m_SourceState.GetPosition().center;
-            m_To = m_TargetState.GetPosition().center;
-            
+
             transitionControl.from = m_From;
             transitionControl.to = m_To;
             transitionControl.color = Color.gray;
@@ -190,7 +215,20 @@ namespace AnimationGraph.Editor
                 return;
             }
             
-            ComputeControlPoints();
+            if (m_TargetState == null)
+            {
+                transitionControl.from = m_SourceState.GetPosition().center;
+                transitionControl.to = m_GlobalCandidatePosition;
+            }
+            else if (m_SourceState == null)
+            {
+                transitionControl.from = m_GlobalCandidatePosition;
+                transitionControl.to = m_TargetState.GetPosition().center;
+            }
+            else
+            {
+                ComputeControlPoints();
+            }
         }
         
         private void UpdateTransitionControlColorsAndWidth()
@@ -364,6 +402,11 @@ namespace AnimationGraph.Editor
             var dy1 = (int)(v2.y - v1.y);
             var epsilon = 0.003 * (dx1 * dx1 + dy1 * dy1);
             return epsilon;
+        }
+        
+        private static bool Approximately(Vector2 v1, Vector2 v2)
+        {
+            return Mathf.Approximately(v1.x, v2.x) && Mathf.Approximately(v1.y, v2.y);
         }
     }
 }
