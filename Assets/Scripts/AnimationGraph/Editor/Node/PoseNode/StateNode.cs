@@ -25,9 +25,7 @@ namespace AnimationGraph.Editor
             // topContainer.RemoveFromHierarchy();
             ColorUtility.TryParseHtmlString("#006633", out var titleColor);
             titleContainer.style.backgroundColor = new StyleColor(titleColor);
-            
-            RegisterCallback<MouseDownEvent>(OnMouseDown);
-            RegisterCallback<MouseUpEvent>(OnMouseUp);
+
             RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
 
@@ -37,24 +35,6 @@ namespace AnimationGraph.Editor
             nodeName = "State";
             m_NodeConfig = new StatePoseNodeConfig();
             m_NodeConfig.SetId(id);
-        }
-
-        private void OnMouseDown(MouseDownEvent evt)
-        {
-            if (evt.button == 1)
-            {
-                m_StateMachineView.transitionToAdd.source = this;
-            }
-        }
-
-        private void OnMouseUp(MouseUpEvent evt)
-        {
-            if (evt.button == 1)
-            {
-                m_StateMachineView.transitionToAdd.target = this;
-                m_StateMachineView.TryCreateTransition();
-                evt.StopImmediatePropagation();
-            }
         }
 
         private void OnGeometryChanged(GeometryChangedEvent evt)
@@ -70,6 +50,24 @@ namespace AnimationGraph.Editor
                 outputTransition.from = evt.newRect.center;
                 outputTransition.UpdateTransitionControl();
             }
+        }
+
+        public override void OnSelected()
+        {
+            if (m_StateMachineView.isMakingTransition && m_StateMachineView.lastSelectedNode != null)
+            {
+                m_StateMachineView.transitionToAdd.source = m_StateMachineView.lastSelectedNode;
+                m_StateMachineView.transitionToAdd.target = this;
+                m_StateMachineView.TryCreateTransition();
+                m_StateMachineView.isMakingTransition = false;
+            }
+            m_StateMachineView.currentSelectedNode = this;
+        }
+
+        public override void OnUnselected()
+        {
+            m_StateMachineView.lastSelectedNode = m_StateMachineView.currentSelectedNode;
+            m_StateMachineView.currentSelectedNode = null;
         }
 
         public void AddInputTransition(StateTransition transition)

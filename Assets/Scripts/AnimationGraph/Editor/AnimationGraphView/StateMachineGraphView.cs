@@ -16,6 +16,10 @@ namespace AnimationGraph.Editor
         private VisualElement m_Container;
         private AnimationGraphView m_OwnerGraph;
         private StateMachineNode m_StateMachineNode;
+
+        public StateNode currentSelectedNode { get; set; }
+        public StateNode lastSelectedNode { get; set; }
+        public bool isMakingTransition { get; set; }
         
         public class TransitionToAdd
         {
@@ -32,6 +36,8 @@ namespace AnimationGraph.Editor
             m_StateMachineNode = stateMachineNode;
             m_ParameterBoard = parameterBoard;
             m_Inspector = inspector;
+
+            RegisterCallback<MouseDownEvent>(OnMouseDown);
             AddGridBackground();
             AddManipulators();
             AddStyleSheet();
@@ -47,11 +53,6 @@ namespace AnimationGraph.Editor
         private void ReturnBack()
         {
             m_OwnerGraph.CloseStateMachineGraphView();
-        }
-        
-        private void OnGeometryChanged(GeometryChangedEvent evt)
-        {
-            
         }
 
         public GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
@@ -82,25 +83,43 @@ namespace AnimationGraph.Editor
         {
             this.AddManipulator(new ContentDragger());
             SetupZoom(ContentZoomer.DefaultMinScale,ContentZoomer.DefaultMaxScale);
-            this.AddManipulator(CreateContextualMenu());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
             this.AddManipulator(new ClickSelector());
+            this.AddManipulator(CreateContextualMenu());
         }
         
         private IManipulator CreateContextualMenu()
         {
-            ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
-                menuEvent =>
-                {
-                    menuEvent.menu.AppendAction(
-                        "Add State",
-                        actionEvent => AddState(MouseToViewPosition(actionEvent.eventInfo.mousePosition))
-                    );
-                });
+            ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(OnContextMenuPopulate);
             return contextualMenuManipulator;
         }
+        
+        private void OnContextMenuPopulate(ContextualMenuPopulateEvent menuEvent)
+        {
+            DropdownMenuAction.Status makeTransitionStatus = currentSelectedNode == null
+                ? DropdownMenuAction.Status.Hidden
+                : DropdownMenuAction.Status.Normal;
 
+            menuEvent.menu.AppendAction(
+                "Add State",
+                actionEvent => AddState(MouseToViewPosition(actionEvent.eventInfo.mousePosition))
+            );
+            
+            menuEvent.menu.AppendAction(
+                "Make Transition",
+                actionEvent => StartMakingTransition(),makeTransitionStatus
+            );
+        }
+
+        private void OnMouseDown(MouseDownEvent evt)
+        {
+            if (isMakingTransition && evt.target == this)
+            {
+                isMakingTransition = false;
+            }
+        }
+        
         private void AddStyleSheet()
         {
             var graphViewStyleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(k_StyleSheetPrefix + "AnimationGraphView.uss");
@@ -120,6 +139,11 @@ namespace AnimationGraph.Editor
             var stateNode = new StateNode(this.m_OwnerGraph, this, position);
             stateNode.InitializeDefault();
             AddElement(stateNode);
+        }
+
+        private void StartMakingTransition()
+        {
+            isMakingTransition = true;
         }
 
         private GraphNode GetNodeById(int id)
