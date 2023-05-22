@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,16 +8,51 @@ namespace AnimationGraph.Editor
 {
     public class StateTransition : GraphElement
     {
+        private const string k_StyleSheetPrefix = "Assets/Scripts/AnimationGraph/Editor/StyleSheet/";
+        
+        private static CustomStyleProperty<int> s_TranstionWidthProperty = new CustomStyleProperty<int>("--edge-width");
+        private static CustomStyleProperty<Color> s_TransitionEdgeColorProperty = new CustomStyleProperty<Color>("--selected-edge-color");
+        private static CustomStyleProperty<Color> s_TransitionColorProperty = new CustomStyleProperty<Color>("--edge-color");
+        
         public int id { get; set; }
-        private readonly List<Vector2> m_RenderPoints = new List<Vector2>();
+
         private StateNode m_SourceState;
         private StateNode m_TargetState;
+        private StateMachineGraphView m_StateMachineGraphView;
         
-        private static readonly float s_ArrowCosAngle = Mathf.Cos(60);
-        private static readonly float s_ArrowSinAngle = Mathf.Sin(60);
         private static readonly float s_ArrowWidth = 20;
-        private const float k_MinTransitionWidth = 1.75f;
-        private const float k_ArrowLength = 4f;
+        private const float k_MaxInterval = 10;
+        private const float k_InterceptWidth = 6.0f;
+
+        public int transitionWidth { get; set; } = s_DefaultTransitionWidth;
+        public Color selectedColor { get; private set; } = s_DefaultSelectedColor;
+        public Color defaultColor { get; private set; } = s_DefaultColor;
+        private static readonly int s_DefaultTransitionWidth = 2;
+        private static readonly Color s_DefaultSelectedColor = new Color(240 / 255f, 240 / 255f, 240 / 255f);
+        private static readonly Color s_DefaultColor = new Color(146 / 255f, 146 / 255f, 146 / 255f);
+        
+        private TransitionControl m_TransitionControl;
+
+        public TransitionControl transitionControl
+        {
+            get
+            {
+                if (m_TransitionControl == null)
+                {
+                    m_TransitionControl = CreateTransitionControl();
+                }
+
+                return m_TransitionControl;
+            }
+        }
+        
+        protected virtual TransitionControl CreateTransitionControl()
+        {
+            return new TransitionControl(m_StateMachineGraphView)
+            {
+                interceptWidth = k_InterceptWidth
+            };
+        }
 
         private Vector2 m_From;
 
@@ -26,7 +62,7 @@ namespace AnimationGraph.Editor
             set
             {
                 m_From = value;
-                OnTransitionPointChange();
+                transitionControl.from = m_From;
             }
         }
 
@@ -37,113 +73,297 @@ namespace AnimationGraph.Editor
             set
             {
                 m_To = value;
-                OnTransitionPointChange();
+                transitionControl.to = m_To;
             }
         }
         
-        public StateTransition(StateNode source, StateNode target)
+        public StateTransition(StateMachineGraphView stateMachineGraphView, StateNode source, StateNode target)
         {
+            m_StateMachineGraphView = stateMachineGraphView;
             m_SourceState = source;
             m_TargetState = target;
             source.AddOutputTransition(this);
             target.AddInputTransition(this);
             
+            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(k_StyleSheetPrefix + "StateTransition.uss"));
+            AddToClassList("state-transition");
+
+            style.position = Position.Absolute;
+            capabilities |= Capabilities.Selectable | Capabilities.Deletable | Capabilities.Copiable;
+            
             m_From = m_SourceState.GetPosition().center;
             m_To = m_TargetState.GetPosition().center;
-            generateVisualContent += OnGenerateVisualContent;
+            
+            transitionControl.from = m_From;
+            transitionControl.to = m_To;
+            transitionControl.color = Color.gray;
+            Add(transitionControl);
+            UpdateTransitionControl();
+            
+            RegisterCallback<AttachToPanelEvent>(OnTransitionAttach);
+        }
+        
+        protected override void OnCustomStyleResolved(ICustomStyle styles)
+        {
+            base.OnCustomStyleResolved(styles);
+
+            if (styles.TryGetValue(s_TranstionWidthProperty, out var edgeWidthValue))
+            {
+                transitionWidth = edgeWidthValue;
+            }
+
+            if (styles.TryGetValue(s_TransitionEdgeColorProperty, out var selectColorValue))
+            {
+                selectedColor = selectColorValue;
+            }
+
+            if (styles.TryGetValue(s_TransitionColorProperty, out var edgeColorValue))
+            {
+                defaultColor = edgeColorValue;
+            }
+
+            UpdateTransitionControlColorsAndWidth();
+        }
+        
+        private void OnTransitionAttach(AttachToPanelEvent evt)
+        {
+            UpdateTransitionControl();
         }
 
-        public void OnTransitionPointChange()
+        #region UNITY_CALLS
+        public override bool ContainsPoint(Vector2 localPoint)
         {
-            MarkDirtyRepaint();
+            var result = UpdateTransitionControl() &&
+                         transitionControl.ContainsPoint(this.ChangeCoordinatesTo(transitionControl, localPoint));
+            return result;
         }
         
-        protected virtual void UpdateRenderPoints()
+        public override bool Overlaps(Rect rectangle)
         {
-            var p1 = parent.ChangeCoordinatesTo(this, m_From);
-            var p2 = parent.ChangeCoordinatesTo(this, m_To);
-            
-            m_RenderPoints.Clear();
-            RenderArrow(p1, p2);
+            if (!UpdateTransitionControl())
+            {
+                return false;
+            }
+
+            rectangle.height = 5f;
+            rectangle.width = 5f;
+            return transitionControl.Overlaps(this.ChangeCoordinatesTo(transitionControl, rectangle));
         }
         
-        private void OnGenerateVisualContent(MeshGenerationContext context)
+        public override void OnSelected()
         {
-            UpdateRenderPoints();
+            UpdateTransitionControlColorsAndWidth();
+        }
+
+        public override void OnUnselected()
+        {
+            UpdateTransitionControlColorsAndWidth();
+        }
+        
+
+        #endregion
+
+        //Update All TransitionControl Properties 
+        public virtual bool UpdateTransitionControl()
+        {
+            if (m_SourceState == null && m_SourceState == null)
+            {
+                return false;
+            }
+
+            if (m_StateMachineGraphView == null)
+            {
+                return false;
+            }
+
+            UpdateTransitionPoints();
+            transitionControl.UpdateLayout();
+            UpdateTransitionControlColorsAndWidth();
+
+            return true;
+        }
+        
+        private void UpdateTransitionPoints()
+        {
+            if (m_TargetState == null && m_SourceState == null)
+            {
+                return;
+            }
             
-            if (m_RenderPoints.Count == 0)
+            ComputeControlPoints();
+        }
+        
+        private void UpdateTransitionControlColorsAndWidth()
+        {
+            if (selected)
+            {
+                transitionControl.color = selectedColor;
+                transitionControl.transitionWidth = transitionWidth;
+            }
+            else
+            {
+                transitionControl.color = defaultColor;
+                transitionControl.transitionWidth = transitionWidth;
+            }
+        }
+        
+        private void ComputeControlPoints()
+        {
+            var inputTransitionCount = 0;
+            var outputTransitionCount = 0;
+            var index = -1;
+
+            foreach (var transition in m_SourceState.outputTransitions)
+            {
+                if (transition.m_TargetState == m_TargetState)
+                {
+                    if (ReferenceEquals(this, transition))
+                    {
+                        index = outputTransitionCount;
+                    }
+
+                    outputTransitionCount++;
+                }
+            }
+            
+            foreach (var transition in m_TargetState.outputTransitions)
+            {
+                if (transition.m_TargetState == m_SourceState)
+                {
+                    if (ReferenceEquals(this, transition))
+                    {
+                        index = outputTransitionCount;
+                    }
+
+                    outputTransitionCount++;
+                }
+            }
+
+            if (index == -1)
             {
                 return;
             }
 
-            var md = context.Allocate(8, 12, null);
-            if (md.vertexCount == 0)
+            var sourceCenter = m_SourceState.GetPosition().center;
+            var destinationCenter = m_TargetState.GetPosition().center;
+
+            var sourceToDestination = destinationCenter - sourceCenter;
+            var normal = new Vector2(-sourceToDestination.y, sourceToDestination.x).normalized;
+
+            var totalCount = inputTransitionCount + outputTransitionCount;
+
+            var radius = m_SourceState.GetPosition().width * 0.5f;
+            var length = k_MaxInterval * (totalCount - 1) * 0.5f;
+            if (length > radius - 2)
             {
-                return;
+                length = radius - 2;
             }
 
-            // setup line
-            var halfWidth = 1f * 0.5f;
-            
-            var p0 = m_RenderPoints[0];
-            var p1 = m_RenderPoints[1];
-            
-            var v = p1 - p0;
-            v *= halfWidth / v.magnitude;
-            v = new Vector2(-v.y, v.x);
+            var fraction = totalCount == 1 ? 0 : (float)index / (totalCount - 1) * 2f - 1f; // [0,1] -> [-1, 1]
+            var p1 = sourceCenter + normal * length * fraction;
+            var p2 = destinationCenter + normal * length * fraction;
 
-            md.SetNextVertex(new Vertex { position = p0 + v, tint = Color.gray });
-            md.SetNextVertex(new Vertex { position = p0 - v, tint = Color.gray });
-            md.SetNextVertex(new Vertex { position = p1 + v, tint = Color.gray });
-            md.SetNextVertex(new Vertex { position = p1 - v, tint = Color.gray });
-            
-            md.SetNextIndex(0);
-            md.SetNextIndex(1);
-            md.SetNextIndex(2);
-            md.SetNextIndex(1);
-            md.SetNextIndex(3);
-            md.SetNextIndex(2);
-
-            // Setup arrow
-            md.SetNextVertex(new Vertex { position = m_RenderPoints[2], tint = Color.gray });
-            md.SetNextVertex(new Vertex { position = m_RenderPoints[3], tint = Color.gray });
-            md.SetNextVertex(new Vertex { position = m_RenderPoints[4], tint = Color.gray });
-            md.SetNextVertex(new Vertex { position = m_RenderPoints[5], tint = Color.gray });
-            
-            md.SetNextIndex(4);
-            md.SetNextIndex(5);
-            md.SetNextIndex(6);
-            md.SetNextIndex(4);
-            md.SetNextIndex(7);
-            md.SetNextIndex(5);
-        }
-
-        private static bool Approximately(Vector2 v1, Vector2 v2)
-        {
-            return Mathf.Approximately(v1.x, v2.x) && Mathf.Approximately(v1.y, v2.y);
+            transitionControl.from = ClosestIntersection(sourceCenter, radius, p1, p2);
+            transitionControl.to = ClosestIntersection(destinationCenter, radius, p1, p2);
         }
         
-        private void RenderArrow(Vector2 p1, Vector2 p2)
+        private static Vector2 ClosestIntersection(Vector2 center, float radius, Vector2 lineStart, Vector2 lineEnd)
         {
-            if (Approximately(p1, p2))
+            var intersections = FindLineCircleIntersections(center.x, center.y, radius, lineStart, lineEnd,
+                out var intersection1, out var intersection2);
+
+            if (intersections == 1)
             {
-                return;
+                return intersection1; // one intersection
             }
-            
-            // line
-            m_RenderPoints.Add(p1);
-            m_RenderPoints.Add(p2);
-            
-            // arrow
-            var v = p2 - p1;
-            v *= s_ArrowWidth / v.magnitude;
-            var v1 = new Vector2(v.x * s_ArrowCosAngle - v.y * s_ArrowSinAngle, v.x * s_ArrowSinAngle + v.y * s_ArrowCosAngle);
-            var v2 = new Vector2(v.x * s_ArrowCosAngle + v.y * s_ArrowSinAngle, v.x * -s_ArrowSinAngle + v.y * s_ArrowCosAngle);
-            
-            m_RenderPoints.Add(p2);
-            m_RenderPoints.Add(p2 + (p1 - p2).normalized * s_ArrowWidth * 0.5f);
-            m_RenderPoints.Add(p2 + v1);
-            m_RenderPoints.Add(p2 + v2);
+
+            if (intersections == 2)
+            {
+                if (IsPointOnLineSegmentViaCrossProduct(lineStart, lineEnd, intersection1))
+                {
+                    return intersection1;
+                }
+
+                return intersection2;
+            }
+
+            return Vector2.zero;
+        }
+        
+        // Find the points of intersection.
+        private static int FindLineCircleIntersections(float cx, float cy, float radius,
+            Vector2 point1, Vector2 point2, out Vector2 intersection1, out Vector2 intersection2)
+        {
+            float dx, dy, A, B, C, det, t;
+
+            dx = point2.x - point1.x;
+            dy = point2.y - point1.y;
+
+            A = dx * dx + dy * dy;
+            B = 2 * (dx * (point1.x - cx) + dy * (point1.y - cy));
+            C = (point1.x - cx) * (point1.x - cx) + (point1.y - cy) * (point1.y - cy) - radius * radius;
+
+            det = B * B - 4 * A * C;
+            if ((A <= 0.0000001) || (det < 0))
+            {
+                // No real solutions.
+                intersection1 = new Vector2(float.NaN, float.NaN);
+                intersection2 = new Vector2(float.NaN, float.NaN);
+                return 0;
+            }
+            else if (det == 0)
+            {
+                // One solution.
+                t = -B / (2 * A);
+                intersection1 = new Vector2(point1.x + t * dx, point1.y + t * dy);
+                intersection2 = new Vector2(float.NaN, float.NaN);
+                return 1;
+            }
+            else
+            {
+                // Two solutions.
+                t = (float)((-B + Mathf.Sqrt(det)) / (2 * A));
+                intersection1 = new Vector2(point1.x + t * dx, point1.y + t * dy);
+                t = (float)((-B - Mathf.Sqrt(det)) / (2 * A));
+                intersection2 = new Vector2(point1.x + t * dx, point1.y + t * dy);
+                return 2;
+            }
+        }
+
+        private static bool IsPointOnLineSegmentViaCrossProduct(Vector2 v1, Vector2 v2, Vector2 p)
+        {
+            if (!((v1.x <= p.x && p.x <= v2.x) || (v2.x <= p.x && p.x <= v1.x)))
+            {
+                // test point not in x-range
+                return false;
+            }
+
+            if (!((v1.y <= p.y && p.y <= v2.y) || (v2.y <= p.y && p.y <= v1.y)))
+            {
+                // test point not in y-range
+                return false;
+            }
+
+            return IsPointOnLineviaPDP(v1, v2, p);
+        }
+        
+        private static bool IsPointOnLineviaPDP(Vector2 v1, Vector2 v2, Vector2 p)
+        {
+            var a = PerpDotProduct(v1, v2, p);
+            return Mathf.Abs(PerpDotProduct(v1, v2, p)) < GetEpsilon(v1, v2);
+        }
+        
+        private static float PerpDotProduct(Vector2 a, Vector2 b, Vector2 c)
+        {
+            return (a.x - c.x) * (b.y - c.y) - (a.y - c.y) * (b.x - c.x);
+        }
+        
+        private static double GetEpsilon(Vector2 v1, Vector2 v2)
+        {
+            var dx1 = (int)(v2.x - v1.x);
+            var dy1 = (int)(v2.y - v1.y);
+            var epsilon = 0.003 * (dx1 * dx1 + dy1 * dy1);
+            return epsilon;
         }
     }
 }

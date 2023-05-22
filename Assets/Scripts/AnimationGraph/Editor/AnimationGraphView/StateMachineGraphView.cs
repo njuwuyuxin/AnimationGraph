@@ -179,8 +179,8 @@ namespace AnimationGraph.Editor
                 return;
             }
 
-            var transition = new StateTransition(transitionToAdd.source, transitionToAdd.target);
-            Add(transition);
+            var transition = new StateTransition(this, transitionToAdd.source, transitionToAdd.target);
+            AddElement(transition);
             transitionToAdd.source = null;
             transitionToAdd.target = null;
         }

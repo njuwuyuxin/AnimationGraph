@@ -13,6 +13,9 @@ namespace AnimationGraph.Editor
         private HashSet<StateTransition> m_InputTransitions = new HashSet<StateTransition>();
         private HashSet<StateTransition> m_OutputTransitions = new HashSet<StateTransition>();
 
+        public HashSet<StateTransition> inputTransitions => m_InputTransitions;
+        public HashSet<StateTransition> outputTransitions => m_OutputTransitions;
+
         public StateNode(AnimationGraphView graphView, StateMachineGraphView stateMachineView, Vector2 position) : base(graphView,position)
         {
             m_StateMachineView = stateMachineView;
@@ -59,11 +62,13 @@ namespace AnimationGraph.Editor
             foreach (var inputTransition in m_InputTransitions)
             {
                 inputTransition.to = evt.newRect.center;
+                inputTransition.UpdateTransitionControl();
             }
 
             foreach (var outputTransition in m_OutputTransitions)
             {
                 outputTransition.from = evt.newRect.center;
+                outputTransition.UpdateTransitionControl();
             }
         }
 
