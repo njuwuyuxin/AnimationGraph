@@ -136,7 +136,7 @@ namespace AnimationGraph.Editor
         public override void OnUnselected()
         {
             base.OnUnselected();
-            m_AnimationGraphView.inspector.SetGraphNode(null, false);
+            m_AnimationGraphView.inspector.ClearInspector();
         }
 
         public virtual void OnNodeConfigUpdate()

@@ -65,6 +65,9 @@ namespace AnimationGraph.Editor
 
         public override void OnSelected()
         {
+            base.OnSelected();
+            m_AnimationGraphView.inspector.SetGraphNode(this, m_DrawInspectorCustomize);
+
             if (m_StateMachineView.isMakingTransition && m_StateMachineView.lastSelectedNode != null)
             {
                 m_StateMachineView.transitionToAdd.source = m_StateMachineView.lastSelectedNode;
@@ -77,6 +80,8 @@ namespace AnimationGraph.Editor
 
         public override void OnUnselected()
         {
+            base.OnUnselected();
+            m_AnimationGraphView.inspector.ClearInspector();
             m_StateMachineView.lastSelectedNode = m_StateMachineView.currentSelectedNode;
             m_StateMachineView.currentSelectedNode = null;
         }

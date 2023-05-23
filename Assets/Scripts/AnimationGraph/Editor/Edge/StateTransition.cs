@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -32,6 +33,9 @@ namespace AnimationGraph.Editor
         private static readonly Color s_DefaultColor = new Color(146 / 255f, 146 / 255f, 146 / 255f);
         
         private TransitionControl m_TransitionControl;
+
+        private TransitionConfig m_EdgeConfig;
+        public TransitionConfig edgeConfig => m_EdgeConfig;
 
         public TransitionControl transitionControl
         {
@@ -127,6 +131,19 @@ namespace AnimationGraph.Editor
             
             RegisterCallback<AttachToPanelEvent>(OnTransitionAttach);
         }
+
+        public void InitializeDefault()
+        {
+            id = Animator.StringToHash(Guid.NewGuid().ToString());
+            m_EdgeConfig = new TransitionConfig();
+            m_EdgeConfig.SetId(id);
+        }
+
+        public void LoadConfig(TransitionConfig transitionConfig)
+        {
+            m_EdgeConfig = transitionConfig;
+            id = transitionConfig.id;
+        }
         
         protected override void OnCustomStyleResolved(ICustomStyle styles)
         {
@@ -178,11 +195,13 @@ namespace AnimationGraph.Editor
         public override void OnSelected()
         {
             UpdateTransitionControlColorsAndWidth();
+            m_StateMachineGraphView.inspector.SetEdge(this, false);
         }
 
         public override void OnUnselected()
         {
             UpdateTransitionControlColorsAndWidth();
+            m_StateMachineGraphView.inspector.ClearInspector();
         }
         
 
@@ -303,6 +322,16 @@ namespace AnimationGraph.Editor
 
             transitionControl.from = ClosestIntersection(sourceCenter, radius, p1, p2);
             transitionControl.to = ClosestIntersection(destinationCenter, radius, p1, p2);
+        }
+
+        public void OnEdgeInspectorGUI()
+        {
+            
+        }
+
+        public void OnEdgeConfigUpdate()
+        {
+            
         }
         
         private static Vector2 ClosestIntersection(Vector2 center, float radius, Vector2 lineStart, Vector2 lineEnd)

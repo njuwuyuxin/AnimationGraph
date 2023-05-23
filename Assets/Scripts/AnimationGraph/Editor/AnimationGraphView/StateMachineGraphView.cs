@@ -8,10 +8,10 @@ namespace AnimationGraph.Editor
     public class StateMachineGraphView : GraphViewBase
     {
         private const string k_StyleSheetPrefix = "Assets/Scripts/AnimationGraph/Editor/StyleSheet/";
-        public NodeInspector inspector => m_Inspector;
+        public AnimationGraphInspector inspector => m_Inspector;
         public ParameterBoard parameterBoard => m_ParameterBoard;
         private ParameterBoard m_ParameterBoard;
-        private NodeInspector m_Inspector;
+        private AnimationGraphInspector m_Inspector;
         private VisualElement m_Container;
         private AnimationGraphView m_AnimationGraphView;
         private StateMachineNode m_StateMachineNode;
@@ -50,7 +50,7 @@ namespace AnimationGraph.Editor
         public TransitionToAdd transitionToAdd { get; set; }
 
         public StateMachineGraphView(VisualElement container, AnimationGraphView animationGraphView,
-            StateMachineNode stateMachineNode, ParameterBoard parameterBoard, NodeInspector inspector)
+            StateMachineNode stateMachineNode, ParameterBoard parameterBoard, AnimationGraphInspector inspector)
         {
             m_Container = container;
             m_AnimationGraphView = animationGraphView;
@@ -169,6 +169,7 @@ namespace AnimationGraph.Editor
             }
 
             var transition = new StateTransition(this, transitionToAdd.source, transitionToAdd.target);
+            transition.InitializeDefault();
             AddElement(transition);
             transitionToAdd.source = null;
             transitionToAdd.target = null;
