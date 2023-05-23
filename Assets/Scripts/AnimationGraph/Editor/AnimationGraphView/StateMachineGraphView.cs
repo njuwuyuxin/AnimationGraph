@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace AnimationGraph.Editor
 {
-    public class StateMachineGraphView : GraphView
+    public class StateMachineGraphView : GraphViewBase
     {
         private const string k_StyleSheetPrefix = "Assets/Scripts/AnimationGraph/Editor/StyleSheet/";
         public NodeInspector inspector => m_Inspector;
@@ -59,11 +58,10 @@ namespace AnimationGraph.Editor
 
             RegisterCallback<MouseDownEvent>(OnMouseDown);
             RegisterCallback<MouseMoveEvent>(OnMouseMove);
-            AddGridBackground();
-            AddManipulators();
+            AddDefaultManipulators();
+            this.AddManipulator(CreateContextualMenu());
             AddStyleSheet();
-            graphViewChanged += OnGraphViewChanged;
-            
+
             Button returnButton = new Button(ReturnBack);
             returnButton.Add(new Label("Return back"));
             this.Add(returnButton);
@@ -76,40 +74,6 @@ namespace AnimationGraph.Editor
             m_OwnerGraph.CloseStateMachineGraphView();
         }
 
-        public GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
-        {
-            if (graphViewChange.elementsToRemove != null && graphViewChange.elementsToRemove.Count > 0)
-            {
-                foreach (var element in graphViewChange.elementsToRemove)
-                {
-                    GraphNode graphNode = element as GraphNode;
-                    if (graphNode != null)
-                    {
-                        graphNode.OnDestroy();
-                    }
-                }
-            }
-            
-            return graphViewChange;
-        }
-
-        private void AddGridBackground()
-        {
-            GridBackground bg = new GridBackground();
-            Insert(0, bg);
-            bg.StretchToParentSize();
-        }
-
-        private void AddManipulators()
-        {
-            this.AddManipulator(new ContentDragger());
-            SetupZoom(ContentZoomer.DefaultMinScale,ContentZoomer.DefaultMaxScale);
-            this.AddManipulator(new SelectionDragger());
-            this.AddManipulator(new RectangleSelector());
-            this.AddManipulator(new ClickSelector());
-            this.AddManipulator(CreateContextualMenu());
-        }
-        
         private IManipulator CreateContextualMenu()
         {
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(OnContextMenuPopulate);
@@ -129,7 +93,7 @@ namespace AnimationGraph.Editor
             
             menuEvent.menu.AppendAction(
                 "Make Transition",
-                actionEvent => StartMakingTransition(),makeTransitionStatus
+                actionEvent => StartMakingTransition(actionEvent),makeTransitionStatus
             );
         }
 
@@ -157,11 +121,6 @@ namespace AnimationGraph.Editor
                 styleSheets.Add(graphViewStyleSheet);
             }
         }
-        private Vector2 MouseToViewPosition(Vector2 mousePosition)
-        {
-            Vector2 graphViewPosition = VisualElementExtensions.LocalToWorld(this, new Vector2(transform.position.x,transform.position.y));
-            return mousePosition - graphViewPosition;
-        }
 
         private void AddState(Vector2 position)
         {
@@ -170,59 +129,15 @@ namespace AnimationGraph.Editor
             AddElement(stateNode);
         }
 
-        private void StartMakingTransition()
+        private void StartMakingTransition(DropdownMenuAction actionEvent)
         {
             isMakingTransition = true;
             if (m_PreviewTransition == null)
             {
                 m_PreviewTransition = new StateTransition(this, currentSelectedNode, null);
+                m_PreviewTransition.candidatePosition = actionEvent.eventInfo.mousePosition;
                 AddElement(m_PreviewTransition);
             }
-        }
-
-        private GraphNode GetNodeById(int id)
-        {
-            GraphNode result = null;
-            nodes.ForEach(node =>
-            {
-                var graphNode = node as GraphNode;
-                if (graphNode != null && graphNode.id == id)
-                {
-                    result = graphNode;
-                }
-            });
-            return result;
-        }
-        
-        private NodePort GetPortById(int id)
-        {
-            NodePort result = null;
-            ports.ForEach(port =>
-            {
-                var nodePort = port as NodePort;
-                if (nodePort != null && nodePort.id == id)
-                {
-                    result = nodePort;
-                }
-            });
-            return result;
-        }
-
-        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
-        {
-            return ports.ToList();
-        }
-
-        public void ClearAnimationGraphView()
-        {
-            DeleteElements(nodes.ToList());
-            DeleteElements(edges.ToList());
-            DeleteElements(ports.ToList());
-        }
-
-        public void OnDestory()
-        {
-            graphViewChanged -= OnGraphViewChanged;
         }
 
         public void TryCreateTransition()
