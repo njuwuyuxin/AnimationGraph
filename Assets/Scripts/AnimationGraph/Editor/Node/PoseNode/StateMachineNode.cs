@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,6 +8,10 @@ namespace AnimationGraph.Editor
     public class StateMachineNode : GraphNode
     {
         public override ENodeType nodeType => ENodeType.StateMachineNode;
+
+        //The index = portIndex
+        private List<StatePoseNodeConfig> m_StateConfigs = new List<StatePoseNodeConfig>();
+        public List<StatePoseNodeConfig> stateConfigs => m_StateConfigs;
 
         public StateMachineNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
@@ -19,9 +24,40 @@ namespace AnimationGraph.Editor
         public override void InitializeDefault()
         {
             base.InitializeDefault();
-            m_NodeConfig = new Blend1DPoseNodeConfig();
+            m_NodeConfig = new StateMachinePoseNodeConfig();
             m_NodeConfig.SetId(id);
             CreatePort(Direction.Output, Port.Capacity.Multi, "Output", NodePort.EPortType.PosePort, 0);
+        }
+        
+        public override void LoadNodeData(NodeData data)
+        {
+            base.LoadNodeData(data);
+            var config = m_NodeConfig as StateMachinePoseNodeConfig;
+        }
+
+        public void OnAddState(StatePoseNodeConfig stateConfig)
+        {
+            CreatePort(Direction.Input, Port.Capacity.Multi, stateConfig.stateName, NodePort.EPortType.PosePort, m_StateConfigs.Count);
+            m_StateConfigs.Add(stateConfig);
+        }
+
+        public void OnRemoveState(StatePoseNodeConfig stateConfig)
+        {
+            var portIndex = m_StateConfigs.IndexOf(stateConfig);
+            var statePort = GetInputPort(NodePort.EPortType.PosePort, portIndex);
+            foreach (var connection in statePort.connections)
+            {
+                m_AnimationGraphView.RemoveElement(connection);
+            }
+            
+            DeletePort(statePort);
+
+            for (int i = portIndex + 1; i < m_StateConfigs.Count; i++)
+            {
+                GetInputPort(NodePort.EPortType.PosePort, i).portIndex = i - 1;
+            }
+
+            m_StateConfigs.Remove(stateConfig);
         }
 
         private void OnMouseDown(MouseDownEvent evt)

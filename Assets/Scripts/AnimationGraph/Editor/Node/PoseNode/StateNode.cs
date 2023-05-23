@@ -20,9 +20,9 @@ namespace AnimationGraph.Editor
         {
             m_StateMachineView = stateMachineView;
             var divider = contentContainer.Q("divider");
-            // divider.RemoveFromHierarchy();
-            // inputContainer.style.flexGrow = 0;
-            // topContainer.RemoveFromHierarchy();
+            divider.RemoveFromHierarchy();
+            inputContainer.style.flexGrow = 0;
+            topContainer.RemoveFromHierarchy();
             ColorUtility.TryParseHtmlString("#006633", out var titleColor);
             titleContainer.style.backgroundColor = new StyleColor(titleColor);
 
@@ -32,9 +32,18 @@ namespace AnimationGraph.Editor
         public override void InitializeDefault()
         {
             base.InitializeDefault();
-            nodeName = "State";
+            nodeName = "Default State";
             m_NodeConfig = new StatePoseNodeConfig();
             m_NodeConfig.SetId(id);
+            var stateConfig = m_NodeConfig as StatePoseNodeConfig;
+            stateConfig.stateName = nodeName;
+        }
+
+        public void LoadFromConfig(StatePoseNodeConfig stateConfig)
+        {
+            m_NodeConfig = stateConfig;
+            id = m_NodeConfig.id;
+            nodeName = stateConfig.stateName;
         }
 
         private void OnGeometryChanged(GeometryChangedEvent evt)
@@ -50,6 +59,8 @@ namespace AnimationGraph.Editor
                 outputTransition.from = evt.newRect.center;
                 outputTransition.UpdateTransitionControl();
             }
+
+            (m_NodeConfig as StatePoseNodeConfig).position = GetPosition().position;
         }
 
         public override void OnSelected()
@@ -68,6 +79,11 @@ namespace AnimationGraph.Editor
         {
             m_StateMachineView.lastSelectedNode = m_StateMachineView.currentSelectedNode;
             m_StateMachineView.currentSelectedNode = null;
+        }
+
+        public override void OnDestroy()
+        {
+            m_StateMachineView.stateMachineNode.OnRemoveState(m_NodeConfig as StatePoseNodeConfig);
         }
 
         public void AddInputTransition(StateTransition transition)

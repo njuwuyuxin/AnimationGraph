@@ -7,12 +7,17 @@ namespace AnimationGraph
     public class StateMachineNode : PoseNode<StateMachinePoseNodeConfig>
     {
         private AnimationGraphRuntime m_AnimationGraphRuntime;
+        
+        //TODO: Need to Define a state machine graph data structure
 
         public override void InitializeGraphNode(AnimationGraphRuntime animationGraphRuntime)
         {
             id = m_NodeConfig.id;
-            // SetPoseInputSlotCount(2);
-            // SetValueInputSlotCount(1);
+            SetPoseInputSlotCount(m_NodeConfig.states.Count);
+            SetValueInputSlotCount(0);
+            
+            //TODO: deserialize nodeconfig to a runtime state machine graph
+            
             m_AnimationGraphRuntime = animationGraphRuntime;
         }
 

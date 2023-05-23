@@ -13,8 +13,9 @@ namespace AnimationGraph.Editor
         private ParameterBoard m_ParameterBoard;
         private NodeInspector m_Inspector;
         private VisualElement m_Container;
-        private AnimationGraphView m_OwnerGraph;
+        private AnimationGraphView m_AnimationGraphView;
         private StateMachineNode m_StateMachineNode;
+        public StateMachineNode stateMachineNode => m_StateMachineNode;
 
         private StateTransition m_PreviewTransition;
 
@@ -48,10 +49,11 @@ namespace AnimationGraph.Editor
         
         public TransitionToAdd transitionToAdd { get; set; }
 
-        public StateMachineGraphView(VisualElement container, AnimationGraphView ownerGraph, StateMachineNode stateMachineNode, ParameterBoard parameterBoard, NodeInspector inspector)
+        public StateMachineGraphView(VisualElement container, AnimationGraphView animationGraphView,
+            StateMachineNode stateMachineNode, ParameterBoard parameterBoard, NodeInspector inspector)
         {
             m_Container = container;
-            m_OwnerGraph = ownerGraph;
+            m_AnimationGraphView = animationGraphView;
             m_StateMachineNode = stateMachineNode;
             m_ParameterBoard = parameterBoard;
             m_Inspector = inspector;
@@ -67,11 +69,23 @@ namespace AnimationGraph.Editor
             this.Add(returnButton);
 
             transitionToAdd = new TransitionToAdd();
+
+            InitializeFromStateMachineNode();
         }
-        
+
+        private void InitializeFromStateMachineNode()
+        {
+            foreach (var stateConfig in m_StateMachineNode.stateConfigs)
+            {
+                var stateNode = new StateNode(this.m_AnimationGraphView, this, stateConfig.position);
+                stateNode.LoadFromConfig(stateConfig);
+                AddElement(stateNode);
+            }
+        }
+
         private void ReturnBack()
         {
-            m_OwnerGraph.CloseStateMachineGraphView();
+            m_AnimationGraphView.CloseStateMachineGraphView();
         }
 
         private IManipulator CreateContextualMenu()
@@ -124,9 +138,11 @@ namespace AnimationGraph.Editor
 
         private void AddState(Vector2 position)
         {
-            var stateNode = new StateNode(this.m_OwnerGraph, this, position);
+            var stateNode = new StateNode(this.m_AnimationGraphView, this, position);
             stateNode.InitializeDefault();
             AddElement(stateNode);
+
+            m_StateMachineNode.OnAddState(stateNode.nodeConfig as StatePoseNodeConfig);
         }
 
         private void StartMakingTransition(DropdownMenuAction actionEvent)
@@ -157,5 +173,6 @@ namespace AnimationGraph.Editor
             transitionToAdd.source = null;
             transitionToAdd.target = null;
         }
+        
     }
 }
