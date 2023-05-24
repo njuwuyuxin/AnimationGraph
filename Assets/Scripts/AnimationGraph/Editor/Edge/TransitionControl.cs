@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System.Reflection;
-using Unity.Profiling;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.Profiling;
 
@@ -11,10 +10,7 @@ namespace AnimationGraph.Editor
 {
     public class TransitionControl : VisualElement
     {
-        private static readonly ProfilerMarker s_ContainsPointProfilerMarker = new ProfilerMarker("TransitionControl.ContainsPoint");
-        private static readonly ProfilerMarker s_UpdateRenderPointsProfilerMarker = new ProfilerMarker("TransitionControl.UpdateRenderPoints");
-        private static readonly ProfilerMarker s_ComputeLayoutPointsProfilerMarker = new ProfilerMarker("TransitionControl.ComputeLayout");
-        
+
         private static readonly float s_ArrowCosAngle = Mathf.Cos(60);
         private static readonly float s_ArrowSinAngle = Mathf.Sin(60);
         private static readonly float s_ArrowWidth = 20;
@@ -118,8 +114,6 @@ namespace AnimationGraph.Editor
 
         public override bool ContainsPoint(Vector2 localPoint)
         {
-            using var auto = s_ContainsPointProfilerMarker.Auto();
-            
             if (!base.ContainsPoint(localPoint))
             {
                 return false;
@@ -216,10 +210,12 @@ namespace AnimationGraph.Editor
             var v1 = new Vector2(v.x * s_ArrowCosAngle - v.y * s_ArrowSinAngle, v.x * s_ArrowSinAngle + v.y * s_ArrowCosAngle);
             var v2 = new Vector2(v.x * s_ArrowCosAngle + v.y * s_ArrowSinAngle, v.x * -s_ArrowSinAngle + v.y * s_ArrowCosAngle);
             
-            m_RenderPoints.Add(p2);
-            m_RenderPoints.Add(p2 + (p1 - p2).normalized * s_ArrowWidth * 0.5f);
-            m_RenderPoints.Add(p2 + v1);
-            m_RenderPoints.Add(p2 + v2);
+            var middle = (p1 + p2) / 2;
+            m_RenderPoints.Add(middle);
+            m_RenderPoints.Add(middle + (p1 - p2).normalized * s_ArrowWidth * 0.5f);
+            m_RenderPoints.Add(middle + v1);
+            m_RenderPoints.Add(middle + v2);
+
         }
 
 
@@ -243,23 +239,18 @@ namespace AnimationGraph.Editor
                     return;
                 }
             }
+            
+            m_LastRenderPoints.Clear();
+            m_LastRenderPoints.Add(p1);
+            m_LastRenderPoints.Add(p2);
+            m_RenderPointsDirty = false;
 
-            using (s_UpdateRenderPointsProfilerMarker.Auto())
-            {
-                m_LastRenderPoints.Clear();
-                m_LastRenderPoints.Add(p1);
-                m_LastRenderPoints.Add(p2);
-                m_RenderPointsDirty = false;
-
-                m_RenderPoints.Clear();
-                RenderArrow(p1, p2);
-            }
+            m_RenderPoints.Clear();
+            RenderArrow(p1, p2);
         }
         
         private void ComputeLayout()
         {
-            using var auto = s_ComputeLayoutPointsProfilerMarker.Auto();
-            
             var rect = new Rect(Vector2.Min(m_To, m_From), new Vector2(Mathf.Abs(from.x - to.x), Mathf.Abs(from.y - to.y)));
             
             if (!Approximately(m_To, m_From))
