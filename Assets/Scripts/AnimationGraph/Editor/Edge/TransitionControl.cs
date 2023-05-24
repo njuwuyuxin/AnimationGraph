@@ -4,7 +4,6 @@ using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor.Experimental.GraphView;
-using UnityEngine.Profiling;
 
 namespace AnimationGraph.Editor
 {
@@ -107,9 +106,7 @@ namespace AnimationGraph.Editor
         
         private void OnGenerateVisualContent(MeshGenerationContext mgc)
         {
-            Profiler.BeginSample("DrawTransition");
             DrawTransition(mgc);
-            Profiler.EndSample();
         }
 
         public override bool ContainsPoint(Vector2 localPoint)

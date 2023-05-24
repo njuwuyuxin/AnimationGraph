@@ -22,7 +22,7 @@ namespace AnimationGraph.Editor
             var divider = contentContainer.Q("divider");
             divider.RemoveFromHierarchy();
             inputContainer.style.flexGrow = 0;
-            topContainer.RemoveFromHierarchy();
+            // topContainer.RemoveFromHierarchy();
             ColorUtility.TryParseHtmlString("#006633", out var titleColor);
             titleContainer.style.backgroundColor = new StyleColor(titleColor);
 

@@ -243,7 +243,7 @@ namespace AnimationGraph.Editor
 
             var totalCount = inputTransitionCount + outputTransitionCount;
 
-            var radius = m_SourceState.GetPosition().width * 0.5f;
+            var radius = m_SourceState.GetPosition().height * 0.5f;
             var length = k_MaxInterval * (totalCount - 1) * 0.5f;
             if (length > radius - 2)
             {
@@ -254,109 +254,10 @@ namespace AnimationGraph.Editor
             var p1 = sourceCenter + normal * length * fraction;
             var p2 = destinationCenter + normal * length * fraction;
 
-            transitionControl.from = ClosestIntersection(sourceCenter, radius, p1, p2);
-            transitionControl.to = ClosestIntersection(destinationCenter, radius, p1, p2);
+            transitionControl.from = p1;
+            transitionControl.to = p2;
         }
 
-        private static Vector2 ClosestIntersection(Vector2 center, float radius, Vector2 lineStart, Vector2 lineEnd)
-        {
-            var intersections = FindLineCircleIntersections(center.x, center.y, radius, lineStart, lineEnd,
-                out var intersection1, out var intersection2);
-
-            if (intersections == 1)
-            {
-                return intersection1; // one intersection
-            }
-
-            if (intersections == 2)
-            {
-                if (IsPointOnLineSegmentViaCrossProduct(lineStart, lineEnd, intersection1))
-                {
-                    return intersection1;
-                }
-
-                return intersection2;
-            }
-
-            return Vector2.zero;
-        }
-        
-        // Find the points of intersection.
-        private static int FindLineCircleIntersections(float cx, float cy, float radius,
-            Vector2 point1, Vector2 point2, out Vector2 intersection1, out Vector2 intersection2)
-        {
-            float dx, dy, A, B, C, det, t;
-
-            dx = point2.x - point1.x;
-            dy = point2.y - point1.y;
-
-            A = dx * dx + dy * dy;
-            B = 2 * (dx * (point1.x - cx) + dy * (point1.y - cy));
-            C = (point1.x - cx) * (point1.x - cx) + (point1.y - cy) * (point1.y - cy) - radius * radius;
-
-            det = B * B - 4 * A * C;
-            if ((A <= 0.0000001) || (det < 0))
-            {
-                // No real solutions.
-                intersection1 = new Vector2(float.NaN, float.NaN);
-                intersection2 = new Vector2(float.NaN, float.NaN);
-                return 0;
-            }
-            else if (det == 0)
-            {
-                // One solution.
-                t = -B / (2 * A);
-                intersection1 = new Vector2(point1.x + t * dx, point1.y + t * dy);
-                intersection2 = new Vector2(float.NaN, float.NaN);
-                return 1;
-            }
-            else
-            {
-                // Two solutions.
-                t = (float)((-B + Mathf.Sqrt(det)) / (2 * A));
-                intersection1 = new Vector2(point1.x + t * dx, point1.y + t * dy);
-                t = (float)((-B - Mathf.Sqrt(det)) / (2 * A));
-                intersection2 = new Vector2(point1.x + t * dx, point1.y + t * dy);
-                return 2;
-            }
-        }
-
-        private static bool IsPointOnLineSegmentViaCrossProduct(Vector2 v1, Vector2 v2, Vector2 p)
-        {
-            if (!((v1.x <= p.x && p.x <= v2.x) || (v2.x <= p.x && p.x <= v1.x)))
-            {
-                // test point not in x-range
-                return false;
-            }
-
-            if (!((v1.y <= p.y && p.y <= v2.y) || (v2.y <= p.y && p.y <= v1.y)))
-            {
-                // test point not in y-range
-                return false;
-            }
-
-            return IsPointOnLineviaPDP(v1, v2, p);
-        }
-        
-        private static bool IsPointOnLineviaPDP(Vector2 v1, Vector2 v2, Vector2 p)
-        {
-            var a = PerpDotProduct(v1, v2, p);
-            return Mathf.Abs(PerpDotProduct(v1, v2, p)) < GetEpsilon(v1, v2);
-        }
-        
-        private static float PerpDotProduct(Vector2 a, Vector2 b, Vector2 c)
-        {
-            return (a.x - c.x) * (b.y - c.y) - (a.y - c.y) * (b.x - c.x);
-        }
-        
-        private static double GetEpsilon(Vector2 v1, Vector2 v2)
-        {
-            var dx1 = (int)(v2.x - v1.x);
-            var dy1 = (int)(v2.y - v1.y);
-            var epsilon = 0.003 * (dx1 * dx1 + dy1 * dy1);
-            return epsilon;
-        }
-        
         private static bool Approximately(Vector2 v1, Vector2 v2)
         {
             return Mathf.Approximately(v1.x, v2.x) && Mathf.Approximately(v1.y, v2.y);
