@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -34,8 +33,8 @@ namespace AnimationGraph.Editor
         
         private TransitionControl m_TransitionControl;
 
-        private TransitionConfig m_EdgeConfig;
-        public TransitionConfig edgeConfig => m_EdgeConfig;
+        private EdgeConfig m_EdgeConfig;
+        public EdgeConfig edgeConfig => m_EdgeConfig;
 
         public TransitionControl transitionControl
         {
@@ -50,35 +49,25 @@ namespace AnimationGraph.Editor
             }
         }
         
-        protected virtual TransitionControl CreateTransitionControl()
+        private TransitionControl CreateTransitionControl()
         {
             return new TransitionControl(m_StateMachineGraphView)
             {
                 interceptWidth = k_InterceptWidth
             };
         }
-
-        private Vector2 m_From;
+        
 
         public Vector2 from
         {
-            get => m_From;
-            set
-            {
-                m_From = value;
-                transitionControl.from = m_From;
-            }
+            get => transitionControl.from;
+            set => transitionControl.from = value;
         }
-
-        private Vector2 m_To;
+        
         public Vector2 to
         {
-            get => m_To;
-            set
-            {
-                m_To = value;
-                transitionControl.to = m_To;
-            }
+            get => transitionControl.to;
+            set => transitionControl.to = value;
         }
         
         private Vector2 m_CandidatePosition;
@@ -100,49 +89,61 @@ namespace AnimationGraph.Editor
             }
         }
         
-        public StateTransition(StateMachineGraphView stateMachineGraphView, StateNode source, StateNode target)
+        public StateTransition(StateMachineGraphView stateMachineGraphView)
         {
             m_StateMachineGraphView = stateMachineGraphView;
+            
+            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(k_StyleSheetPrefix + "StateTransition.uss"));
+            AddToClassList("state-transition");
+            style.position = Position.Absolute;
+            capabilities |= Capabilities.Selectable | Capabilities.Deletable | Capabilities.Copiable;
+            
+            Add(transitionControl);
+            
+            RegisterCallback<AttachToPanelEvent>(OnTransitionAttach);
+        }
+
+        public void InitializeDefault(StateNode source, StateNode target)
+        {
+            id = Animator.StringToHash(Guid.NewGuid().ToString());
             m_SourceState = source;
             m_TargetState = target;
             if (source != null)
             {
                 source.AddOutputTransition(this);
-                m_From = m_SourceState.GetPosition().center;
+                from = m_SourceState.GetPosition().center;
             }
 
             if (target != null)
             {
                 target.AddInputTransition(this);
-                m_To = m_TargetState.GetPosition().center;
+                to = m_TargetState.GetPosition().center;
             }
-
-            styleSheets.Add(AssetDatabase.LoadAssetAtPath<StyleSheet>(k_StyleSheetPrefix + "StateTransition.uss"));
-            AddToClassList("state-transition");
-
-            style.position = Position.Absolute;
-            capabilities |= Capabilities.Selectable | Capabilities.Deletable | Capabilities.Copiable;
-
-            transitionControl.from = m_From;
-            transitionControl.to = m_To;
-            transitionControl.color = Color.gray;
-            Add(transitionControl);
             UpdateTransitionControl();
-            
-            RegisterCallback<AttachToPanelEvent>(OnTransitionAttach);
+
+            //Init Default TransitionConfig
+            if (source != null && target != null)
+            {
+                m_EdgeConfig = new TransitionConfig();
+                m_EdgeConfig.SetId(id);
+                var transitionConfig = m_EdgeConfig as TransitionConfig;
+                transitionConfig.sourceStateId = m_SourceState.id;
+                transitionConfig.targetStateId = m_TargetState.id;
+            }
         }
 
-        public void InitializeDefault()
-        {
-            id = Animator.StringToHash(Guid.NewGuid().ToString());
-            m_EdgeConfig = new TransitionConfig();
-            m_EdgeConfig.SetId(id);
-        }
-
-        public void LoadConfig(TransitionConfig transitionConfig)
+        public void LoadFromConfig(TransitionConfig transitionConfig)
         {
             m_EdgeConfig = transitionConfig;
             id = transitionConfig.id;
+            m_SourceState = m_StateMachineGraphView.GetNodeById(transitionConfig.sourceStateId) as StateNode;
+            m_TargetState = m_StateMachineGraphView.GetNodeById(transitionConfig.targetStateId) as StateNode;
+                
+            m_SourceState.AddOutputTransition(this);
+            m_TargetState.AddInputTransition(this);
+            from = m_SourceState.GetPosition().center;
+            to = m_TargetState.GetPosition().center;
+            UpdateTransitionControl();
         }
         
         protected override void OnCustomStyleResolved(ICustomStyle styles)
@@ -332,6 +333,26 @@ namespace AnimationGraph.Editor
         public void OnEdgeConfigUpdate()
         {
             
+        }
+
+        public void OnDestroy()
+        {
+            if (m_SourceState != null)
+            {
+                m_SourceState.outputTransitions.Remove(this);
+            }
+
+            if (m_TargetState != null)
+            {
+                m_TargetState.inputTransitions.Remove(this);
+            }
+
+            m_StateMachineGraphView.stateMachineNode.OnRemoveTransition(m_EdgeConfig as TransitionConfig);
+        }
+
+        public void OnDestroyByStateDestroy()
+        {
+            m_StateMachineGraphView.stateMachineNode.OnRemoveTransition(m_EdgeConfig as TransitionConfig);
         }
         
         private static Vector2 ClosestIntersection(Vector2 center, float radius, Vector2 lineStart, Vector2 lineEnd)

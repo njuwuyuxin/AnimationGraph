@@ -40,6 +40,12 @@ namespace AnimationGraph.Editor
                     {
                         graphNode.OnDestroy();
                     }
+                    
+                    StateTransition transition = element as StateTransition;
+                    if (transition != null)
+                    {
+                        transition.OnDestroy();
+                    }
                 }
             }
             
@@ -52,7 +58,7 @@ namespace AnimationGraph.Editor
             return mousePosition - graphViewPosition;
         }
 
-        protected GraphNode GetNodeById(int id)
+        public GraphNode GetNodeById(int id)
         {
             GraphNode result = null;
             nodes.ForEach(node =>
@@ -66,7 +72,7 @@ namespace AnimationGraph.Editor
             return result;
         }
         
-        protected NodePort GetPortById(int id)
+        public NodePort GetPortById(int id)
         {
             NodePort result = null;
             ports.ForEach(port =>

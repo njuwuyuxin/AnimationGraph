@@ -13,6 +13,9 @@ namespace AnimationGraph.Editor
         private List<StatePoseNodeConfig> m_StateConfigs = new List<StatePoseNodeConfig>();
         public List<StatePoseNodeConfig> stateConfigs => m_StateConfigs;
 
+        private List<TransitionConfig> m_TransitionConfigs = new List<TransitionConfig>();
+        public List<TransitionConfig> transitionConfigs => m_TransitionConfigs;
+
         public StateMachineNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
             nodeName = "StateMachine";
@@ -58,6 +61,16 @@ namespace AnimationGraph.Editor
             }
 
             m_StateConfigs.Remove(stateConfig);
+        }
+
+        public void OnAddTransition(TransitionConfig transitionConfig)
+        {
+            m_TransitionConfigs.Add(transitionConfig);
+        }
+
+        public void OnRemoveTransition(TransitionConfig transitionConfig)
+        {
+            m_TransitionConfigs.Remove(transitionConfig);
         }
 
         private void OnMouseDown(MouseDownEvent evt)

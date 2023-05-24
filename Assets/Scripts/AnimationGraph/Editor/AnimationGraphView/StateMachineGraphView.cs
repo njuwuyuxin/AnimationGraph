@@ -81,6 +81,13 @@ namespace AnimationGraph.Editor
                 stateNode.LoadFromConfig(stateConfig);
                 AddElement(stateNode);
             }
+
+            foreach (var transitionConfig in m_StateMachineNode.transitionConfigs)
+            {
+                var stateTransition = new StateTransition(this);
+                stateTransition.LoadFromConfig(transitionConfig);
+                AddElement(stateTransition);
+            }
         }
 
         private void ReturnBack()
@@ -150,7 +157,8 @@ namespace AnimationGraph.Editor
             isMakingTransition = true;
             if (m_PreviewTransition == null)
             {
-                m_PreviewTransition = new StateTransition(this, currentSelectedNode, null);
+                m_PreviewTransition = new StateTransition(this);
+                m_PreviewTransition.InitializeDefault(currentSelectedNode, null);
                 m_PreviewTransition.candidatePosition = actionEvent.eventInfo.mousePosition;
                 AddElement(m_PreviewTransition);
             }
@@ -168,9 +176,10 @@ namespace AnimationGraph.Editor
                 return;
             }
 
-            var transition = new StateTransition(this, transitionToAdd.source, transitionToAdd.target);
-            transition.InitializeDefault();
+            var transition = new StateTransition(this);
+            transition.InitializeDefault(transitionToAdd.source, transitionToAdd.target);
             AddElement(transition);
+            stateMachineNode.OnAddTransition(transition.edgeConfig as TransitionConfig);
             transitionToAdd.source = null;
             transitionToAdd.target = null;
         }

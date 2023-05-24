@@ -88,6 +88,17 @@ namespace AnimationGraph.Editor
 
         public override void OnDestroy()
         {
+            foreach (var inputTransition in m_InputTransitions )
+            {
+                m_StateMachineView.RemoveElement(inputTransition);
+                //Call RemoveElement will not trigger OnGraphChange Event, need to call transition.OnDestroyByStateDestroy manually.
+                inputTransition.OnDestroyByStateDestroy();
+            }
+            foreach (var outputTransition in m_OutputTransitions )
+            {
+                m_StateMachineView.RemoveElement(outputTransition);
+                outputTransition.OnDestroyByStateDestroy();
+            }
             m_StateMachineView.stateMachineNode.OnRemoveState(m_NodeConfig as StatePoseNodeConfig);
         }
 
