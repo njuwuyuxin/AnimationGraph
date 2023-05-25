@@ -36,6 +36,19 @@ namespace AnimationGraph.Editor
         {
             base.LoadNodeData(data);
             var config = m_NodeConfig as StateMachinePoseNodeConfig;
+            m_StateConfigs = new List<StatePoseNodeConfig>();
+            m_StateConfigs.AddRange(config.states);
+            m_TransitionConfigs = new List<TransitionConfig>();
+            m_TransitionConfigs.AddRange(config.transitions);
+        }
+
+        public override void OnSave()
+        {
+            var stateMachineNodeConfig = m_NodeConfig as StateMachinePoseNodeConfig;
+            stateMachineNodeConfig.states = new List<StatePoseNodeConfig>();
+            stateMachineNodeConfig.states.AddRange(m_StateConfigs);
+            stateMachineNodeConfig.transitions = new List<TransitionConfig>();
+            stateMachineNodeConfig.transitions.AddRange(m_TransitionConfigs);
         }
 
         public void OnAddState(StatePoseNodeConfig stateConfig)

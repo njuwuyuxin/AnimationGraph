@@ -125,12 +125,12 @@ MonoBehaviour:
       rid: 5990190180978655490
     customData:
       rid: -2
-  - id: -1003514715
+  - id: -539524448
     nodeType: 7
-    positionX: 483
-    positionY: 525
+    positionX: 444
+    positionY: 542
     nodeConfig:
-      rid: 5990190297734447226
+      rid: 5990190472830386387
     customData:
       rid: -2
   ports:
@@ -309,9 +309,23 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
+  - portName: Default State
+    portId: -412993459
+    nodeId: -539524448
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: Default State
+    portId: 1840097746
+    nodeId: -539524448
+    portType: 0
+    portIndex: 1
+    direction: 0
+    capacity: 1
   - portName: Output
-    portId: 58311395
-    nodeId: -1003514715
+    portId: 933432730
+    nodeId: -539524448
     portType: 0
     portIndex: 0
     direction: 1
@@ -342,10 +356,10 @@ MonoBehaviour:
   - inputPort: -346309245
     outputPort: -1293489154
   parameters:
-  - rid: 5990190297734447265
-  - rid: 5990190297734447266
-  - rid: 5990190297734447267
-  - rid: 5990190297734447268
+  - rid: 5990190472830386417
+  - rid: 5990190472830386418
+  - rid: 5990190472830386419
+  - rid: 5990190472830386420
   references:
     version: 2
     RefIds:
@@ -439,34 +453,39 @@ MonoBehaviour:
         id: -530591723
         slot0: 0
         slot1: 1
-    - rid: 5990190297734447226
-      type: {class: Blend1DPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+    - rid: 5990190472830386387
+      type: {class: StateMachinePoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
-        id: -1003514715
-        slot0: 0
-        slot1: 0
-    - rid: 5990190297734447265
+        id: -539524448
+        states:
+        - id: 924762677
+          stateName: Default State
+          position: {x: 237, y: 386}
+        - id: 595615291
+          stateName: Default State
+          position: {x: 427, y: 524}
+    - rid: 5990190472830386417
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: moveCondition
         associateNodes: 
         value: 0
-    - rid: 5990190297734447266
+    - rid: 5990190472830386418
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217
         name: stringParameter
         associateNodes: a9232362
         value: 
-    - rid: 5990190297734447267
+    - rid: 5990190472830386419
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: -906310031
         name: mode
         associateNodes: b334e3be
         value: 0
-    - rid: 5990190297734447268
+    - rid: 5990190472830386420
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1597705152
