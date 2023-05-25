@@ -72,7 +72,7 @@ namespace AnimationGraph.Editor
             {
                 m_StateMachineView.transitionToAdd.source = m_StateMachineView.lastSelectedNode;
                 m_StateMachineView.transitionToAdd.target = this;
-                m_StateMachineView.TryCreateTransition();
+                m_StateMachineView.TryAddTransition();
                 m_StateMachineView.isMakingTransition = false;
             }
             m_StateMachineView.currentSelectedNode = this;
@@ -100,6 +100,11 @@ namespace AnimationGraph.Editor
                 outputTransition.OnDestroyByStateDestroy();
             }
             m_StateMachineView.stateMachineNode.OnRemoveState(m_NodeConfig as StatePoseNodeConfig);
+
+            if (m_StateMachineView.defaultNode == this)
+            {
+                m_StateMachineView.SetRandomStateAsDefault();
+            }
         }
 
         public void AddInputTransition(StateTransition transition)
@@ -111,6 +116,17 @@ namespace AnimationGraph.Editor
         {
             m_OutputTransitions.Add(transition);
         }
-        
+
+        public void SetDefault()
+        {
+            ColorUtility.TryParseHtmlString("#8B6914", out var titleColor);
+            titleContainer.style.backgroundColor = new StyleColor(titleColor);
+        }
+
+        public void CancelDefault()
+        {
+            ColorUtility.TryParseHtmlString("#006633", out var titleColor);
+            titleContainer.style.backgroundColor = new StyleColor(titleColor);
+        }
     }
 }

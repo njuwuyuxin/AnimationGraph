@@ -15,6 +15,8 @@ namespace AnimationGraph.Editor
 
         private List<TransitionConfig> m_TransitionConfigs = new List<TransitionConfig>();
         public List<TransitionConfig> transitionConfigs => m_TransitionConfigs;
+        
+        public int defaultStateId { get; set; }
 
         public StateMachineNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {
@@ -37,9 +39,18 @@ namespace AnimationGraph.Editor
             base.LoadNodeData(data);
             var config = m_NodeConfig as StateMachinePoseNodeConfig;
             m_StateConfigs = new List<StatePoseNodeConfig>();
-            m_StateConfigs.AddRange(config.states);
+            if (config.states != null)
+            {
+                m_StateConfigs.AddRange(config.states);
+            }
+
             m_TransitionConfigs = new List<TransitionConfig>();
-            m_TransitionConfigs.AddRange(config.transitions);
+            if (config.transitions != null)
+            {
+                m_TransitionConfigs.AddRange(config.transitions);
+            }
+
+            defaultStateId = config.defaultStateId;
         }
 
         public override void OnSave()
@@ -49,6 +60,7 @@ namespace AnimationGraph.Editor
             stateMachineNodeConfig.states.AddRange(m_StateConfigs);
             stateMachineNodeConfig.transitions = new List<TransitionConfig>();
             stateMachineNodeConfig.transitions.AddRange(m_TransitionConfigs);
+            stateMachineNodeConfig.defaultStateId = defaultStateId;
         }
 
         public void OnAddState(StatePoseNodeConfig stateConfig)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -21,6 +22,32 @@ namespace AnimationGraph.Editor
 
         public StateNode currentSelectedNode { get; set; }
         public StateNode lastSelectedNode { get; set; }
+
+        private StateNode m_DefaultNode;
+
+        public StateNode defaultNode
+        {
+            get => m_DefaultNode;
+            set
+            {
+                if (m_DefaultNode != null)
+                {
+                    m_DefaultNode.CancelDefault();
+                }
+                
+                m_DefaultNode = value;
+                
+                if (m_DefaultNode != null)
+                {
+                    m_DefaultNode.SetDefault();
+                    stateMachineNode.defaultStateId = m_DefaultNode.id;
+                }
+                else
+                {
+                    stateMachineNode.defaultStateId = 0;
+                }
+            }
+        }
 
         private bool m_IsMakingTransition;
 
@@ -88,6 +115,11 @@ namespace AnimationGraph.Editor
                 stateTransition.LoadFromConfig(transitionConfig);
                 AddElement(stateTransition);
             }
+
+            if (m_StateMachineNode.stateConfigs.Count != 0)
+            {
+                defaultNode = GetNodeById(m_StateMachineNode.defaultStateId) as StateNode;
+            }
         }
 
         private void ReturnBack()
@@ -103,18 +135,29 @@ namespace AnimationGraph.Editor
         
         private void OnContextMenuPopulate(ContextualMenuPopulateEvent menuEvent)
         {
-            DropdownMenuAction.Status makeTransitionStatus = currentSelectedNode == null
+            DropdownMenuAction.Status addStateMenuStatus = currentSelectedNode == null
+                ? DropdownMenuAction.Status.Normal
+                : DropdownMenuAction.Status.Hidden;
+            
+            DropdownMenuAction.Status makeTransitionMenuStatus = currentSelectedNode == null
                 ? DropdownMenuAction.Status.Hidden
                 : DropdownMenuAction.Status.Normal;
 
+            DropdownMenuAction.Status setDefaultMenuStatus = makeTransitionMenuStatus;
+
             menuEvent.menu.AppendAction(
                 "Add State",
-                actionEvent => AddState(MouseToViewPosition(actionEvent.eventInfo.mousePosition))
+                actionEvent => AddState(MouseToViewPosition(actionEvent.eventInfo.mousePosition)), addStateMenuStatus
             );
             
             menuEvent.menu.AppendAction(
                 "Make Transition",
-                actionEvent => StartMakingTransition(actionEvent),makeTransitionStatus
+                actionEvent => StartMakingTransition(actionEvent), makeTransitionMenuStatus
+            );
+            
+            menuEvent.menu.AppendAction(
+                "Set Default State",
+                actionEvent => SetDefaultState(), setDefaultMenuStatus
             );
         }
 
@@ -149,22 +192,46 @@ namespace AnimationGraph.Editor
             stateNode.InitializeDefault();
             AddElement(stateNode);
 
+            if (stateMachineNode.stateConfigs.Count == 0)
+            {
+                defaultNode = stateNode;
+            }
+
             m_StateMachineNode.OnAddState(stateNode.nodeConfig as StatePoseNodeConfig);
         }
 
-        private void StartMakingTransition(DropdownMenuAction actionEvent)
+        private void AddTransition()
         {
-            isMakingTransition = true;
-            if (m_PreviewTransition == null)
+            var transition = new StateTransition(this);
+            transition.InitializeDefault(transitionToAdd.source, transitionToAdd.target);
+            AddElement(transition);
+            stateMachineNode.OnAddTransition(transition.edgeConfig as TransitionConfig);
+            transitionToAdd.source = null;
+            transitionToAdd.target = null;
+        }
+
+        private void SetDefaultState()
+        {
+            if (currentSelectedNode != null)
             {
-                m_PreviewTransition = new StateTransition(this);
-                m_PreviewTransition.InitializeDefault(currentSelectedNode, null);
-                m_PreviewTransition.candidatePosition = actionEvent.eventInfo.mousePosition;
-                AddElement(m_PreviewTransition);
+                defaultNode = currentSelectedNode;
             }
         }
 
-        public void TryCreateTransition()
+        public void SetRandomStateAsDefault()
+        {
+            if (m_StateMachineNode.stateConfigs.Count > 0)
+            {
+                var stateNode = GetNodeById(m_StateMachineNode.stateConfigs[0].id) as StateNode;
+                defaultNode = stateNode;
+            }
+            else
+            {
+                defaultNode = null;
+            }
+        }
+        
+        public void TryAddTransition()
         {
             if (transitionToAdd.source == null || transitionToAdd.target == null)
             {
@@ -176,13 +243,19 @@ namespace AnimationGraph.Editor
                 return;
             }
 
-            var transition = new StateTransition(this);
-            transition.InitializeDefault(transitionToAdd.source, transitionToAdd.target);
-            AddElement(transition);
-            stateMachineNode.OnAddTransition(transition.edgeConfig as TransitionConfig);
-            transitionToAdd.source = null;
-            transitionToAdd.target = null;
+            AddTransition();
         }
         
+        private void StartMakingTransition(DropdownMenuAction actionEvent)
+        {
+            isMakingTransition = true;
+            if (m_PreviewTransition == null)
+            {
+                m_PreviewTransition = new StateTransition(this);
+                m_PreviewTransition.InitializeDefault(currentSelectedNode, null);
+                m_PreviewTransition.candidatePosition = actionEvent.eventInfo.mousePosition;
+                AddElement(m_PreviewTransition);
+            }
+        }
     }
 }

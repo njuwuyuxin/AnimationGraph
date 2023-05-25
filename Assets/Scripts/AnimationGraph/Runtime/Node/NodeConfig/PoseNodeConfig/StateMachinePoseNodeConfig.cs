@@ -6,6 +6,7 @@ namespace AnimationGraph
     [Serializable]
     public class StateMachinePoseNodeConfig : PoseNodeConfig
     {
+        public int defaultStateId;
         public List<StatePoseNodeConfig> states;
         public List<TransitionConfig> transitions;
         public override INode GenerateNode(AnimationGraphRuntime graphRuntime)
