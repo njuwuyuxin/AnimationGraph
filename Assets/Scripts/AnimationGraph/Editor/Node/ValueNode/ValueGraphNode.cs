@@ -19,9 +19,19 @@ namespace AnimationGraph.Editor
         public void CombineWithParameter(ParameterCard parameterCard)
         {
             m_ParameterCard = parameterCard;
+            parameterCard.associatedNodes.Add(id);
             var boolValueNodeConfig = (ValueNodeConfig) m_NodeConfig;
             boolValueNodeConfig.parameterId = parameterCard.id;
             boolValueNodeConfig.parameterName = parameterCard.parameterName;
+        }
+
+        public void DeCombineWithParameter()
+        {
+            m_ParameterCard.associatedNodes.Remove(id);
+            var boolValueNodeConfig = (ValueNodeConfig) m_NodeConfig;
+            boolValueNodeConfig.parameterId = 0;
+            boolValueNodeConfig.parameterName = string.Empty;
+            m_ParameterCard = null;
         }
 
         public override void LoadNodeData(NodeData data)

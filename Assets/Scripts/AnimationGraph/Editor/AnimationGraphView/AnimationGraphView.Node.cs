@@ -47,41 +47,31 @@ namespace AnimationGraph.Editor
 
         private GraphNode CreateDefaultNode(ENodeType nodeType, Vector2 position)
         {
-            var node = CreateNodeInternal(nodeType, position);
-            node.InitializeDefault();
-            return node;
+            CreateNodeCommand createNodeCommand = new CreateNodeCommand(this, nodeType, position);
+            createNodeCommand.Do();
+            PushNewCommand(createNodeCommand);
+            return createNodeCommand.GetCreatedNode();
         }
 
-        private GraphNode CreateParameterNode(ParameterCard parameterCard, Vector2 position)
+        private void CreateParameterNode(ParameterCard parameterCard, Vector2 position)
         {
-            GraphNode node = null;
-            if (parameterCard is BoolParameterCard)
+            ENodeType nodeType = ENodeType.BaseNode;
+            switch (parameterCard)
             {
-                node = CreateNodeInternal(ENodeType.BoolValueNode, position);
+                case BoolParameterCard: nodeType = ENodeType.BoolValueNode;
+                    break;
+                case IntParameterCard: nodeType = ENodeType.IntValueNode;
+                    break;
+                case FloatParameterCard: nodeType = ENodeType.FloatValueNode;
+                    break;
+                case StringParameterCard: nodeType = ENodeType.StringValueNode;
+                    break;
             }
-            else if (parameterCard is IntParameterCard)
-            {
-                node = CreateNodeInternal(ENodeType.IntValueNode, position);
-            }
-            else if (parameterCard is FloatParameterCard)
-            {
-                node = CreateNodeInternal(ENodeType.FloatValueNode, position);
-            }
-            else if (parameterCard is StringParameterCard)
-            {
-                node = CreateNodeInternal(ENodeType.StringValueNode, position);
-            }
-            else
-            {
-                Debug.LogError("[AnimationGraph][GraphView]: Unknown Parameter Type, " + parameterCard);
-                node = CreateNodeInternal(ENodeType.BoolValueNode, position);
-            }
-
-            var valueNode = node as ValueGraphNode;
-            valueNode.InitializeDefault();
-            valueNode.CombineWithParameter(parameterCard);
             
-            return node;
+            CreateParameterNodeCommand createParameterNodeCommand =
+                new CreateParameterNodeCommand(this, nodeType, position, parameterCard);
+            createParameterNodeCommand.Do();
+            PushNewCommand(createParameterNodeCommand);
         }
 
         private GraphNode CreateNodeFromAsset(NodeData data)

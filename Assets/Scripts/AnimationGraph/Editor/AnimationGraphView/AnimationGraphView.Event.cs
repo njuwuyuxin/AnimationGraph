@@ -13,18 +13,19 @@ namespace AnimationGraph.Editor
             RegisterCallback<DragUpdatedEvent>(OnDragUpdate);
             RegisterCallback<DragPerformEvent>(OnDragPerform);
             RegisterCallback<DragExitedEvent>(OnDragExit);
+            RegisterCallback<KeyDownEvent>(OnKeyDown);
         }
 
-        void OnDragEnter(DragEnterEvent evt)
+        private void OnDragEnter(DragEnterEvent evt)
         {
         }
         
-        void OnDragLeave(DragLeaveEvent evt)
+        private void OnDragLeave(DragLeaveEvent evt)
         {
             
         }
         
-        void OnDragUpdate(DragUpdatedEvent evt)
+        private void OnDragUpdate(DragUpdatedEvent evt)
         {
             DragAndDrop.visualMode = DragAndDropVisualMode.Generic;
         }
@@ -57,16 +58,29 @@ namespace AnimationGraph.Editor
             var parameterCard = DragAndDrop.GetGenericData("parameterCard") as ParameterCard;
             if (parameterCard != null)
             {
-                GraphNode node = CreateParameterNode(parameterCard, MouseToViewPosition(evt.mousePosition));
-                parameterCard.associatedNodes.Add(node.id);
+                CreateParameterNode(parameterCard, MouseToViewPosition(evt.mousePosition));
                 Debug.Log(parameterCard.parameterName);
-                return;
             }
         }
         
-        void OnDragExit(DragExitedEvent evt)
+        private void OnDragExit(DragExitedEvent evt)
         { 
             
+        }
+
+        private void OnKeyDown(KeyDownEvent keyDownEvent)
+        {
+            if (keyDownEvent.keyCode == KeyCode.Z && keyDownEvent.modifiers == EventModifiers.Control)
+            {
+                TryUndoCommand();
+                keyDownEvent.StopPropagation();
+            }
+            
+            if (keyDownEvent.keyCode == KeyCode.Y && keyDownEvent.modifiers == EventModifiers.Control)
+            {
+                TryRedoCommand();
+                keyDownEvent.StopPropagation();
+            }
         }
     }
 }
