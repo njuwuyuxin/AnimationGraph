@@ -1,10 +1,3 @@
-// Decompiled with JetBrains decompiler
-// Type: UnityEditor.Experimental.GraphView.LineView
-// Assembly: UnityEditor.GraphViewModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: A6D89896-B602-4F01-A341-6B278435C73E
-// Assembly location: D:\UnityEditor\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEditor.GraphViewModule.dll
-// XML documentation location: D:\UnityEditor\2021.3.16f1\Editor\Data\Managed\UnityEngine\UnityEditor.GraphViewModule.xml
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
