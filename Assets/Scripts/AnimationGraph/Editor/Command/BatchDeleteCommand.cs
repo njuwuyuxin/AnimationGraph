@@ -5,7 +5,7 @@ namespace AnimationGraph.Editor
 {
     public class BatchDeleteCommand : ICommand
     {
-        protected AnimationGraphView m_AnimationGraphView;
+        private AnimationGraphView m_AnimationGraphView;
         private List<GraphNode> m_DeletedNodes;
         private List<Edge> m_DeletedEdges;
 
@@ -22,15 +22,13 @@ namespace AnimationGraph.Editor
             selection.AddRange(m_AnimationGraphView.selection);
             foreach (var element in selection)
             {
-                if (element is GraphNode)
+                if (element is GraphNode graphNode)
                 {
-                    var graphNode = element as GraphNode;
                     DeleteNode(graphNode);
                 }
 
-                if (element is Edge)
+                if (element is Edge edge)
                 {
-                    var edge = element as Edge;
                     DeleteEdge(edge);
                 }
                 ValidateEdges();
@@ -43,8 +41,7 @@ namespace AnimationGraph.Editor
             foreach (var node in m_DeletedNodes)
             {
                 m_AnimationGraphView.AddElement(node);
-                var valueNode = node as ValueGraphNode;
-                if (valueNode != null)
+                if (node is ValueGraphNode valueNode)
                 {
                     valueNode.ReCombineWithParameter();
                 }
@@ -63,8 +60,7 @@ namespace AnimationGraph.Editor
             foreach (var node in m_DeletedNodes)
             {
                 m_AnimationGraphView.RemoveElement(node);
-                var valueNode = node as ValueGraphNode;
-                if (valueNode != null)
+                if (node is ValueGraphNode valueNode)
                 {
                     valueNode.DeCombineWithParameter();
                 }
@@ -80,9 +76,8 @@ namespace AnimationGraph.Editor
 
         private void DeleteNode(GraphNode graphNode)
         {
-            if (graphNode is ValueGraphNode)
+            if (graphNode is ValueGraphNode valueNode)
             {
-                var valueNode = graphNode as ValueGraphNode;
                 valueNode.DeCombineWithParameter();
             }
 
