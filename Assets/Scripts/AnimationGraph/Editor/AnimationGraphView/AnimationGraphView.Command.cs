@@ -7,7 +7,7 @@ namespace AnimationGraph.Editor
         private Stack<ICommand> undoStack = new Stack<ICommand>();
         private Stack<ICommand> redoStack = new Stack<ICommand>();
 
-        private void PushNewCommand(ICommand command)
+        internal void PushNewCommand(ICommand command)
         {
             command.Do();
             undoStack.Push(command);

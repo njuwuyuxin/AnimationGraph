@@ -24,7 +24,7 @@ namespace AnimationGraph.Editor
         {
             SetupZoom(ContentZoomer.DefaultMinScale,ContentZoomer.DefaultMaxScale);
             this.AddManipulator(new ContentDragger());
-            this.AddManipulator(new SelectionDragger());
+            this.AddManipulator(new AnimationGraphSelectionDragger());
             this.AddManipulator(new RectangleSelector());
             this.AddManipulator(new ClickSelector());
         }
