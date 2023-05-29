@@ -50,6 +50,7 @@ namespace AnimationGraph.Editor
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
                 menuEvent =>
                 {
+                    menuEvent.menu.MenuItems().Clear();
                     menuEvent.menu.AppendAction(
                         "Add FinalPose Node",
                         actionEvent => CreateDefaultNode(ENodeType.FinalPoseNode, MouseToViewPosition(actionEvent.eventInfo.mousePosition))

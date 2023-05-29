@@ -7,7 +7,6 @@ namespace AnimationGraph.Editor
     public class BoolValueGraphNode : ValueGraphNode
     {
         public override ENodeType nodeType => ENodeType.BoolValueNode;
-        private ParameterCard m_ParameterCard;
 
         public BoolValueGraphNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {

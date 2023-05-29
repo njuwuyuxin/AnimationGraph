@@ -48,7 +48,6 @@ namespace AnimationGraph.Editor
         private GraphNode CreateDefaultNode(ENodeType nodeType, Vector2 position)
         {
             CreateNodeCommand createNodeCommand = new CreateNodeCommand(this, nodeType, position);
-            createNodeCommand.Do();
             PushNewCommand(createNodeCommand);
             return createNodeCommand.GetCreatedNode();
         }
@@ -70,7 +69,6 @@ namespace AnimationGraph.Editor
             
             CreateParameterNodeCommand createParameterNodeCommand =
                 new CreateParameterNodeCommand(this, nodeType, position, parameterCard);
-            createParameterNodeCommand.Do();
             PushNewCommand(createParameterNodeCommand);
         }
 

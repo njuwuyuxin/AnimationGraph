@@ -30,7 +30,7 @@ namespace AnimationGraph.Editor
         {
             base.Redo();
             var valueNode = m_Node as ValueGraphNode;
-            valueNode.CombineWithParameter(m_ParameterCard);
+            valueNode.ReCombineWithParameter();
         }
     }
 }

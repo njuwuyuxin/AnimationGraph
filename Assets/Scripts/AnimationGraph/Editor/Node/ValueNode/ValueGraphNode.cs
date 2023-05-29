@@ -31,7 +31,17 @@ namespace AnimationGraph.Editor
             var boolValueNodeConfig = (ValueNodeConfig) m_NodeConfig;
             boolValueNodeConfig.parameterId = 0;
             boolValueNodeConfig.parameterName = string.Empty;
-            m_ParameterCard = null;
+        }
+
+        public void ReCombineWithParameter()
+        {
+            if (m_ParameterCard != null)
+            {
+                m_ParameterCard.associatedNodes.Add(id);
+                var boolValueNodeConfig = (ValueNodeConfig) m_NodeConfig;
+                boolValueNodeConfig.parameterId = m_ParameterCard.id;
+                boolValueNodeConfig.parameterName = m_ParameterCard.parameterName;
+            }
         }
 
         public override void LoadNodeData(NodeData data)
@@ -40,12 +50,6 @@ namespace AnimationGraph.Editor
             ValueNodeConfig nodeConfig = data.nodeConfig as ValueNodeConfig;
             m_ParameterCard = m_AnimationGraphView.parameterBoard.TryGetParameterById(nodeConfig.parameterId);
             nodeName = nodeConfig.parameterName;
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-            m_ParameterCard.associatedNodes.Remove(this.id);
         }
     }
 }

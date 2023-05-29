@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -79,6 +80,13 @@ namespace AnimationGraph.Editor
             if (keyDownEvent.keyCode == KeyCode.Y && keyDownEvent.modifiers == EventModifiers.Control)
             {
                 TryRedoCommand();
+                keyDownEvent.StopPropagation();
+            }
+
+            if (keyDownEvent.keyCode == KeyCode.Delete && selection != null)
+            {
+                var batchDeleteCommand = new BatchDeleteCommand(this);
+                PushNewCommand(batchDeleteCommand);
                 keyDownEvent.StopPropagation();
             }
         }

@@ -7,7 +7,6 @@ namespace AnimationGraph.Editor
     public class FloatValueGraphNode : ValueGraphNode
     {
         public override ENodeType nodeType => ENodeType.FloatValueNode;
-        private ParameterCard m_ParameterCard;
 
         public FloatValueGraphNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {

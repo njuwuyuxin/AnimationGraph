@@ -7,7 +7,6 @@ namespace AnimationGraph.Editor
     public class StringValueGraphNode : ValueGraphNode
     {
         public override ENodeType nodeType => ENodeType.StringValueNode;
-        private ParameterCard m_ParameterCard;
 
         public StringValueGraphNode(AnimationGraphView graphView, Vector2 position) : base(graphView,position)
         {

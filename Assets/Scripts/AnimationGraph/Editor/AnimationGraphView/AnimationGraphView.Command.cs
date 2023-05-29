@@ -9,6 +9,7 @@ namespace AnimationGraph.Editor
 
         private void PushNewCommand(ICommand command)
         {
+            command.Do();
             undoStack.Push(command);
             redoStack.Clear();
         }
