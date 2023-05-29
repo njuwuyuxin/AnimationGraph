@@ -14,7 +14,7 @@ namespace AnimationGraph.Editor
             m_AnimationGraphView = animationGraphView;
         }
         
-        public virtual void Do()
+        public void Do()
         {
             m_DeletedNodes = new List<GraphNode>();
             m_DeletedEdges = new List<Edge>();
@@ -38,7 +38,7 @@ namespace AnimationGraph.Editor
 
         }
 
-        public virtual void Undo()
+        public void Undo()
         {
             foreach (var node in m_DeletedNodes)
             {
@@ -58,7 +58,7 @@ namespace AnimationGraph.Editor
             }
         }
 
-        public virtual void Redo()
+        public void Redo()
         {
             foreach (var node in m_DeletedNodes)
             {
