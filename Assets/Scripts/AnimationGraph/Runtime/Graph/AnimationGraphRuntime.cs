@@ -90,6 +90,10 @@ namespace AnimationGraph
             var hash = Animator.StringToHash(parameterName);
             if (m_Id2ParameterMap.TryGetValue(hash, out var graphParameter))
             {
+                if (graphParameter is BoolParameter boolParameter)
+                {
+                    boolParameter.value.boolValue = value;
+                }
                 foreach (var nodeId in  graphParameter.associatedNodes)
                 {
                     if (m_Id2NodeMap.TryGetValue(nodeId, out var node))
@@ -110,6 +114,10 @@ namespace AnimationGraph
             var hash = Animator.StringToHash(parameterName);
             if (m_Id2ParameterMap.TryGetValue(hash, out var graphParameter))
             {
+                if (graphParameter is FloatParameter floatParameter)
+                {
+                    floatParameter.value.floatValue = value;
+                }
                 foreach (var nodeId in  graphParameter.associatedNodes)
                 {
                     if (m_Id2NodeMap.TryGetValue(nodeId, out var node))
@@ -130,6 +138,10 @@ namespace AnimationGraph
             var hash = Animator.StringToHash(parameterName);
             if (m_Id2ParameterMap.TryGetValue(hash, out var graphParameter))
             {
+                if (graphParameter is StringParameter stringParameter)
+                {
+                    stringParameter.value.stringValue = value;
+                }
                 foreach (var nodeId in  graphParameter.associatedNodes)
                 {
                     if (m_Id2NodeMap.TryGetValue(nodeId, out var node))

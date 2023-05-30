@@ -109,14 +109,6 @@ MonoBehaviour:
       rid: 5990190297734447150
     customData:
       rid: -2
-  - id: 1787778619
-    nodeType: 7
-    positionX: 461
-    positionY: 526
-    nodeConfig:
-      rid: 5990190472830386503
-    customData:
-      rid: -2
   - id: -1465730693
     nodeType: 3
     positionX: 364
@@ -139,6 +131,14 @@ MonoBehaviour:
     positionY: 365
     nodeConfig:
       rid: 5990190297734447151
+    customData:
+      rid: -2
+  - id: 1787778619
+    nodeType: 7
+    positionX: 461
+    positionY: 526
+    nodeConfig:
+      rid: 5990190472830386503
     customData:
       rid: -2
   ports:
@@ -261,27 +261,6 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
-  - portName: Default State
-    portId: -72401009
-    nodeId: 1787778619
-    portType: 0
-    portIndex: 0
-    direction: 0
-    capacity: 1
-  - portName: Default State
-    portId: -1608329609
-    nodeId: 1787778619
-    portType: 0
-    portIndex: 1
-    direction: 0
-    capacity: 1
-  - portName: Output
-    portId: -715299499
-    nodeId: 1787778619
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
   - portName: True
     portId: -1065401543
     nodeId: -1465730693
@@ -345,6 +324,27 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
+  - portName: Default State
+    portId: -72401009
+    nodeId: 1787778619
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: Default State
+    portId: -1608329609
+    nodeId: 1787778619
+    portType: 0
+    portIndex: 1
+    direction: 0
+    capacity: 1
+  - portName: Output
+    portId: -715299499
+    nodeId: 1787778619
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
   edges:
   - inputPort: 357491562
     outputPort: 1219996606
@@ -371,10 +371,10 @@ MonoBehaviour:
   - inputPort: 1229671768
     outputPort: 2055963221
   parameters:
-  - rid: 5990190472830386808
-  - rid: 5990190472830386809
-  - rid: 5990190472830386810
-  - rid: 5990190472830386811
+  - rid: 5990190472830387067
+  - rid: 5990190472830387068
+  - rid: 5990190472830387069
+  - rid: 5990190472830387070
   references:
     version: 2
     RefIds:
@@ -476,38 +476,38 @@ MonoBehaviour:
         states:
         - id: 326968293
           stateName: Default State
-          position: {x: 279, y: 317}
+          position: {x: 292, y: 306}
         - id: 1210844696
           stateName: Default State
-          position: {x: 554, y: 317}
+          position: {x: 499, y: 290}
     - rid: 5990190472830386718
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1637558093
         clip: {fileID: 0}
         playSpeed: 0
-    - rid: 5990190472830386808
+    - rid: 5990190472830387067
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: moveCondition
         associateNodes: 
         value: 0
-    - rid: 5990190472830386809
+    - rid: 5990190472830387068
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217
         name: stringParameter
         associateNodes: a9232362
         value: 
-    - rid: 5990190472830386810
+    - rid: 5990190472830387069
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: -906310031
         name: mode
         associateNodes: b334e3be
         value: 0
-    - rid: 5990190472830386811
+    - rid: 5990190472830387070
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1597705152

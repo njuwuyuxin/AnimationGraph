@@ -1,9 +1,32 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace AnimationGraph
 {
+    public enum ConditionType
+    {
+        NotEqual = 0,
+        Equal = 1,
+        Less = 2,
+        LessEqual = 3,
+        Greater = 4,
+        GreaterEqual = 5,
+    }
+    
+    [Serializable]
+    public class TransitionCondition
+    {
+        public int parameterId;
+        public ConditionType conditionType;
+        [SerializeReference]
+        public GraphParameter.Value value;
+    }
+    
     public class TransitionConfig : EdgeConfig
     {
         public int sourceStateId;
         public int targetStateId;
+        public List<TransitionCondition> conditions;
     }
 }
