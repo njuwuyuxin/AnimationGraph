@@ -20,7 +20,7 @@ namespace AnimationGraph.Editor
     private GraphViewChange m_GraphViewChange;
     private List<GraphElement> m_MovedElements;
     private List<VisualElement> m_DropTargetPickList = new List<VisualElement>();
-    private AnimationGraphView m_GraphView;
+    private GraphView m_GraphView;
     private Dictionary<GraphElement, AnimationGraphSelectionDragger.OriginalPos> m_OriginalPos;
     private Vector2 m_originalMouse;
     internal const int k_PanAreaWidth = 100;
@@ -184,7 +184,7 @@ namespace AnimationGraph.Editor
       {
         if (!this.CanStartManipulation((IMouseEvent) e))
           return;
-        this.m_GraphView = this.target as AnimationGraphView;
+        this.m_GraphView = this.target as GraphView;
         if (this.m_GraphView == null)
           return;
         this.selectedElement = (GraphElement) null;
@@ -404,9 +404,12 @@ namespace AnimationGraph.Editor
         {
           if (this.m_Dragging)
           {
-            var moveElementCommand = new MoveElementCommand(m_GraphView, m_OriginalPos);
-            m_GraphView.PushNewCommand(moveElementCommand);
-            
+            if (m_GraphView is AnimationGraphView animationGraphView)
+            {
+              var moveElementCommand = new MoveElementCommand(animationGraphView, m_OriginalPos);
+              animationGraphView.PushNewCommand(moveElementCommand);
+            }
+
             foreach (IGrouping<StackNode, GraphElement> collection in this.m_OriginalPos.GroupBy<KeyValuePair<GraphElement, AnimationGraphSelectionDragger.OriginalPos>, StackNode, GraphElement>((Func<KeyValuePair<GraphElement, AnimationGraphSelectionDragger.OriginalPos>, StackNode>) (v => v.Value.stack), (Func<KeyValuePair<GraphElement, AnimationGraphSelectionDragger.OriginalPos>, GraphElement>) (v => v.Key)))
             {
               if (collection.Key != null && this.m_GraphView.elementsRemovedFromStackNode != null)
