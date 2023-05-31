@@ -23,6 +23,7 @@ namespace AnimationGraph
         public GraphParameter.Value value;
     }
     
+    [Serializable]
     public class TransitionConfig : EdgeConfig
     {
         public int sourceStateId;

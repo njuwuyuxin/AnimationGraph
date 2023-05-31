@@ -8,13 +8,13 @@ namespace AnimationGraph.Editor
         private const string k_StyleSheetPrefix = "Assets/Scripts/AnimationGraph/Editor/StyleSheet/";
         private VisualElement m_Container;
         private AnimationGraphAsset m_AnimationGraphAsset;
-        public AnimationGraphInspector inspector => m_Inspector;
+        internal AnimationGraphInspector inspector => m_Inspector;
         public ParameterBoard parameterBoard => m_ParameterBoard;
         private ParameterBoard m_ParameterBoard;
         private AnimationGraphInspector m_Inspector;
         private StateMachineGraphView m_StateMachineGraphView;
 
-        public AnimationGraphView(VisualElement container, ParameterBoard parameterBoard, AnimationGraphInspector inspector)
+        internal AnimationGraphView(VisualElement container, ParameterBoard parameterBoard, AnimationGraphInspector inspector)
         {
             m_Container = container;
             m_ParameterBoard = parameterBoard;

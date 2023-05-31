@@ -7,7 +7,7 @@ namespace AnimationGraph.Editor
     public class StateMachineGraphView : GraphViewBase
     {
         private const string k_StyleSheetPrefix = "Assets/Scripts/AnimationGraph/Editor/StyleSheet/";
-        public AnimationGraphInspector inspector => m_Inspector;
+        internal AnimationGraphInspector inspector => m_Inspector;
         public ParameterBoard parameterBoard => m_ParameterBoard;
         private ParameterBoard m_ParameterBoard;
         private AnimationGraphInspector m_Inspector;
@@ -74,7 +74,7 @@ namespace AnimationGraph.Editor
         
         public TransitionToAdd transitionToAdd { get; set; }
 
-        public StateMachineGraphView(VisualElement container, AnimationGraphView animationGraphView,
+        internal StateMachineGraphView(VisualElement container, AnimationGraphView animationGraphView,
             StateMachineNode stateMachineNode, ParameterBoard parameterBoard, AnimationGraphInspector inspector)
         {
             m_Container = container;

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace AnimationGraph
 {
+    [Serializable]
     public class EdgeConfig
     {
         [SerializeField]

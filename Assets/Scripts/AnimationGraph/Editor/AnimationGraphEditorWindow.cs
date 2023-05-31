@@ -9,8 +9,9 @@ namespace AnimationGraph.Editor
     {
         private VisualElement m_ParameterArea;
         private VisualElement m_GraphArea;
-        private IMGUIContainer m_InspectorArea;
-        private AnimationGraphInspector m_AnimationGraphInspector;
+        private VisualElement m_InspectorArea;
+        private AnimationGraphInspector m_Inspector;
+        // private IMGUIInspector m_IMGUIInspector;
         private ParameterBoard m_ParameterBoard;
 
         private const string k_StyleSheetPrefix = "Assets/Scripts/AnimationGraph/Editor/StyleSheet/";
@@ -72,17 +73,17 @@ namespace AnimationGraph.Editor
             m_ParameterArea.Add(m_ParameterBoard);
             m_ParameterBoard.StretchToParentSize();
             
-            
-            m_InspectorArea = mainWindowElement.Q("InspectorArea") as IMGUIContainer;
-            m_AnimationGraphInspector = CreateInstance<AnimationGraphInspector>();
-            m_InspectorArea.onGUIHandler = m_AnimationGraphInspector.OnInspectorGUI;
+            m_InspectorArea = mainWindowElement.Q("InspectorArea");
+            m_Inspector = new AnimationGraphInspector();
+            m_InspectorArea.Add(m_Inspector);
+            m_Inspector.StretchToParentSize();
 
             InitAnimGraphView();
         }
 
         private void InitAnimGraphView()
         {
-            m_AnimationGraphView = new AnimationGraphView(m_GraphArea, m_ParameterBoard, m_AnimationGraphInspector);
+            m_AnimationGraphView = new AnimationGraphView(m_GraphArea, m_ParameterBoard, m_Inspector);
             m_GraphArea.Add(m_AnimationGraphView);
             m_AnimationGraphView.StretchToParentSize();
         }

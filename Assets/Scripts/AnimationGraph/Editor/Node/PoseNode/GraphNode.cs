@@ -130,7 +130,7 @@ namespace AnimationGraph.Editor
         public override void OnSelected()
         {
             base.OnSelected();
-            m_AnimationGraphView.inspector.SetGraphNode(this, m_DrawInspectorCustomize);
+            m_AnimationGraphView.inspector.SetGraphNodeIMGUI(this, m_DrawInspectorCustomize);
         }
 
         public override void OnUnselected()

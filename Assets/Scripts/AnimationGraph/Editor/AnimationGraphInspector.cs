@@ -1,161 +1,88 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace AnimationGraph.Editor
 {
-    public class AnimationGraphInspector : UnityEditor.Editor
+    internal class AnimationGraphInspector : VisualElement
     {
-        class NodeInspectorObject : ScriptableObject
+        private enum EInspectorType
         {
-            [SerializeReference]
-            public NodeConfig m_NodeConfig;
+            IMGUI,
+            UIElement
         }
-
-        class EdgeInspectorObject : ScriptableObject
-        {
-            [SerializeReference]
-            public EdgeConfig m_EdgeConfig;
-        }
-
-        public enum EInspectorType
-        {
-            Null,
-            Node,
-            Edge,
-        }
-
-        private EInspectorType m_InspectorType = EInspectorType.Null;
-
-        private GraphNode m_GraphNode;
-        private NodeConfig m_NodeConfig => m_GraphNode.nodeConfig;
-        private StateTransition m_StateTransition;
-
-        private EdgeConfig m_EdgeConfig => m_StateTransition.edgeConfig;
         
-        private NodeInspectorObject m_NodeInspectorObject;
-        private EdgeInspectorObject m_EdgeInspectorObject;
-        private SerializedObject m_SerializedObject;
-        private bool m_DrawInspectorCustomize;
+        public IMGUIInspector IMGUIInspector { get; private set; }
+        private IMGUIContainer m_IMGUIContainer;
+        private VisualElement m_UIElementContainer;
 
-        public override void OnInspectorGUI()
+        private EInspectorType m_InspectorType = EInspectorType.IMGUI;
+
+        public AnimationGraphInspector()
         {
-            EditorGUILayout.LabelField("Inspector", new GUIStyle()
-            {
-                alignment = TextAnchor.MiddleLeft,
-                normal = new GUIStyleState()
-                {
-                    textColor = Color.white
-                },
-                fontStyle = FontStyle.Bold,
-                fontSize = 14,
-            });
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
+            CreateTitleGUI();
 
-            if (m_InspectorType == EInspectorType.Null)
-            {
-                return;
-            }
-            else if (m_InspectorType == EInspectorType.Node)
-            {
-                if (!m_DrawInspectorCustomize)
-                {
-                    if (m_SerializedObject != null)
-                    {
-                        var nodeConfig = m_SerializedObject.FindProperty("m_NodeConfig");
-                        if (nodeConfig != null)
-                        {
-                            while (nodeConfig.NextVisible(true))
-                            {
-                                EditorGUILayout.PropertyField(nodeConfig);
-                            }
-
-                            if (m_SerializedObject.hasModifiedProperties)
-                            {
-                                m_SerializedObject.ApplyModifiedProperties();
-                                m_GraphNode.OnNodeConfigUpdate();
-                            }
-                        }
-                    }
-                }
-
-                if (m_GraphNode != null)
-                {
-                    m_GraphNode.OnNodeInspectorGUI();
-                }
-            }
-            else if (m_InspectorType == EInspectorType.Edge)
-            {
-                if (!m_DrawInspectorCustomize)
-                {
-                    if (m_SerializedObject != null)
-                    {
-                        var edgeConfig = m_SerializedObject.FindProperty("m_EdgeConfig");
-                        if (edgeConfig != null)
-                        {
-                            while (edgeConfig.NextVisible(true))
-                            {
-                                EditorGUILayout.PropertyField(edgeConfig);
-                            }
-
-                            if (m_SerializedObject.hasModifiedProperties)
-                            {
-                                m_SerializedObject.ApplyModifiedProperties();
-                                m_StateTransition.OnEdgeConfigUpdate();
-                            }
-                        }
-                    }
-                }
-
-                if (m_StateTransition != null)
-                {
-                    m_StateTransition.OnEdgeInspectorGUI();
-                }
-            }
+            m_IMGUIContainer = new IMGUIContainer();
+            m_UIElementContainer = new VisualElement();
+            Add(m_IMGUIContainer);
+            
+            IMGUIInspector = ScriptableObject.CreateInstance<IMGUIInspector>();
+            m_IMGUIContainer.onGUIHandler = IMGUIInspector.OnInspectorGUI;
         }
 
-        public void SetGraphNode(GraphNode graphNode, bool drawInspectorCustomize)
+        private void CreateTitleGUI()
         {
-            ClearInspector();
-            m_InspectorType = EInspectorType.Node;
-            m_DrawInspectorCustomize = drawInspectorCustomize;
-            m_GraphNode = graphNode;
-            m_NodeInspectorObject = ScriptableObject.CreateInstance<NodeInspectorObject>();
-            m_NodeInspectorObject.m_NodeConfig = m_NodeConfig;
-            m_SerializedObject = new SerializedObject(m_NodeInspectorObject);
+            VisualElement titleContainer = new VisualElement();
+            Label title = new Label("Inspector");
+            title.style.fontSize = 14;
+            title.style.color = Color.white;
+            title.style.unityFontStyleAndWeight = new StyleEnum<FontStyle>(FontStyle.Bold);
+            titleContainer.Add(title);
+            Add(titleContainer);
+        }
+        
+        public void SetCustomContent(VisualElement content)
+        {
+            if (m_InspectorType == EInspectorType.IMGUI)
+            {
+                Remove(m_IMGUIContainer);
+                Add(m_UIElementContainer);
+                m_InspectorType = EInspectorType.UIElement;
+            }
+            
+            m_UIElementContainer.Clear();
+            m_UIElementContainer.Add(content);
         }
 
-        public void SetEdge(StateTransition edge, bool drawInspectorCustomize)
+        public void SetGraphNodeIMGUI(GraphNode graphNode, bool drawInspectorCustomize)
         {
-            ClearInspector();
-            m_InspectorType = EInspectorType.Edge;
-            m_DrawInspectorCustomize = drawInspectorCustomize;
-            m_StateTransition = edge;
-            m_EdgeInspectorObject = ScriptableObject.CreateInstance<EdgeInspectorObject>();
-            m_EdgeInspectorObject.m_EdgeConfig = m_EdgeConfig;
-            m_SerializedObject = new SerializedObject(m_EdgeInspectorObject);
+            if (m_InspectorType == EInspectorType.UIElement)
+            {
+                Remove(m_UIElementContainer);
+                Add(m_IMGUIContainer);
+                m_InspectorType = EInspectorType.IMGUI;
+            }
+
+            IMGUIInspector.SetGraphNode(graphNode, drawInspectorCustomize);
+        }
+
+        public void SetEdgeIMGUI(StateTransition edge, bool drawInspectorCustomize)
+        {
+            if (m_InspectorType == EInspectorType.UIElement)
+            {
+                Remove(m_UIElementContainer);
+                Add(m_IMGUIContainer);
+                m_InspectorType = EInspectorType.IMGUI;
+            }
+
+            IMGUIInspector.SetEdge(edge, drawInspectorCustomize);
         }
 
         public void ClearInspector()
         {
-            if (m_NodeInspectorObject != null)
+            if (m_InspectorType == EInspectorType.IMGUI)
             {
-                DestroyImmediate(m_NodeInspectorObject);
+                IMGUIInspector.ClearInspector();
             }
-
-            if (m_EdgeInspectorObject != null)
-            {
-                DestroyImmediate(m_EdgeInspectorObject);
-            }
-
-            m_DrawInspectorCustomize = false;
-            m_GraphNode = null;
-
-            m_NodeInspectorObject = null;
-            m_SerializedObject = null;
-            m_InspectorType = EInspectorType.Null;
         }
     }
 }

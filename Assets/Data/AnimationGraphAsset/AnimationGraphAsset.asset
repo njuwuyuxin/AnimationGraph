@@ -136,7 +136,7 @@ MonoBehaviour:
   - id: 1787778619
     nodeType: 7
     positionX: 461
-    positionY: 526
+    positionY: 525
     nodeConfig:
       rid: 5990190472830386503
     customData:
@@ -371,10 +371,10 @@ MonoBehaviour:
   - inputPort: 1229671768
     outputPort: 2055963221
   parameters:
-  - rid: 5990190472830387067
-  - rid: 5990190472830387068
-  - rid: 5990190472830387069
-  - rid: 5990190472830387070
+  - rid: 5990190472830387180
+  - rid: 5990190472830387181
+  - rid: 5990190472830387182
+  - rid: 5990190472830387183
   references:
     version: 2
     RefIds:
@@ -476,38 +476,51 @@ MonoBehaviour:
         states:
         - id: 326968293
           stateName: Default State
-          position: {x: 292, y: 306}
+          position: {x: 272, y: 290}
         - id: 1210844696
           stateName: Default State
           position: {x: 499, y: 290}
+        transitions:
+        - id: -1164554458
+          sourceStateId: 326968293
+          targetStateId: 1210844696
+          conditions:
+          - parameterId: 0
+            conditionType: 0
+            value:
+              rid: -2
+          - parameterId: 11567
+            conditionType: 2
+            value:
+              rid: -2
     - rid: 5990190472830386718
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1637558093
         clip: {fileID: 0}
         playSpeed: 0
-    - rid: 5990190472830387067
+    - rid: 5990190472830387180
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: moveCondition
         associateNodes: 
         value: 0
-    - rid: 5990190472830387068
+    - rid: 5990190472830387181
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217
         name: stringParameter
         associateNodes: a9232362
         value: 
-    - rid: 5990190472830387069
+    - rid: 5990190472830387182
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: -906310031
         name: mode
         associateNodes: b334e3be
         value: 0
-    - rid: 5990190472830387070
+    - rid: 5990190472830387183
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1597705152
