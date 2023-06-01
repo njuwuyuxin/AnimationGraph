@@ -83,6 +83,11 @@ namespace AnimationGraph.Editor
             {
                 IMGUIInspector.ClearInspector();
             }
+
+            if (m_InspectorType == EInspectorType.UIElement)
+            {
+                m_UIElementContainer.Clear();
+            }
         }
     }
 }

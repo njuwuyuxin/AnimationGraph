@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AnimationGraph
 {
-    public enum ConditionType
+    public enum EConditionType
     {
         NotEqual = 0,
         Equal = 1,
@@ -18,7 +19,7 @@ namespace AnimationGraph
     public class TransitionCondition
     {
         public int parameterId;
-        public ConditionType conditionType;
+        [FormerlySerializedAs("conditionType")] public EConditionType conditionType;
         [SerializeReference]
         public GraphParameter.Value value;
     }

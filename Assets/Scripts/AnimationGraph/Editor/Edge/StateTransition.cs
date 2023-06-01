@@ -78,37 +78,7 @@ namespace AnimationGraph.Editor
 
         public void OnEdgeInspectorGUI(SerializedObject serializedObject)
         {
-            // var edgeConfig = serializedObject.FindProperty("m_EdgeConfig");
-            // SerializedProperty conditions = null;
-            // while (edgeConfig.NextVisible(true))
-            // {
-            //     if (edgeConfig.name.Equals("conditions"))
-            //     {
-            //         conditions = edgeConfig;
-            //         break;
-            //     }
-            // }
-            //
-            // if (conditions != null)
-            // {
-            //     EditorGUILayout.PropertyField(conditions);
-            // }
-            //
-            // if (serializedObject.hasModifiedProperties)
-            // {
-            //     serializedObject.ApplyModifiedProperties();
-            //     OnEdgeConfigUpdate();
-            // }
             
-
-            if (EditorGUILayout.DropdownButton(new GUIContent("Test"), FocusType.Passive))
-            {
-                GenericMenu menu = new GenericMenu();
-                menu.AddItem(new GUIContent("test1"), false, () => { });
-                menu.AddItem(new GUIContent("test2"), false, () => { });
-                menu.AddItem(new GUIContent("test3"), false, () => { });
-                menu.ShowAsContext();
-            }
         }
 
         public void OnEdgeConfigUpdate()

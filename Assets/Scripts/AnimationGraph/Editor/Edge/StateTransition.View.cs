@@ -1,6 +1,3 @@
-using System;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -129,7 +126,6 @@ namespace AnimationGraph.Editor
         public override void OnSelected()
         {
             UpdateTransitionControlColorsAndWidth();
-            // m_StateMachineGraphView.inspector.SetEdgeIMGUI(this, true);
             m_StateMachineGraphView.inspector.SetCustomContent(CreateInspectorGUI());
         }
 
@@ -141,15 +137,6 @@ namespace AnimationGraph.Editor
         
 
         #endregion
-
-        public VisualElement CreateInspectorGUI()
-        {
-            VisualElement root = new VisualElement();
-            Label testLabel = new Label("Test");
-            root.Add(testLabel);
-            
-            return root;
-        }
 
         //Update All TransitionControl Properties 
         public virtual bool UpdateTransitionControl()

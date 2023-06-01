@@ -14,6 +14,8 @@ namespace AnimationGraph.Editor
         private VisualElement m_ToolBarArea;
         private VisualElement m_ParameterArea;
         private List<ParameterCard> m_ParameterCards;
+
+        public List<ParameterCard> parameterCards => m_ParameterCards;
         public ParameterBoard()
         {
             var parameterBoardVisualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
