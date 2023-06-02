@@ -31,6 +31,8 @@ namespace AnimationGraph.Editor
 
         public Action<int> onAddRow;
         public Action<VisualElement, int> onDeleteRow;
+
+        private const int m_RowHeight = 24;
         
         public TableListView()
         {
@@ -39,16 +41,20 @@ namespace AnimationGraph.Editor
             style.borderTopWidth = style.borderBottomWidth =
                 style.borderLeftWidth = style.borderRightWidth = 1;
             style.borderTopColor = style.borderBottomColor =
-                style.borderLeftColor = style.borderRightColor = Color.gray;
+                style.borderLeftColor = style.borderRightColor = Color.black;
+            style.borderTopLeftRadius = 2;
+            style.borderTopRightRadius = 2;
+            style.borderBottomLeftRadius = 2;
+            style.borderBottomRightRadius = 2;
 
             m_TopContainer = new VisualElement()
             {
                 style =
                 {
                     flexDirection = new StyleEnum<FlexDirection>(FlexDirection.RowReverse),
-                    height = 20,
+                    height = m_RowHeight,
                     borderBottomWidth = 1,
-                    borderBottomColor = Color.gray
+                    borderBottomColor = Color.black,
                 }
             };
 
@@ -57,24 +63,64 @@ namespace AnimationGraph.Editor
                 style =
                 {
                     flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Row),
-                    height = 20,
+                    height = m_RowHeight,
                     borderBottomWidth = 1,
-                    borderBottomColor = Color.gray
+                    borderBottomColor = Color.black
                 }
             };
             Add(m_TopContainer);
             Add(m_TitleContainer);
-
-            Button addElementButton = new Button(AddRow);
-            addElementButton.Add(new Label("+"));
-            m_TopContainer.Add(addElementButton);
-
+            
+            CreateAddRowButton();
         }
 
+        private void CreateAddRowButton()
+        {
+            Button addElementButton = new Button(AddRow)
+            {
+                style =
+                {
+                    marginLeft = 0,
+                    marginRight = 0
+                }
+            };
+            addElementButton.Add(new Label("+"));
+            m_TopContainer.Add(addElementButton);
+        }
+        
         public void AddColumn(Column column)
         {
             m_Columns.Add(column);
-            m_TitleContainer.Add(column.title.Invoke());
+            
+            m_TitleContainer.Clear();
+
+            foreach (var col in m_Columns)
+            {
+                var parameterLabel = new Label(col.name)
+                {
+                    style =
+                    {
+                        flexGrow = 1,
+                        width = 0,
+                        paddingLeft = 0,
+                        paddingRight = 0,
+                        borderRightWidth = 1,
+                        borderRightColor = Color.black,
+                        unityTextAlign = new StyleEnum<TextAnchor>(TextAnchor.MiddleCenter)
+                    }
+                };
+                m_TitleContainer.Add(parameterLabel);
+            }
+
+            var placeHolder = new VisualElement()
+            {
+                style =
+                {
+                    width = 24
+                }
+            };
+            m_TitleContainer.Add(placeHolder);
+
         }
 
         public void AddRow()
@@ -85,9 +131,9 @@ namespace AnimationGraph.Editor
             {
                 style =
                 {
-                    height = 20,
+                    height = m_RowHeight,
                     borderBottomWidth = 1,
-                    borderBottomColor = Color.gray,
+                    borderBottomColor = Color.black,
                     flexDirection = new StyleEnum<FlexDirection>(FlexDirection.Row)
                 }
             };
@@ -100,16 +146,34 @@ namespace AnimationGraph.Editor
             {
                 var cell = column.cellTemplate.Invoke();
                 column.refreshCell.Invoke(cell, m_Rows.Count);
-                rowContainer.Add(cell);
                 row.cells.Add(cell);
+
+                var cellContainer = new VisualElement()
+                {
+                    style =
+                    {
+                        flexGrow = 1,
+                        width = 0,
+                        borderRightWidth = 1,
+                        borderRightColor = Color.black,
+                        justifyContent = new StyleEnum<Justify>(Justify.Center)
+                    }
+                };
+                cellContainer.Add(cell);
+                rowContainer.Add(cellContainer);
+
             }
             
-            var deleteButton = new Button(() =>
+            var deleteButton = new Button(() => DeleteRow(row))
             {
-                DeleteRow(row);
-            });
+                style =
+                {
+                    marginLeft = 0,
+                    marginRight = 0
+                }
+            };
             deleteButton.Add(new Label("×"));
-            deleteButton.style.width = 20;
+            deleteButton.style.width = 24;
             rowContainer.Add(deleteButton);
 
             Add(rowContainer);

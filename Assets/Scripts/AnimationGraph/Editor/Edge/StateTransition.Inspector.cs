@@ -87,20 +87,6 @@ namespace AnimationGraph.Editor
         {
             var column = new TableListView.Column();
             column.name = "Parameter";
-            column.title = () =>
-            {
-                var parameterLabel = new Label("Parameter")
-                {
-                    style =
-                    {
-                        flexGrow = 1,
-                        width = 0,
-                        borderRightWidth = 1,
-                        borderRightColor = Color.gray
-                    }
-                };
-                return parameterLabel;
-            };
 
             column.cellTemplate = () =>
             {
@@ -110,10 +96,6 @@ namespace AnimationGraph.Editor
                 {
                     style =
                     {
-                        flexGrow = 1,
-                        width = 0,
-                        borderRightWidth = 1,
-                        borderRightColor = Color.gray
                     }
                 };
 
@@ -154,20 +136,6 @@ namespace AnimationGraph.Editor
         {
             var column = new TableListView.Column();
             column.name = "Operation";
-            column.title = () =>
-            {
-                var operationLabel = new Label("Operation")
-                {
-                    style =
-                    {
-                        flexGrow = 1,
-                        width = 0,
-                        borderRightWidth = 1,
-                        borderRightColor = Color.gray
-                    }
-                };
-                return operationLabel;
-            };
 
             column.cellTemplate = () =>
             {
@@ -176,10 +144,6 @@ namespace AnimationGraph.Editor
                 {
                     style =
                     {
-                        flexGrow = 1,
-                        width = 0,
-                        borderRightWidth = 1,
-                        borderRightColor = Color.gray
                     }
                 };
                 operation.RegisterValueChangedCallback(OnOperationTypeChange);
@@ -225,21 +189,6 @@ namespace AnimationGraph.Editor
         {
             var column = new TableListView.Column();
             column.name = "Value";
-            column.title = () =>
-            {
-                var valueLabel = new Label("Value")
-                {
-                    style =
-                    {
-                        flexGrow = 1,
-                        width = 0,
-                        borderRightWidth = 1,
-                        borderRightColor = Color.gray
-                    }
-                };
-                
-                return valueLabel;
-            };
 
             column.cellTemplate = () =>
             {
@@ -247,10 +196,8 @@ namespace AnimationGraph.Editor
                 {
                     style =
                     {
-                        flexGrow = 1,
-                        width = 0,
-                        borderRightWidth = 1,
-                        borderRightColor = Color.gray
+                        width = new StyleLength(new Length(100,LengthUnit.Percent)),
+                        alignItems = new StyleEnum<Align>(Align.Center)
                     }
                 };
 
@@ -300,7 +247,15 @@ namespace AnimationGraph.Editor
         private void DrawFloatValue(VisualElement element, FloatParameter.FloatValue floatValue)
         {
             element.Clear();
-            var floatField = new FloatField();
+            var floatField = new FloatField()
+            {
+                style =
+                {
+                    paddingLeft = 2,
+                    paddingRight = 2,
+                    width = new StyleLength(new Length(100,LengthUnit.Percent))
+                }
+            };
             floatField.value = floatValue.floatValue;
             floatField.RegisterValueChangedCallback(evt =>
             {
@@ -312,7 +267,15 @@ namespace AnimationGraph.Editor
         private void DrawIntValue(VisualElement element, IntParameter.IntValue intValue)
         {
             element.Clear();
-            var intField = new IntegerField();
+            var intField = new IntegerField()
+            {
+                style =
+                {
+                    paddingLeft = 2,
+                    paddingRight = 2,
+                    width = new StyleLength(new Length(100,LengthUnit.Percent))
+                }
+            };
             intField.value = intValue.intValue;
             intField.RegisterValueChangedCallback(evt =>
             {
@@ -324,7 +287,15 @@ namespace AnimationGraph.Editor
         private void DrawStringValue(VisualElement element, StringParameter.StringValue stringValue)
         {
             element.Clear();
-            var textField = new TextField();
+            var textField = new TextField()
+            {
+                style =
+                {
+                    paddingLeft = 2,
+                    paddingRight = 2,
+                    width = new StyleLength(new Length(100,LengthUnit.Percent))
+                }
+            };
             textField.value = stringValue.stringValue;
             textField.RegisterValueChangedCallback(evt =>
             {

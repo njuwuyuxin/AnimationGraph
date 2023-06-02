@@ -384,6 +384,22 @@ MonoBehaviour:
       type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1067351774
+    - rid: 3204726779982905444
+      type: {class: BoolParameter/BoolValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: 0
+    - rid: 3204726779982905565
+      type: {class: BoolParameter/BoolValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: 1
+    - rid: 3204726779982905602
+      type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: testString
+    - rid: 3204726779982905603
+      type: {class: FloatParameter/FloatValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: 3.5
     - rid: 5990190180978655307
       type: {class: StringSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
@@ -476,7 +492,7 @@ MonoBehaviour:
         states:
         - id: 326968293
           stateName: Default State
-          position: {x: 272, y: 290}
+          position: {x: 271, y: 290}
         - id: 1210844696
           stateName: Default State
           position: {x: 499, y: 290}
@@ -485,14 +501,22 @@ MonoBehaviour:
           sourceStateId: 326968293
           targetStateId: 1210844696
           conditions:
-          - parameterId: 0
+          - parameterId: 871654246
             conditionType: 0
             value:
-              rid: -2
-          - parameterId: 11567
-            conditionType: 2
+              rid: 3204726779982905565
+          - parameterId: 871654246
+            conditionType: 0
             value:
-              rid: -2
+              rid: 3204726779982905444
+          - parameterId: 1283543217
+            conditionType: 0
+            value:
+              rid: 3204726779982905602
+          - parameterId: 1597705152
+            conditionType: 0
+            value:
+              rid: 3204726779982905603
     - rid: 5990190472830386718
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
