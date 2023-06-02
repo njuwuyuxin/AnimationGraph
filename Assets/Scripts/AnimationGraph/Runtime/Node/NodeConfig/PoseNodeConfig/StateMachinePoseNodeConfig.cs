@@ -7,6 +7,7 @@ namespace AnimationGraph
     public class StateMachinePoseNodeConfig : PoseNodeConfig
     {
         public int defaultStateId;
+        //states order == port order
         public List<StatePoseNodeConfig> states;
         public List<TransitionConfig> transitions;
         public override INode GenerateNode(AnimationGraphRuntime graphRuntime)

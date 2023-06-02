@@ -15,22 +15,19 @@ MonoBehaviour:
   finalPosePoseNode:
     id: 1067351774
   nodes:
-  - rid: 5990190472830386812
-  - rid: 5990190472830386813
-  - rid: 5990190472830386814
-  - rid: 5990190472830386815
-  - rid: 5990190472830386816
-  - rid: 5990190472830386817
-  - rid: 5990190472830386818
-  - rid: 5990190472830386819
-  - rid: 5990190472830386820
-  - rid: 5990190472830386821
-  - rid: 5990190472830386822
-  - rid: 5990190472830386823
-  - rid: 5990190472830386824
-  - rid: 5990190472830386825
-  - rid: 5990190472830386826
-  - rid: 5990190472830386827
+  - rid: 3204726779982905891
+  - rid: 3204726779982905892
+  - rid: 3204726779982905893
+  - rid: 3204726779982905894
+  - rid: 3204726779982905895
+  - rid: 3204726779982905896
+  - rid: 3204726779982905897
+  - rid: 3204726779982905898
+  - rid: 3204726779982905899
+  - rid: 3204726779982905900
+  - rid: 3204726779982905901
+  - rid: 3204726779982905902
+  - rid: 3204726779982905903
   nodeConnections:
   - sourceNodeId: 1646470057
     targetNodeId: -233946403
@@ -41,91 +38,55 @@ MonoBehaviour:
   - sourceNodeId: 177331940
     targetNodeId: -233946403
     targetPortIndex: 0
-  - sourceNodeId: -1805907108
-    targetNodeId: -233946403
-    targetPortIndex: 3
-  - sourceNodeId: -35317417
-    targetNodeId: -233946403
-    targetPortIndex: 2
-  - sourceNodeId: -233946403
-    targetNodeId: -1465730693
-    targetPortIndex: 0
-  - sourceNodeId: -1092406093
-    targetNodeId: -1465730693
-    targetPortIndex: 0
-  - sourceNodeId: 1655197360
-    targetNodeId: -1465730693
-    targetPortIndex: 1
-  - sourceNodeId: -530591723
-    targetNodeId: 1067351774
-    targetPortIndex: 0
   - sourceNodeId: 1821668909
     targetNodeId: -530591723
     targetPortIndex: 0
-  - sourceNodeId: -1753076601
-    targetNodeId: -530591723
-    targetPortIndex: 1
   - sourceNodeId: 641799270
     targetNodeId: -530591723
     targetPortIndex: 0
+  - sourceNodeId: 1787778619
+    targetNodeId: 1067351774
+    targetPortIndex: 0
+  - sourceNodeId: 1655197360
+    targetNodeId: 1787778619
+    targetPortIndex: 0
+  - sourceNodeId: -1753076601
+    targetNodeId: 1787778619
+    targetPortIndex: 1
+  - sourceNodeId: -35317417
+    targetNodeId: 1787778619
+    targetPortIndex: 2
+  - sourceNodeId: -1805907108
+    targetNodeId: 1787778619
+    targetPortIndex: 3
   parameters:
-  - rid: 5990190472830386828
-  - rid: 5990190472830386829
-  - rid: 5990190472830386830
-  - rid: 5990190472830386831
+  - rid: 3204726779982905904
+  - rid: 3204726779982905905
+  - rid: 3204726779982905906
+  - rid: 3204726779982905907
   references:
     version: 2
     RefIds:
-    - rid: 5990190472830386812
+    - rid: 3204726779982905891
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: -2020598042
         clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
         playSpeed: 0
-    - rid: 5990190472830386813
-      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: -35317417
-        clip: {fileID: -203655887218126122, guid: 1d8430178d057ed44a336d1ae2c16d7c, type: 3}
-        playSpeed: 0
-    - rid: 5990190472830386814
-      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: -1805907108
-        clip: {fileID: -203655887218126122, guid: fcf21530cadefc94eb194e6ab6ad787a, type: 3}
-        playSpeed: 0
-    - rid: 5990190472830386815
+    - rid: 3204726779982905892
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 177331940
         clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
         playSpeed: 0
-    - rid: 5990190472830386816
+    - rid: 3204726779982905893
       type: {class: StringValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1646470057
         parameterId: 1283543217
         parameterName: stringParameter
         value: Idle
-    - rid: 5990190472830386817
-      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: -1753076601
-        clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
-        playSpeed: 0
-    - rid: 5990190472830386818
-      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: 641799270
-        clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
-        playSpeed: 0
-    - rid: 5990190472830386819
-      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: 1655197360
-        clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
-        playSpeed: 0
-    - rid: 5990190472830386820
+    - rid: 3204726779982905894
       type: {class: StringSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: -233946403
@@ -135,78 +96,189 @@ MonoBehaviour:
         - Idle
         - LeftStrafe
         - RightStrafe
-    - rid: 5990190472830386821
+    - rid: 3204726779982905895
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
-        id: 1637558093
-        clip: {fileID: 0}
+        id: 641799270
+        clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
         playSpeed: 0
-    - rid: 5990190472830386822
-      type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+    - rid: 3204726779982905896
+      type: {class: Blend1DPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
-        id: -1092406093
-        parameterId: -906310031
-        parameterName: mode
-        value: 0
-    - rid: 5990190472830386823
-      type: {class: FloatValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+        id: -530591723
+        slot0: 0
+        slot1: 1
+    - rid: 3204726779982905897
+      type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
-        id: 1821668909
-        parameterId: 1597705152
-        parameterName: moveSpeed
-        value: 0
-    - rid: 5990190472830386824
+        id: 1067351774
+    - rid: 3204726779982905898
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: 1655197360
+        clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
+        playSpeed: 0
+    - rid: 3204726779982905899
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: -1753076601
+        clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
+        playSpeed: 0
+    - rid: 3204726779982905900
       type: {class: StateMachinePoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1787778619
         defaultStateId: 326968293
         states:
         - id: 326968293
-          stateName: Default State
-          position: {x: 279, y: 317}
+          stateName: Idle
+          position: {x: 271, y: 290}
         - id: 1210844696
-          stateName: Default State
-          position: {x: 554, y: 317}
-    - rid: 5990190472830386825
-      type: {class: BoolSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+          stateName: Jog
+          position: {x: 509, y: 290}
+        - id: -1901786484
+          stateName: Left
+          position: {x: 371, y: 202}
+        - id: 1469518005
+          stateName: Right
+          position: {x: 364, y: 393}
+        transitions:
+        - id: -1164554458
+          sourceStateId: 326968293
+          targetStateId: 1210844696
+          conditions:
+          - parameterId: 1283543217
+            conditionType: 1
+            value:
+              rid: 3204726779982905908
+        - id: 1531747862
+          sourceStateId: 1210844696
+          targetStateId: 326968293
+          conditions:
+          - parameterId: 1283543217
+            conditionType: 1
+            value:
+              rid: 3204726779982905909
+        - id: 1675822894
+          sourceStateId: 1210844696
+          targetStateId: -1901786484
+          conditions:
+          - parameterId: 1283543217
+            conditionType: 1
+            value:
+              rid: 3204726779982905910
+        - id: -18261190
+          sourceStateId: 1210844696
+          targetStateId: 1469518005
+          conditions:
+          - parameterId: 1283543217
+            conditionType: 1
+            value:
+              rid: 3204726779982905911
+        - id: -192971467
+          sourceStateId: 1469518005
+          targetStateId: 1210844696
+          conditions:
+          - parameterId: 1283543217
+            conditionType: 1
+            value:
+              rid: 3204726779982905912
+        - id: -861573888
+          sourceStateId: -1901786484
+          targetStateId: 1210844696
+          conditions:
+          - parameterId: 1283543217
+            conditionType: 1
+            value:
+              rid: 3204726779982905913
+    - rid: 3204726779982905901
+      type: {class: FloatValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
-        id: -1465730693
-        blendTime: 0.25
-    - rid: 5990190472830386826
-      type: {class: FinalPosePoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+        id: 1821668909
+        parameterId: 1597705152
+        parameterName: moveSpeed
+        value: 0
+    - rid: 3204726779982905902
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
-        id: 1067351774
-    - rid: 5990190472830386827
-      type: {class: Blend1DPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+        id: -35317417
+        clip: {fileID: -203655887218126122, guid: 1d8430178d057ed44a336d1ae2c16d7c, type: 3}
+        playSpeed: 0
+    - rid: 3204726779982905903
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
-        id: -530591723
-        slot0: 0
-        slot1: 1
-    - rid: 5990190472830386828
+        id: -1805907108
+        clip: {fileID: -203655887218126122, guid: fcf21530cadefc94eb194e6ab6ad787a, type: 3}
+        playSpeed: 0
+    - rid: 3204726779982905904
       type: {class: BoolParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 871654246
         name: moveCondition
+        value:
+          rid: 3204726779982905914
         associatedNodes: 
-        value: 0
-    - rid: 5990190472830386829
+    - rid: 3204726779982905905
       type: {class: StringParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1283543217
         name: stringParameter
+        value:
+          rid: 3204726779982905915
         associatedNodes: a9232362
-        value: 
-    - rid: 5990190472830386830
+    - rid: 3204726779982905906
       type: {class: BoolParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: -906310031
         name: mode
-        associatedNodes: b334e3be
-        value: 0
-    - rid: 5990190472830386831
+        value:
+          rid: 3204726779982905916
+        associatedNodes: 
+    - rid: 3204726779982905907
       type: {class: FloatParameter, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1597705152
         name: moveSpeed
+        value:
+          rid: 3204726779982905917
         associatedNodes: 2d76946c
-        value: 0
+    - rid: 3204726779982905908
+      type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: Jog
+    - rid: 3204726779982905909
+      type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: Idle
+    - rid: 3204726779982905910
+      type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: LeftStrafe
+    - rid: 3204726779982905911
+      type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: RightStrafe
+    - rid: 3204726779982905912
+      type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: Jog
+    - rid: 3204726779982905913
+      type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: Jog
+    - rid: 3204726779982905914
+      type: {class: BoolParameter/BoolValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: 0
+    - rid: 3204726779982905915
+      type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: 
+    - rid: 3204726779982905916
+      type: {class: BoolParameter/BoolValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: 0
+    - rid: 3204726779982905917
+      type: {class: FloatParameter/FloatValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        m_Value: 0

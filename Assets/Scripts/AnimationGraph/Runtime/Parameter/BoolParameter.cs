@@ -22,7 +22,10 @@ namespace AnimationGraph
                 return m_Value == rhs.boolValue;
             }
         }
-        
-        public BoolValue value;
+
+        public BoolParameter()
+        {
+            value = new BoolValue();
+        }
     }
 }

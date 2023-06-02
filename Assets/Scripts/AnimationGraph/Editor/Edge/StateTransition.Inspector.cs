@@ -52,9 +52,12 @@ namespace AnimationGraph.Editor
         private void LoadConditionsFromConfig()
         {
             var transitionConfig = edgeConfig as TransitionConfig;
-            foreach (var condition in transitionConfig.conditions)
+            if (transitionConfig.conditions != null)
             {
-                m_TableList.AddRow();
+                foreach (var condition in transitionConfig.conditions)
+                {
+                    m_TableList.AddRow();
+                }
             }
         }
         

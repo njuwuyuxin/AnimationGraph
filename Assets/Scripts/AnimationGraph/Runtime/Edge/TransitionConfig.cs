@@ -29,6 +29,6 @@ namespace AnimationGraph
     {
         public int sourceStateId;
         public int targetStateId;
-        public List<TransitionCondition> conditions;
+        public List<TransitionCondition> conditions = new List<TransitionCondition>();
     }
 }

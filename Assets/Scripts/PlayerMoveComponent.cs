@@ -28,7 +28,7 @@ public class PlayerMoveComponent : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W))
         {
-            m_AnimationGraphPlayer.SetStringParameter("stringParameter", "Run");
+            m_AnimationGraphPlayer.SetStringParameter("stringParameter", "Jog");
         }
 
         if (Input.GetKeyDown(KeyCode.S))

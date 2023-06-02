@@ -22,7 +22,13 @@ namespace AnimationGraph
                 return m_Value.Equals(rhs.stringValue);
             }
         }
-        
-        public StringValue value;
+
+        public StringParameter()
+        {
+            value = new StringValue()
+            {
+                stringValue = string.Empty
+            };
+        }
     }
 }

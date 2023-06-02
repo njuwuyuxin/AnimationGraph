@@ -16,6 +16,7 @@ namespace AnimationGraph
         private FinalPoseNode m_FinalPoseNode;
         private Dictionary<int, INode> m_Id2NodeMap;
         private Dictionary<int, GraphParameter> m_Id2ParameterMap;
+        private Dictionary<string, GraphParameter> m_String2ParameterMap;
         
         public AnimationGraphRuntime(AnimationActor actor, CompiledAnimationGraph compiledAnimationGraph)
         {
@@ -69,9 +70,11 @@ namespace AnimationGraph
         private void GenerateParameterMap()
         {
             m_Id2ParameterMap = new Dictionary<int, GraphParameter>();
+            m_String2ParameterMap = new Dictionary<string, GraphParameter>();
             foreach (var parameter in m_CompiledAnimationGraph.parameters)
             {
-                m_Id2ParameterMap.Add(Animator.StringToHash(parameter.name), parameter);
+                m_Id2ParameterMap.Add(parameter.id, parameter);
+                m_String2ParameterMap.Add(parameter.name, parameter);
             }
         }
 
@@ -87,8 +90,7 @@ namespace AnimationGraph
 
         public void SetBoolParameter(string parameterName, bool value)
         {
-            var hash = Animator.StringToHash(parameterName);
-            if (m_Id2ParameterMap.TryGetValue(hash, out var graphParameter))
+            if (m_String2ParameterMap.TryGetValue(parameterName, out var graphParameter))
             {
                 if (graphParameter is BoolParameter boolParameter)
                 {
@@ -111,8 +113,7 @@ namespace AnimationGraph
         
         public void SetFloatParameter(string parameterName, float value)
         {
-            var hash = Animator.StringToHash(parameterName);
-            if (m_Id2ParameterMap.TryGetValue(hash, out var graphParameter))
+            if (m_String2ParameterMap.TryGetValue(parameterName, out var graphParameter))
             {
                 if (graphParameter is FloatParameter floatParameter)
                 {
@@ -135,8 +136,7 @@ namespace AnimationGraph
 
         public void SetStringParameter(string parameterName, string value)
         {
-            var hash = Animator.StringToHash(parameterName);
-            if (m_Id2ParameterMap.TryGetValue(hash, out var graphParameter))
+            if (m_String2ParameterMap.TryGetValue(parameterName, out var graphParameter))
             {
                 if (graphParameter is StringParameter stringParameter)
                 {
@@ -155,6 +155,16 @@ namespace AnimationGraph
             {
                 Debug.LogError("Paramter \"" + parameterName + "\" not exist!");
             }
+        }
+
+        public GraphParameter GetParameterById(int id)
+        {
+            if (m_Id2ParameterMap.TryGetValue(id, out var parameter))
+            {
+                return parameter;
+            }
+
+            return null;
         }
     }
 }

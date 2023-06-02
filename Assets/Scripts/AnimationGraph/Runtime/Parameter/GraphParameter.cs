@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace AnimationGraph
 {
@@ -42,6 +43,10 @@ namespace AnimationGraph
         
         public int id;
         public string name;
+        
+        [SerializeReference]
+        public Value value;
+        
         public List<int> associatedNodes;
     }
 }

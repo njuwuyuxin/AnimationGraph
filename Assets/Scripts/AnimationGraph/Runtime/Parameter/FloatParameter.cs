@@ -42,7 +42,10 @@ namespace AnimationGraph
                 return m_Value >= rhs.floatValue;
             }
         }
-        
-        public FloatValue value;
+
+        public FloatParameter()
+        {
+            value = new FloatValue();
+        }
     }
 }

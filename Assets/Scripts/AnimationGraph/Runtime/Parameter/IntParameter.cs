@@ -42,7 +42,10 @@ namespace AnimationGraph
                 return m_Value >= rhs.intValue;
             }
         }
-        
-        public IntValue value;
+
+        public IntParameter()
+        {
+            value = new IntValue();
+        }
     }
 }
