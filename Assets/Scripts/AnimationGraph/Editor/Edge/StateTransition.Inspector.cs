@@ -24,6 +24,8 @@ namespace AnimationGraph.Editor
             EConditionType.GreaterEqual
         };
 
+        private TableListView m_TableList;
+        
         public VisualElement CreateInspectorGUI()
         {
             VisualElement root = new VisualElement();
@@ -34,25 +36,25 @@ namespace AnimationGraph.Editor
             conditionLabel.style.borderBottomColor = Color.gray;
             root.Add(conditionLabel);
 
-            var tableList = new TableListView();
-            tableList.AddColumn(CreateParameterColumn());
-            tableList.AddColumn(CreateOperationColumn());
-            tableList.AddColumn(CreateValueColumn());
-            tableList.onAddRow = (i) => OnAddCondition(i);
-            tableList.onDeleteRow = (element, i) => OnRemoveCondition(i); 
-            LoadConditionsFromConfig(tableList);
+            m_TableList = new TableListView();
+            m_TableList.AddColumn(CreateParameterColumn());
+            m_TableList.AddColumn(CreateOperationColumn());
+            m_TableList.AddColumn(CreateValueColumn());
+            m_TableList.onAddRow = (i) => OnAddCondition(i);
+            m_TableList.onDeleteRow = (element, i) => OnRemoveCondition(i); 
+            LoadConditionsFromConfig();
             
-            root.Add(tableList);
+            root.Add(m_TableList);
             
             return root;
         }
 
-        private void LoadConditionsFromConfig(TableListView tableListView)
+        private void LoadConditionsFromConfig()
         {
             var transitionConfig = edgeConfig as TransitionConfig;
             foreach (var condition in transitionConfig.conditions)
             {
-                tableListView.AddRow();
+                m_TableList.AddRow();
             }
         }
         
@@ -68,8 +70,10 @@ namespace AnimationGraph.Editor
 
             //Add new condition
             TransitionCondition condition = new TransitionCondition();
-            condition.parameterId = m_StateMachineGraphView.parameterBoard.parameterCards.First().id;
+            var parameterCard = m_StateMachineGraphView.parameterBoard.parameterCards.First();
+            condition.parameterId = parameterCard.id;
             condition.conditionType = EConditionType.NotEqual;
+            condition.value = CreateValueByParameterCard(parameterCard);
             transitionConfig.conditions.Add(condition);
         }
 
@@ -124,8 +128,8 @@ namespace AnimationGraph.Editor
                 popup.userData = row;
 
                 var transitionConfig = edgeConfig as TransitionConfig;
-                popup.value = m_StateMachineGraphView.parameterBoard.parameterCards.Find(p =>
-                        p.id == transitionConfig.conditions[row].parameterId);
+                popup.value = m_StateMachineGraphView.parameterBoard.TryGetParameterById(transitionConfig.conditions[row].parameterId);
+
             };
             
             return column;
@@ -136,9 +140,14 @@ namespace AnimationGraph.Editor
             var popup = evt.target as PopupField<ParameterCard>;
             var transitionConfig = edgeConfig as TransitionConfig;
             int row = (int)(popup.userData);
-            transitionConfig.conditions[row].parameterId = evt.newValue.id;
+            var parameterCard = evt.newValue;
             
-            //TODO: operation type change to default
+            var condition = transitionConfig.conditions[row];
+            condition.parameterId = parameterCard.id;
+            condition.conditionType = EConditionType.NotEqual;
+            condition.value = CreateValueByParameterCard(parameterCard);
+
+            m_TableList.RefreshRow(row);
         }
         
         private TableListView.Column CreateOperationColumn()
@@ -180,9 +189,24 @@ namespace AnimationGraph.Editor
             
             column.refreshCell = (element, row) =>
             {
+                var transitionConfig = edgeConfig as TransitionConfig;
                 var popup = element as PopupField<EConditionType>;
                 popup.userData = row;
-                var transitionConfig = edgeConfig as TransitionConfig;
+
+                bool isNumberParameter = false;
+                switch (transitionConfig.conditions[row].value)
+                {
+                    case FloatParameter.FloatValue:
+                    case IntParameter.IntValue:
+                        isNumberParameter = true;
+                        break;
+                    case BoolParameter.BoolValue:
+                    case StringParameter.StringValue:
+                        isNumberParameter = false;
+                        break;
+                }
+
+                popup.choices = isNumberParameter ? s_NumberConditions : s_ValueConditions;
                 popup.value = transitionConfig.conditions[row].conditionType;
             };
             
@@ -219,7 +243,7 @@ namespace AnimationGraph.Editor
 
             column.cellTemplate = () =>
             {
-                var value = new TextField()
+                var value = new VisualElement()
                 {
                     style =
                     {
@@ -235,39 +259,93 @@ namespace AnimationGraph.Editor
             
             column.refreshCell = (element, row) =>
             {
-
+                var transitionConfig = edgeConfig as TransitionConfig;
+                DrawValueField(element, transitionConfig.conditions[row].value);
             };
             
             return column;
+        }
+
+        private void DrawValueField(VisualElement element, GraphParameter.Value value)
+        {
+            switch (value)
+            {
+                case BoolParameter.BoolValue boolValue:
+                    DrawBoolValue(element, boolValue);
+                    break;
+                case FloatParameter.FloatValue floatValue:
+                    DrawFloatValue(element, floatValue);
+                    break;
+                case IntParameter.IntValue intValue:
+                    DrawIntValue(element, intValue);
+                    break;
+                case StringParameter.StringValue stringValue:
+                    DrawStringValue(element, stringValue);
+                    break;
+            }
+        }
+
+        private void DrawBoolValue(VisualElement element, BoolParameter.BoolValue boolValue)
+        {
+            element.Clear();
+            var boolField = new Toggle();
+            boolField.value = boolValue.boolValue;
+            boolField.RegisterValueChangedCallback(evt =>
+            {
+                boolValue.boolValue = evt.newValue;
+            });
+            element.Add(boolField);
         }
         
-        private TableListView.Column CreateDeleteColumn()
+        private void DrawFloatValue(VisualElement element, FloatParameter.FloatValue floatValue)
         {
-            var column = new TableListView.Column();
-            column.name = " ";
-            column.title = () =>
+            element.Clear();
+            var floatField = new FloatField();
+            floatField.value = floatValue.floatValue;
+            floatField.RegisterValueChangedCallback(evt =>
             {
-                var placeHolderLabel = new Label(" ")
-                {
-                    style =
-                    {
-                        width = 20,
-                    }
-                };
-                return placeHolderLabel;
-            };
-
-            column.cellTemplate = () =>
-            {
-                var deleteButton = new Button(() => { });
-                deleteButton.Add(new Label("×"));
-                deleteButton.style.width = 20;
-                return deleteButton;
-            };
-            
-            return column;
+                floatValue.floatValue = evt.newValue;
+            });
+            element.Add(floatField);
         }
 
+        private void DrawIntValue(VisualElement element, IntParameter.IntValue intValue)
+        {
+            element.Clear();
+            var intField = new IntegerField();
+            intField.value = intValue.intValue;
+            intField.RegisterValueChangedCallback(evt =>
+            {
+                intValue.intValue = evt.newValue;
+            });
+            element.Add(intField);
+        }
+        
+        private void DrawStringValue(VisualElement element, StringParameter.StringValue stringValue)
+        {
+            element.Clear();
+            var textField = new TextField();
+            textField.value = stringValue.stringValue;
+            textField.RegisterValueChangedCallback(evt =>
+            {
+                stringValue.stringValue = evt.newValue;
+            });
+            element.Add(textField);
+        }
+
+        private GraphParameter.Value CreateValueByParameterCard(ParameterCard parameterCard)
+        {
+            switch (parameterCard)
+            {
+                case BoolParameterCard: return new BoolParameter.BoolValue();
+                case FloatParameterCard: return new FloatParameter.FloatValue();
+                case IntParameterCard: return new IntParameter.IntValue();
+                case StringParameterCard: return new StringParameter.StringValue();
+            }
+
+            return null;
+        }
+        
         private string ConvertParameterToString(ParameterCard parameterCard)
         {
             return parameterCard != null ? parameterCard.parameterName : " ";

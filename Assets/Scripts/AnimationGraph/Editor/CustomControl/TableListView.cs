@@ -132,5 +132,24 @@ namespace AnimationGraph.Editor
                 }
             }
         }
+
+        public void RefreshTable()
+        {
+            for (int col = 0; col < m_Columns.Count; col++)
+            {
+                for (int row = 0; row < m_Rows.Count; row++)
+                {
+                    m_Columns[col].refreshCell?.Invoke(m_Rows[row].cells[col], row);
+                }
+            }
+        }
+
+        public void RefreshRow(int row)
+        {
+            for (int col = 0; col < m_Columns.Count; col++)
+            {
+                m_Columns[col].refreshCell?.Invoke(m_Rows[row].cells[col], row);
+            }
+        }
     }
 }
