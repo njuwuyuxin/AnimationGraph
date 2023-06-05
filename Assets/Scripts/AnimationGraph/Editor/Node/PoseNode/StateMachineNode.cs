@@ -63,6 +63,11 @@ namespace AnimationGraph.Editor
             stateMachineNodeConfig.defaultStateId = defaultStateId;
         }
 
+        public int GetStateIndex(StateNode state)
+        {
+            return m_StateConfigs.IndexOf(state.nodeConfig as StatePoseNodeConfig);
+        }
+
         public void OnAddState(StatePoseNodeConfig stateConfig)
         {
             CreatePort(Direction.Input, Port.Capacity.Multi, stateConfig.stateName, NodePort.EPortType.PosePort, m_StateConfigs.Count);

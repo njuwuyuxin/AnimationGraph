@@ -63,10 +63,27 @@ namespace AnimationGraph.Editor
             (m_NodeConfig as StatePoseNodeConfig).position = GetPosition().position;
         }
 
+        private VisualElement CreateInspectorGUI()
+        {
+            var root = new VisualElement();
+            TextField stateNameField = new TextField("State Name");
+            stateNameField.value = nodeName;
+            stateNameField.RegisterValueChangedCallback(evt =>
+            {
+                nodeName = evt.newValue;
+                (m_NodeConfig as StatePoseNodeConfig).stateName = evt.newValue;
+                var stateIndex = m_StateMachineView.stateMachineNode.GetStateIndex(this);
+                m_StateMachineView.stateMachineNode.GetInputPort(NodePort.EPortType.PosePort, stateIndex).portName = nodeName;
+            });
+            root.Add(stateNameField);
+            
+            return root;
+        }
+        
         public override void OnSelected()
         {
             base.OnSelected();
-            m_AnimationGraphView.inspector.SetGraphNodeIMGUI(this, m_DrawInspectorCustomize);
+            m_AnimationGraphView.inspector.SetCustomContent(CreateInspectorGUI());
 
             if (m_StateMachineView.isMakingTransition && m_StateMachineView.lastSelectedNode != null)
             {
