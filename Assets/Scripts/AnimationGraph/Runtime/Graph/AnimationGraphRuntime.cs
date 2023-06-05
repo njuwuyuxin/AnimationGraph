@@ -71,7 +71,9 @@ namespace AnimationGraph
         {
             m_Id2ParameterMap = new Dictionary<int, GraphParameter>();
             m_String2ParameterMap = new Dictionary<string, GraphParameter>();
-            foreach (var parameter in m_CompiledAnimationGraph.parameters)
+            List<GraphParameter> runtimeParameter = new List<GraphParameter>();
+            runtimeParameter.AddRange(m_CompiledAnimationGraph.parameters);
+            foreach (var parameter in runtimeParameter)
             {
                 m_Id2ParameterMap.Add(parameter.id, parameter);
                 m_String2ParameterMap.Add(parameter.name, parameter);

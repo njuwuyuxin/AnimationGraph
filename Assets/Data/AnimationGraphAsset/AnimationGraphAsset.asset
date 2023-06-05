@@ -13,12 +13,76 @@ MonoBehaviour:
   m_Name: AnimationGraphAsset
   m_EditorClassIdentifier: 
   nodes:
-  - id: -2020598042
-    nodeType: 2
-    positionX: -68
-    positionY: 182
+  - id: 1646470057
+    nodeType: 104
+    positionX: -111
+    positionY: 9
     nodeConfig:
-      rid: 5990190180978655388
+      rid: 5990190180978655386
+    customData:
+      rid: -2
+  - id: -1805907108
+    nodeType: 2
+    positionX: -46
+    positionY: 594
+    nodeConfig:
+      rid: 5990190180978655452
+    customData:
+      rid: -2
+  - id: 1655197360
+    nodeType: 2
+    positionX: 12
+    positionY: 333
+    nodeConfig:
+      rid: 5990190297734447111
+    customData:
+      rid: -2
+  - id: -1753076601
+    nodeType: 2
+    positionX: 7
+    positionY: 410
+    nodeConfig:
+      rid: 5990190180978655489
+    customData:
+      rid: -2
+  - id: -35317417
+    nodeType: 2
+    positionX: -38
+    positionY: 500
+    nodeConfig:
+      rid: 5990190180978655453
+    customData:
+      rid: -2
+  - id: 1787778619
+    nodeType: 7
+    positionX: 190
+    positionY: 335
+    nodeConfig:
+      rid: 5990190472830386503
+    customData:
+      rid: -2
+  - id: 1067351774
+    nodeType: 1
+    positionX: 572
+    positionY: 217
+    nodeConfig:
+      rid: 0
+    customData:
+      rid: -2
+  - id: 1357478134
+    nodeType: 3
+    positionX: 380
+    positionY: 208
+    nodeConfig:
+      rid: 3204726779982906222
+    customData:
+      rid: -2
+  - id: 925971299
+    nodeType: 101
+    positionX: 350
+    positionY: 368
+    nodeConfig:
+      rid: 3204726779982906223
     customData:
       rid: -2
   - id: 177331940
@@ -29,12 +93,28 @@ MonoBehaviour:
       rid: 5990190180978655387
     customData:
       rid: -2
-  - id: 1646470057
-    nodeType: 104
-    positionX: -111
-    positionY: 9
+  - id: -2020598042
+    nodeType: 2
+    positionX: -60
+    positionY: 163
     nodeConfig:
-      rid: 5990190180978655386
+      rid: 5990190180978655388
+    customData:
+      rid: -2
+  - id: 589859969
+    nodeType: 2
+    positionX: -120
+    positionY: 240
+    nodeConfig:
+      rid: 3204726779982906224
+    customData:
+      rid: -2
+  - id: -1845522004
+    nodeType: 2
+    positionX: -176
+    positionY: 317
+    nodeConfig:
+      rid: 3204726779982906225
     customData:
       rid: -2
   - id: -233946403
@@ -45,93 +125,7 @@ MonoBehaviour:
       rid: 5990190180978655307
     customData:
       rid: -2
-  - id: 641799270
-    nodeType: 2
-    positionX: 116
-    positionY: 380
-    nodeConfig:
-      rid: 5990190180978655490
-    customData:
-      rid: -2
-  - id: -530591723
-    nodeType: 5
-    positionX: 249
-    positionY: 278
-    nodeConfig:
-      rid: 5990190297734447151
-    customData:
-      rid: -2
-  - id: 1067351774
-    nodeType: 1
-    positionX: 664
-    positionY: 305
-    nodeConfig:
-      rid: 0
-    customData:
-      rid: -2
-  - id: 1655197360
-    nodeType: 2
-    positionX: 254
-    positionY: 419
-    nodeConfig:
-      rid: 5990190297734447111
-    customData:
-      rid: -2
-  - id: -1753076601
-    nodeType: 2
-    positionX: 249
-    positionY: 496
-    nodeConfig:
-      rid: 5990190180978655489
-    customData:
-      rid: -2
-  - id: 1821668909
-    nodeType: 103
-    positionX: 26
-    positionY: 496
-    nodeConfig:
-      rid: 5990190297734447150
-    customData:
-      rid: -2
-  - id: -35317417
-    nodeType: 2
-    positionX: 204
-    positionY: 586
-    nodeConfig:
-      rid: 5990190180978655453
-    customData:
-      rid: -2
-  - id: -1805907108
-    nodeType: 2
-    positionX: 196
-    positionY: 680
-    nodeConfig:
-      rid: 5990190180978655452
-    customData:
-      rid: -2
-  - id: 1787778619
-    nodeType: 7
-    positionX: 432
-    positionY: 421
-    nodeConfig:
-      rid: 5990190472830386503
-    customData:
-      rid: -2
   ports:
-  - portName: Output
-    portId: -456624635
-    nodeId: -2020598042
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
-    portId: 1627149462
-    nodeId: 177331940
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
   - portName: Output
     portId: 1219996606
     nodeId: 1646470057
@@ -139,90 +133,13 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
-  - portName: Condition
-    portId: 357491562
-    nodeId: -233946403
-    portType: 1
-    portIndex: 0
-    direction: 0
-    capacity: 1
-  - portName: Run
-    portId: 1609239283
-    nodeId: -233946403
-    portType: 0
-    portIndex: 0
-    direction: 0
-    capacity: 1
-  - portName: Idle
-    portId: 486245932
-    nodeId: -233946403
-    portType: 0
-    portIndex: 1
-    direction: 0
-    capacity: 1
-  - portName: LeftStrafe
-    portId: 1999347804
-    nodeId: -233946403
-    portType: 0
-    portIndex: 2
-    direction: 0
-    capacity: 1
-  - portName: RightStrafe
-    portId: -240578694
-    nodeId: -233946403
-    portType: 0
-    portIndex: 3
-    direction: 0
-    capacity: 1
   - portName: Output
-    portId: -674763441
-    nodeId: -233946403
+    portId: -764251177
+    nodeId: -1805907108
     portType: 0
     portIndex: 0
     direction: 1
     capacity: 1
-  - portName: Output
-    portId: 2055963221
-    nodeId: 641799270
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Slot0
-    portId: 1229671768
-    nodeId: -530591723
-    portType: 0
-    portIndex: 0
-    direction: 0
-    capacity: 1
-  - portName: Slot1
-    portId: -346309245
-    nodeId: -530591723
-    portType: 0
-    portIndex: 1
-    direction: 0
-    capacity: 1
-  - portName: Parameter
-    portId: 775278219
-    nodeId: -530591723
-    portType: 1
-    portIndex: 0
-    direction: 0
-    capacity: 1
-  - portName: Output
-    portId: -864662129
-    nodeId: -530591723
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Input
-    portId: 1805344058
-    nodeId: 1067351774
-    portType: 0
-    portIndex: 0
-    direction: 0
-    capacity: 0
   - portName: Output
     portId: 1068578476
     nodeId: 1655197360
@@ -238,22 +155,8 @@ MonoBehaviour:
     direction: 1
     capacity: 1
   - portName: Output
-    portId: -1755716129
-    nodeId: 1821668909
-    portType: 1
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
     portId: -1546681452
     nodeId: -35317417
-    portType: 0
-    portIndex: 0
-    direction: 1
-    capacity: 1
-  - portName: Output
-    portId: -764251177
-    nodeId: -1805907108
     portType: 0
     portIndex: 0
     direction: 1
@@ -293,6 +196,118 @@ MonoBehaviour:
     portIndex: 0
     direction: 1
     capacity: 1
+  - portName: Input
+    portId: 1805344058
+    nodeId: 1067351774
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 0
+  - portName: True
+    portId: -733370433
+    nodeId: 1357478134
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: False
+    portId: -2132043633
+    nodeId: 1357478134
+    portType: 0
+    portIndex: 1
+    direction: 0
+    capacity: 1
+  - portName: Condition
+    portId: -1601690857
+    nodeId: 1357478134
+    portType: 1
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: Output
+    portId: 500479253
+    nodeId: 1357478134
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 1252573578
+    nodeId: 925971299
+    portType: 1
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 1627149462
+    nodeId: 177331940
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: -456624635
+    nodeId: -2020598042
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: -1449109788
+    nodeId: 589859969
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Output
+    portId: 2085393865
+    nodeId: -1845522004
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
+  - portName: Condition
+    portId: 357491562
+    nodeId: -233946403
+    portType: 1
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: Jog
+    portId: 1609239283
+    nodeId: -233946403
+    portType: 0
+    portIndex: 0
+    direction: 0
+    capacity: 1
+  - portName: Idle
+    portId: 486245932
+    nodeId: -233946403
+    portType: 0
+    portIndex: 1
+    direction: 0
+    capacity: 1
+  - portName: LeftStrafe
+    portId: 1999347804
+    nodeId: -233946403
+    portType: 0
+    portIndex: 2
+    direction: 0
+    capacity: 1
+  - portName: RightStrafe
+    portId: -240578694
+    nodeId: -233946403
+    portType: 0
+    portIndex: 3
+    direction: 0
+    capacity: 1
+  - portName: Output
+    portId: -674763441
+    nodeId: -233946403
+    portType: 0
+    portIndex: 0
+    direction: 1
+    capacity: 1
   edges:
   - inputPort: 357491562
     outputPort: 1219996606
@@ -300,12 +315,6 @@ MonoBehaviour:
     outputPort: -456624635
   - inputPort: 1609239283
     outputPort: 1627149462
-  - inputPort: 775278219
-    outputPort: -1755716129
-  - inputPort: 1229671768
-    outputPort: 2055963221
-  - inputPort: 1805344058
-    outputPort: -715299499
   - inputPort: -72401009
     outputPort: 1068578476
   - inputPort: -1608329609
@@ -314,11 +323,23 @@ MonoBehaviour:
     outputPort: -1546681452
   - inputPort: 1509208718
     outputPort: -764251177
+  - inputPort: 1805344058
+    outputPort: 500479253
+  - inputPort: -2132043633
+    outputPort: -715299499
+  - inputPort: -1601690857
+    outputPort: 1252573578
+  - inputPort: -733370433
+    outputPort: -674763441
+  - inputPort: 1999347804
+    outputPort: -1449109788
+  - inputPort: -240578694
+    outputPort: 2085393865
   parameters:
-  - rid: 3204726779982906124
-  - rid: 3204726779982906125
-  - rid: 3204726779982906126
-  - rid: 3204726779982906127
+  - rid: 3204726779982906259
+  - rid: 3204726779982906260
+  - rid: 3204726779982906261
+  - rid: 3204726779982906262
   references:
     version: 2
     RefIds:
@@ -352,33 +373,57 @@ MonoBehaviour:
       type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         m_Value: Jog
-    - rid: 3204726779982906124
+    - rid: 3204726779982906222
+      type: {class: BoolSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: 1357478134
+        blendTime: 0.25
+    - rid: 3204726779982906223
+      type: {class: BoolValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: 925971299
+        parameterId: -906310031
+        parameterName: mode
+        value: 0
+    - rid: 3204726779982906224
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: 589859969
+        clip: {fileID: -203655887218126122, guid: 1d8430178d057ed44a336d1ae2c16d7c, type: 3}
+        playSpeed: 0
+    - rid: 3204726779982906225
+      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
+      data:
+        id: -1845522004
+        clip: {fileID: -203655887218126122, guid: fcf21530cadefc94eb194e6ab6ad787a, type: 3}
+        playSpeed: 0
+    - rid: 3204726779982906259
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: moveCondition
         associateNodes: 
         value: 0
-    - rid: 3204726779982906125
+    - rid: 3204726779982906260
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217
         name: stringParameter
         associateNodes: a9232362
         value: 
-    - rid: 3204726779982906126
+    - rid: 3204726779982906261
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: -906310031
         name: mode
-        associateNodes: 
+        associateNodes: 63333137
         value: 0
-    - rid: 3204726779982906127
+    - rid: 3204726779982906262
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1597705152
         name: moveSpeed
-        associateNodes: 2d76946c
+        associateNodes: 
         value: 0
     - rid: 5990190180978655307
       type: {class: StringSelectorPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
@@ -386,7 +431,7 @@ MonoBehaviour:
         id: -233946403
         blendTime: 0.25
         selections:
-        - Run
+        - Jog
         - Idle
         - LeftStrafe
         - RightStrafe
@@ -427,31 +472,12 @@ MonoBehaviour:
         id: -1753076601
         clip: {fileID: 8648702121991251029, guid: 808402b71683bb64a8f271b52f27b87a, type: 3}
         playSpeed: 0
-    - rid: 5990190180978655490
-      type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: 641799270
-        clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
-        playSpeed: 0
     - rid: 5990190297734447111
       type: {class: AnimationClipPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         id: 1655197360
         clip: {fileID: -203655887218126122, guid: 7e34749ed0864b245b3706e856afa178, type: 3}
         playSpeed: 0
-    - rid: 5990190297734447150
-      type: {class: FloatValueNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: 1821668909
-        parameterId: 1597705152
-        parameterName: moveSpeed
-        value: 0
-    - rid: 5990190297734447151
-      type: {class: Blend1DPoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
-      data:
-        id: -530591723
-        slot0: 0
-        slot1: 1
     - rid: 5990190472830386503
       type: {class: StateMachinePoseNodeConfig, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
