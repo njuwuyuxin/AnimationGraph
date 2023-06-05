@@ -223,6 +223,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.zijin.easyanimtion": {
+      "version": "https://github.com/njuwuyuxin/EasyAnimation.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e6957f58e0e06625c2fb8616f51938f6ce61466f"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
