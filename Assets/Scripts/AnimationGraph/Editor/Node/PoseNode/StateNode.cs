@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -66,15 +65,15 @@ namespace AnimationGraph.Editor
         private VisualElement CreateInspectorGUI()
         {
             var root = new VisualElement();
-            TextField stateNameField = new TextField("State Name");
-            stateNameField.value = nodeName;
-            stateNameField.RegisterValueChangedCallback(evt =>
+            TextField stateNameField = InspectorUitils.CreateTextField("State Name", evt =>
             {
                 nodeName = evt.newValue;
                 (m_NodeConfig as StatePoseNodeConfig).stateName = evt.newValue;
                 var stateIndex = m_StateMachineView.stateMachineNode.GetStateIndex(this);
-                m_StateMachineView.stateMachineNode.GetInputPort(NodePort.EPortType.PosePort, stateIndex).portName = nodeName;
+                m_StateMachineView.stateMachineNode.GetInputPort(NodePort.EPortType.PosePort, stateIndex).portName =
+                    nodeName;
             });
+            stateNameField.value = nodeName;
             root.Add(stateNameField);
             
             return root;

@@ -29,6 +29,7 @@ namespace AnimationGraph
     {
         public int sourceStateId;
         public int targetStateId;
+        public float blendTime;
         public List<TransitionCondition> conditions = new List<TransitionCondition>();
     }
 }

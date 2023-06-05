@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.UIElements;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace AnimationGraph.Editor
@@ -29,12 +28,18 @@ namespace AnimationGraph.Editor
         public VisualElement CreateInspectorGUI()
         {
             VisualElement root = new VisualElement();
-            Label conditionLabel = new Label("Conditions");
-            conditionLabel.style.fontSize = 12;
-            conditionLabel.style.paddingTop = conditionLabel.style.paddingBottom = 2;
-            conditionLabel.style.borderBottomWidth = 1f;
-            conditionLabel.style.borderBottomColor = Color.gray;
-            root.Add(conditionLabel);
+            
+            root.Add(InspectorUitils.CreateHeader("Transition"));
+            
+            FloatField blendTimeField = InspectorUitils.CreateFloatField("Blend Time", evt =>
+            {
+                var transitionConfig = edgeConfig as TransitionConfig;
+                transitionConfig.blendTime = evt.newValue;
+            });
+            blendTimeField.value = (edgeConfig as TransitionConfig).blendTime;
+            root.Add(blendTimeField);
+
+            root.Add(InspectorUitils.CreateHeader("Conditions"));
 
             m_TableList = new TableListView();
             m_TableList.AddColumn(CreateParameterColumn());
@@ -95,12 +100,7 @@ namespace AnimationGraph.Editor
             {
                 var parameterList = m_StateMachineGraphView.parameterBoard.parameterCards;
                 var parameter = new PopupField<ParameterCard>(parameterList, parameterList[0], ConvertParameterToString,
-                    ConvertParameterToString)
-                {
-                    style =
-                    {
-                    }
-                };
+                    ConvertParameterToString);
 
                 parameter.RegisterValueChangedCallback(OnParameterChange);
 
@@ -143,12 +143,7 @@ namespace AnimationGraph.Editor
             column.cellTemplate = () =>
             {
                 var operation = new PopupField<EConditionType>(s_NumberConditions, EConditionType.Equal,
-                    ConvertConditionToString, ConvertConditionToString)
-                {
-                    style =
-                    {
-                    }
-                };
+                    ConvertConditionToString, ConvertConditionToString);
                 operation.RegisterValueChangedCallback(OnOperationTypeChange);
 
                 return operation;

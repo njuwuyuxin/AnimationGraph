@@ -315,10 +315,10 @@ MonoBehaviour:
   - inputPort: 1509208718
     outputPort: -764251177
   parameters:
-  - rid: 3204726779982906051
-  - rid: 3204726779982906052
-  - rid: 3204726779982906053
-  - rid: 3204726779982906054
+  - rid: 3204726779982906124
+  - rid: 3204726779982906125
+  - rid: 3204726779982906126
+  - rid: 3204726779982906127
   references:
     version: 2
     RefIds:
@@ -352,28 +352,28 @@ MonoBehaviour:
       type: {class: StringParameter/StringValue, ns: AnimationGraph, asm: AnimationGraph.Runtime}
       data:
         m_Value: Jog
-    - rid: 3204726779982906051
+    - rid: 3204726779982906124
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 871654246
         name: moveCondition
         associateNodes: 
         value: 0
-    - rid: 3204726779982906052
+    - rid: 3204726779982906125
       type: {class: StringParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1283543217
         name: stringParameter
         associateNodes: a9232362
         value: 
-    - rid: 3204726779982906053
+    - rid: 3204726779982906126
       type: {class: BoolParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: -906310031
         name: mode
         associateNodes: 
         value: 0
-    - rid: 3204726779982906054
+    - rid: 3204726779982906127
       type: {class: FloatParameterData, ns: AnimationGraph.Editor, asm: AnimationGraph.Editor}
       data:
         id: 1597705152
@@ -474,6 +474,7 @@ MonoBehaviour:
         - id: -1164554458
           sourceStateId: 326968293
           targetStateId: 1210844696
+          blendTime: 0.25
           conditions:
           - parameterId: 1283543217
             conditionType: 1
@@ -482,6 +483,7 @@ MonoBehaviour:
         - id: 1531747862
           sourceStateId: 1210844696
           targetStateId: 326968293
+          blendTime: 0.25
           conditions:
           - parameterId: 1283543217
             conditionType: 1
@@ -490,6 +492,7 @@ MonoBehaviour:
         - id: 1675822894
           sourceStateId: 1210844696
           targetStateId: -1901786484
+          blendTime: 0.25
           conditions:
           - parameterId: 1283543217
             conditionType: 1
@@ -498,6 +501,7 @@ MonoBehaviour:
         - id: -18261190
           sourceStateId: 1210844696
           targetStateId: 1469518005
+          blendTime: 0.25
           conditions:
           - parameterId: 1283543217
             conditionType: 1
@@ -506,6 +510,7 @@ MonoBehaviour:
         - id: -192971467
           sourceStateId: 1469518005
           targetStateId: 1210844696
+          blendTime: 0.25
           conditions:
           - parameterId: 1283543217
             conditionType: 1
@@ -514,6 +519,7 @@ MonoBehaviour:
         - id: -861573888
           sourceStateId: -1901786484
           targetStateId: 1210844696
+          blendTime: 0.25
           conditions:
           - parameterId: 1283543217
             conditionType: 1

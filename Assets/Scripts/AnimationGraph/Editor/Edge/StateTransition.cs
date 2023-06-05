@@ -59,6 +59,7 @@ namespace AnimationGraph.Editor
                 var transitionConfig = m_EdgeConfig as TransitionConfig;
                 transitionConfig.sourceStateId = m_SourceState.id;
                 transitionConfig.targetStateId = m_TargetState.id;
+                transitionConfig.blendTime = 0.25f;
             }
         }
 
