@@ -126,12 +126,12 @@
       "source": "registry",
       "dependencies": {
         "com.unity.ugui": "1.0.0",
-        "com.unity.modules.unityanalytics": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0",
-        "com.unity.modules.androidjni": "1.0.0",
         "com.unity.services.core": "1.3.1",
-        "com.unity.services.analytics": "4.0.1"
+        "com.unity.modules.androidjni": "1.0.0",
+        "com.unity.services.analytics": "4.0.1",
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.unity.modules.unityanalytics": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -150,9 +150,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.androidjni": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2",
-        "com.unity.modules.androidjni": "1.0.0"
+        "com.unity.modules.unitywebrequest": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -181,9 +181,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -224,11 +224,10 @@
       "url": "https://packages.unity.com"
     },
     "com.zijin.easyanimtion": {
-      "version": "https://github.com/njuwuyuxin/EasyAnimation.git",
+      "version": "file:D:\\GitRepositories\\EasyAnimation",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "e6957f58e0e06625c2fb8616f51938f6ce61466f"
+      "source": "local",
+      "dependencies": {}
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
